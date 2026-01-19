@@ -37,80 +37,50 @@
 
     .wrap{ max-width:var(--max); margin:0 auto; padding: 28px 16px; }
 
-/* GoatCounter — rectangular micro HUD */
-#gc-counter{
-  position: fixed;
-  top: 10px;
-  right: 12px;
-  z-index: 10000;
+    /* GoatCounter HUD (custom) — cannot stretch */
+    #gc-hud{
+      position: fixed;
+      top: 10px;
+      right: 12px;
+      z-index: 10000;
 
-  display: inline-block !important;
-  width: auto !important;
-  height: auto !important;
-  max-height: 32px !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
 
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
+      padding: 6px 8px;
+      min-height: 22px;
+      max-width: 140px;
 
-  pointer-events: none;
-}
+      border-radius: 0; /* perfectly rectangular */
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(11,18,32,.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
 
-/* Style ONLY the injected element */
-#gc-counter > *{
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+      font-size: 10px;            /* small */
+      font-weight: 700;
+      letter-spacing: .06em;
+      line-height: 1;
+      color: rgba(245,247,255,.9);
 
-  /* HUD sizing */
-  padding: 6px 8px;
-  min-height: 22px;
-  max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
-  border-radius: 0;                   /* perfectly rectangular */
-  border: 1px solid rgba(255,255,255,.08);
-  background: rgba(11,18,32,.6);
+      box-shadow: 0 6px 18px rgba(0,0,0,.22);
+      opacity: .85;
+      user-select: none;
+    }
 
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+    #gc-hud:hover{ opacity: 1; }
 
-  /* smaller, technical font */
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  line-height: 1;
-  text-transform: uppercase;
-
-  color: rgba(245,247,255,.9) !important;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,.22);
-  opacity: .85;
-
-  pointer-events: auto;
-}
-
-#gc-counter > *:hover{
-  opacity: 1;
-}
-
-/* Accent the number only */
-#gc-counter > *::after{
-  content: "";
-}
-
-/* Mobile: move below topbar */
-@media (max-width: 520px){
-  #gc-counter{
-    top: 64px;
-    right: 12px;
-  }
-}
-
-
+    @media (max-width: 520px){
+      #gc-hud{
+        top: 64px;   /* below topbar on mobile */
+        right: 12px;
+      }
+    }
 
     /* Top bar */
     .topbar{
@@ -499,8 +469,8 @@
 </head>
 
 <body>
-  <!-- ✅ single, unique counter target (no duplicate IDs) -->
-  <div id="gc-counter" aria-hidden="true"></div>
+  <!-- ✅ Custom GoatCounter HUD (no injected HTML counter) -->
+  <div id="gc-hud" aria-hidden="true">Views: —</div>
 
   <div class="wrap">
     <div class="topbar">
@@ -752,27 +722,28 @@
     document.getElementById("btnClear").addEventListener("click", clearAll);
   </script>
 
-<script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
-        async src="https://gc.zgo.at/count.js"></script>
+  <!-- ✅ GoatCounter tracking (loaded once) -->
+  <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
 
-<script>
-(function(){
-  const t = setInterval(function () {
-    if (window.goatcounter && window.goatcounter.visit_count) {
-      clearInterval(t);
+  <!-- ✅ Custom JSON counter -> HUD text "Views: 123" -->
+  <script>
+  (function(){
+    const el = document.getElementById('gc-hud');
+    if (!el) return;
 
-      window.goatcounter.visit_count({
-        append: '#gc-counter',
-        no_branding: true,
-        onload: function(el, count){
-          // Force clean HUD text
-          el.textContent = `Views: ${count}`;
-        }
+    const path = location.pathname || '/';
+    const url = 'https://sa-ps-wages.goatcounter.com/counter/' + encodeURIComponent(path) + '.json?no_branding=1';
+
+    fetch(url, { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(data => {
+        el.textContent = `Views: ${data.count}`;
+      })
+      .catch(() => {
+        el.textContent = 'Views: —';
       });
-    }
-  }, 100);
-})();
-</script>
-
+  })();
+  </script>
 </body>
 </html>
