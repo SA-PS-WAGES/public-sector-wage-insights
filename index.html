@@ -4,507 +4,510 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SA Public Sector Salaried Employees Wage Insights – Public Data Explainer</title>
-  
-<!-- GoatCounter (privacy-preserving analytics) -->
-<script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
-        async src="https://gc.zgo.at/count.js"></script>
 
- <style>
-  :root{
-    --bg0:#070A12;
-    --bg1:#0B1220;
-    --line:rgba(255,255,255,.10);
-    --text:#F5F7FF;
-    --muted:rgba(245,247,255,.72);
-    --accent:#6EE7FF;
-    --accent2:#A78BFA;
-    --radius:18px;
-    --shadow: 0 14px 40px rgba(0,0,0,.35);
-    --max: 1200px;
-  }
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1220;
+      --line:rgba(255,255,255,.10);
+      --text:#F5F7FF;
+      --muted:rgba(245,247,255,.72);
+      --accent:#6EE7FF;
+      --accent2:#A78BFA;
+      --radius:18px;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --max: 1200px;
+    }
 
-  *{ box-sizing:border-box; }
+    *{ box-sizing:border-box; }
 
-  body{
-    margin:0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color:var(--text);
-    background:
-      radial-gradient(900px 500px at 12% 10%, rgba(110,231,255,.20), transparent 60%),
-      radial-gradient(700px 500px at 88% 0%, rgba(167,139,250,.22), transparent 55%),
-      linear-gradient(180deg, var(--bg0), var(--bg1));
-    line-height:1.5;
-  }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 12% 10%, rgba(110,231,255,.20), transparent 60%),
+        radial-gradient(700px 500px at 88% 0%, rgba(167,139,250,.22), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      line-height:1.5;
+    }
 
-  a{ color:var(--accent); text-decoration:none; }
-  a:hover{ text-decoration:underline; }
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
 
-  .wrap{ max-width:var(--max); margin:0 auto; padding: 28px 16px; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding: 28px 16px; }
 
-/* GoatCounter — force inline micro badge, no layout bleed */
-#gc-counter,
-#gcvc{
+/* GoatCounter — perfectly rectangular HUD (no stretching) */
+#gc-counter{
   position: fixed;
-  top: 8px;
-  right: 10px;
-  z-index: 9999;
+  top: 10px;
+  right: 12px;
+  z-index: 10000;
 
-  /* critical fixes */
-  height: auto !important;
-  max-height: 24px !important;
+  display: inline-block !important;
   width: auto !important;
+  height: auto !important;
+  max-height: 40px !important;
+
   margin: 0 !important;
   padding: 0 !important;
+  overflow: hidden !important;
 
   pointer-events: none;
-  overflow: hidden;
 }
 
-/* The ACTUAL badge (child element) */
-#gc-counter > *,
-#gcvc > *{
+/* Style ONLY the injected element inside #gc-counter */
+#gc-counter > *{
   display: inline-flex !important;
-  align-items: center;
+  align-items: center !important;
+  justify-content: center !important;
 
-  height: auto !important;
-  line-height: 1 !important;
+  /* ✅ rectangular HUD shape */
+  padding: 8px 10px;
+  border-radius: 0 !important;         /* perfectly rectangular */
+  min-height: 32px;                    /* consistent HUD height */
+  min-width: 54px;                     /* avoids tiny wobble */
+  max-width: 140px;                    /* mobile-safe cap */
+
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(11,18,32,.55);      /* matches your bg1 vibe */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: .12em;               /* HUD-ish feel */
+  text-transform: uppercase;
+
+  color: var(--text) !important;
+
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-  padding: 3px 6px;
-  border-radius: 6px;
-
-  border: 0.5px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.025);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .15px;
-  color: rgba(245,247,255,.85);
-
-  opacity: .45;
-  transition: opacity .2s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28);
+  opacity: .85;
 
   pointer-events: auto;
 }
 
-/* Hover reveal */
-#gc-counter > *:hover,
-#gcvc > *:hover{
-  opacity: .9;
+#gc-counter > *:hover{
+  opacity: 1;
 }
 
-/* Kill any default paragraphs / labels */
-#gcvc-for,
-#gcvc-by{
-  display: none !important;
+/* Force any injected links to match */
+#gc-counter a{
+  color: var(--text) !important;
+  text-decoration: none !important;
 }
 
-/* Number only */
-#gcvc-views{
+/* Optional: make the number slightly “signal” colored */
+#gc-counter #gcvc-views{
+  color: var(--accent) !important;
   font-variant-numeric: tabular-nums;
+  letter-spacing: .02em; /* keep digits readable */
+  text-transform: none;
+}
+
+/* Mobile placement: below the topbar */
+@media (max-width: 520px){
+  #gc-counter{
+    top: 64px;
+    right: 12px;
+  }
 }
 
 
+    /* Top bar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding: 10px 12px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
 
-  /* Top bar */
-  .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:14px;
-    padding: 10px 12px;
-    border:1px solid var(--line);
-    border-radius: 999px;
-    background: rgba(255,255,255,.04);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
+    .brand{ display:flex; align-items:center; gap:10px; min-width: 0; }
 
-  .brand{ display:flex; align-items:center; gap:10px; min-width: 0; }
+    .mark{
+      width:34px; height:34px;
+      border-radius: 12px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(110,231,255,.95), transparent 70%),
+        radial-gradient(18px 18px at 70% 70%, rgba(167,139,250,.95), transparent 70%);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      flex: 0 0 auto;
+    }
 
-  .mark{
-    width:34px; height:34px;
-    border-radius: 12px;
-    background:
-      radial-gradient(18px 18px at 30% 30%, rgba(110,231,255,.95), transparent 70%),
-      radial-gradient(18px 18px at 70% 70%, rgba(167,139,250,.95), transparent 70%);
-    border:1px solid rgba(255,255,255,.18);
-    box-shadow: 0 10px 24px rgba(0,0,0,.35);
-    flex: 0 0 auto;
-  }
+    .brandname{
+      font-weight:850;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
 
-  .brandname{
-    font-weight:850;
-    letter-spacing:.2px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
+    .nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
 
-  .nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      font-size: 13px;
+    }
 
-  .pill{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding: 8px 12px;
-    border-radius: 999px;
-    border:1px solid var(--line);
-    background: rgba(255,255,255,.03);
-    color: var(--text);
-    font-size: 13px;
-  }
+    .pill strong{
+      color: var(--accent);
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
 
-  .pill strong{
-    color: var(--accent);
-    font-weight: 900;
-    letter-spacing: .2px;
-  }
+    /* Hero */
+    .hero{
+      margin-top: 22px;
+      padding: 28px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.16), transparent 55%),
+        radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.16), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
 
-  /* Hero */
-  .hero{
-    margin-top: 22px;
-    padding: 28px 18px;
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
-    background:
-      radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.16), transparent 55%),
-      radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.16), transparent 55%),
-      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-    box-shadow: var(--shadow);
-    overflow:hidden;
-  }
+    .heroTitle{
+      margin:0 0 12px 0;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -1px;
+    }
 
-  .heroTitle{
-    margin:0 0 12px 0;
-    font-size: clamp(36px, 5vw, 64px);
-    line-height: 1.02;
-    letter-spacing: -1px;
-  }
+    .heroTitle .grad{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
 
-  .heroTitle .grad{
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color: transparent;
-  }
+    .heroSub{
+      max-width: 92ch;
+      margin: 12px 0 0 0;
+      font-size: clamp(16px, 1.35vw, 20px);
+      line-height: 1.35;
+      font-weight: 750;
+      letter-spacing: -0.15px;
+      color: rgba(245,247,255,.88);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.12), transparent 60%),
+        radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.12), transparent 60%),
+        rgba(255,255,255,.03);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
 
-  .heroSub{
-    max-width: 92ch;
-    margin: 12px 0 0 0;
-    font-size: clamp(16px, 1.35vw, 20px);
-    line-height: 1.35;
-    font-weight: 750;
-    letter-spacing: -0.15px;
-    color: rgba(245,247,255,.88);
-    padding: 12px 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.12);
-    background:
-      radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.12), transparent 60%),
-      radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.12), transparent 60%),
-      rgba(255,255,255,.03);
-    box-shadow: 0 10px 24px rgba(0,0,0,.25);
-  }
+    .heroSub strong{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      font-weight: 900;
+    }
 
-  /* Gradient emphasis inside heroSub (single, non-duplicated rule) */
-  .heroSub strong{
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color: transparent;
-    font-weight: 900;
-  }
+    /* Section */
+    .section{
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    }
 
-  /* Section */
-  .section{
-    margin-top: 18px;
-    padding: 18px;
-    border-radius: var(--radius);
-    border:1px solid var(--line);
-    background: rgba(255,255,255,.03);
-    box-shadow: 0 10px 30px rgba(0,0,0,.18);
-  }
+    .sectionHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom: 10px;
+    }
 
-  .sectionHead{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    flex-wrap:wrap;
-    gap:12px;
-    margin-bottom: 10px;
-  }
+    .sectionHead h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: -.2px;
+    }
 
-  .sectionHead h2{
-    margin:0;
-    font-size: 18px;
-    letter-spacing: -.2px;
-  }
+    .small{ font-size: 12px; color: var(--muted); }
 
-  .small{ font-size: 12px; color: var(--muted); }
+    /* Embed */
+    .iframeWrap{
+      width:100%;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      overflow:hidden;
+      background: rgba(0,0,0,.25);
+    }
 
-  /* Embed */
-  .iframeWrap{
-    width:100%;
-    border-radius: var(--radius);
-    border:1px solid var(--line);
-    overflow:hidden;
-    background: rgba(0,0,0,.25);
-  }
+    iframe{
+      width:100%;
+      height: 76vh;
+      min-height: 620px;
+      border:0;
+      display:block;
+    }
 
-  iframe{
-    width:100%;
-    height: 76vh;
-    min-height: 620px;
-    border:0;
-    display:block;
-  }
+    @media (max-width: 520px){
+      iframe{ height: 78vh; min-height: 560px; }
+    }
 
-  @media (max-width: 520px){
-    iframe{ height: 78vh; min-height: 560px; }
-  }
+    /* Calculator */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
 
-  /* Calculator */
-  .grid{
-    display:grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
+    .grid.oneCol{ grid-template-columns: 1fr; }
 
-  /* Make the input card span full width now that the other card is removed */
-  .grid.oneCol{
-    grid-template-columns: 1fr;
-  }
+    .card{
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding: 16px;
+    }
 
-  .card{
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
-    background: rgba(255,255,255,.03);
-    padding: 16px;
-  }
+    .card h3{
+      margin:0 0 10px 0;
+      font-size: 16px;
+      letter-spacing: -.2px;
+    }
 
-  .card h3{
-    margin:0 0 10px 0;
-    font-size: 16px;
-    letter-spacing: -.2px;
-  }
+    .card p{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
 
-  .card p{
-    margin:0;
-    color: var(--muted);
-    font-size: 14px;
-  }
+    label{
+      display:block;
+      margin-top: 10px;
+      font-size: 13px;
+      color: rgba(245,247,255,.86);
+    }
 
-  label{
-    display:block;
-    margin-top: 10px;
-    font-size: 13px;
-    color: rgba(245,247,255,.86);
-  }
+    input[type="number"]{
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
 
-  input[type="number"]{
-    width: 100%;
-    margin-top: 6px;
-    padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,.14);
-    background: rgba(0,0,0,.22);
-    color: var(--text);
-    font-size: 14px;
-    outline: none;
-  }
+    input[type="number"]:focus{
+      border-color: rgba(110,231,255,.45);
+      box-shadow: 0 0 0 4px rgba(110,231,255,.12);
+    }
 
-  input[type="number"]:focus{
-    border-color: rgba(110,231,255,.45);
-    box-shadow: 0 0 0 4px rgba(110,231,255,.12);
-  }
+    .checkRow{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+    }
 
-  .checkRow{
-    display:flex;
-    align-items:flex-start;
-    gap:10px;
-    margin-top: 12px;
-    padding: 10px 12px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.10);
-    background: rgba(0,0,0,.16);
-  }
+    .checkRow input{ margin-top: 2px; }
 
-  .checkRow input{ margin-top: 2px; }
+    .checkRow .hint{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
 
-  .checkRow .hint{
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 3px;
-  }
+    .btnRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
 
-  .btnRow{
-    display:flex;
-    flex-wrap:wrap;
-    gap: 10px;
-    margin-top: 14px;
-  }
+    .btn{
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(420px 160px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
+        radial-gradient(420px 160px at 80% 0%, rgba(167,139,250,.14), transparent 60%),
+        rgba(255,255,255,.03);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 850;
+    }
 
-  .btn{
-    cursor:pointer;
-    border:1px solid rgba(255,255,255,.14);
-    background:
-      radial-gradient(420px 160px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
-      radial-gradient(420px 160px at 80% 0%, rgba(167,139,250,.14), transparent 60%),
-      rgba(255,255,255,.03);
-    color: var(--text);
-    padding: 10px 14px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 850;
-  }
+    .btn:hover{ background: rgba(255,255,255,.06); }
 
-  .btn:hover{ background: rgba(255,255,255,.06); }
+    /* Results table */
+    .tableWrap{
+      margin-top: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      overflow:auto;
+      background: rgba(0,0,0,.18);
+    }
 
-  /* Results table */
-  .tableWrap{
-    margin-top: 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.10);
-    overflow:auto;
-    background: rgba(0,0,0,.18);
-  }
+    table{
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 980px;
+      font-size: 15px;
+    }
 
-  table{
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    min-width: 980px;
-    font-size: 15px;
-  }
+    thead th{
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      text-align: left;
+      padding: 10px 12px;
+      background: rgba(11,18,32,.92);
+      color: rgba(245,247,255,.92);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      white-space: nowrap;
+    }
 
-  thead th{
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    text-align: left;
-    padding: 10px 12px;
-    background: rgba(11,18,32,.92);
-    color: rgba(245,247,255,.92);
-    border-bottom: 1px solid rgba(255,255,255,.10);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    white-space: nowrap;
-  }
+    tbody td{
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      color: rgba(245,247,255,.86);
+      white-space: nowrap;
+    }
 
-  tbody td{
-    padding: 10px 12px;
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    color: rgba(245,247,255,.86);
-    white-space: nowrap;
-  }
+    tbody tr:nth-child(odd){ background: rgba(255,255,255,.02); }
+    tbody tr:hover{ background: rgba(110,231,255,.06); }
 
-  tbody tr:nth-child(odd){ background: rgba(255,255,255,.02); }
-  tbody tr:hover{ background: rgba(110,231,255,.06); }
+    .rowLabel{ font-weight: 900; }
+    .num{ text-align: right; font-variant-numeric: tabular-nums; }
+    .numStrong{ color: var(--accent); font-weight: 900; }
 
-  .rowLabel{ font-weight: 900; }
-  .num{ text-align: right; font-variant-numeric: tabular-nums; }
-  .numStrong{ color: var(--accent); font-weight: 900; }
+    /* Recovery callout */
+    .topCohort{
+      margin: 12px 0 0 0;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+        rgba(0,0,0,.14);
+      color: rgba(245,247,255,.88);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
 
-  /* Recovery callout */
-  .topCohort{
-    margin: 12px 0 0 0;
-    padding: 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.12);
-    background:
-      radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
-      radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
-      rgba(0,0,0,.14);
-    color: rgba(245,247,255,.88);
-    box-shadow: 0 10px 22px rgba(0,0,0,.18);
-    display:flex;
-    gap:12px;
-    align-items:flex-start;
-    flex-wrap:wrap;
-  }
+    .topCohort .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin: 0 0 4px 0;
+    }
 
-  .topCohort .kicker{
-    font-size: 12px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: .12em;
-    margin: 0 0 4px 0;
-  }
+    .topCohort .big{
+      margin: 0;
+      font-size: clamp(16px, 1.2vw, 18px);
+      font-weight: 900;
+      letter-spacing: -.2px;
+      line-height: 1.25;
+    }
 
-  .topCohort .big{
-    margin: 0;
-    font-size: clamp(16px, 1.2vw, 18px);
-    font-weight: 900;
-    letter-spacing: -.2px;
-    line-height: 1.25;
-  }
+    .topCohort .hi{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
 
-  .topCohort .hi{
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color: transparent;
-  }
+    .topCohort .meta{
+      margin: 6px 0 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
 
-  .topCohort .meta{
-    margin: 6px 0 0 0;
-    font-size: 13px;
-    color: var(--muted);
-  }
+    .topCohort .chip{
+      display:inline-flex;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: rgba(245,247,255,.86);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      margin-top: 6px;
+      white-space: nowrap;
+    }
 
-  .topCohort .chip{
-    display:inline-flex;
-    align-items:center;
-    padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,.12);
-    background: rgba(0,0,0,.18);
-    color: rgba(245,247,255,.86);
-    font-size: 12px;
-    font-variant-numeric: tabular-nums;
-    margin-top: 6px;
-    white-space: nowrap;
-  }
+    /* Disclaimer box */
+    .infoBox{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+        rgba(255,255,255,.02);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
 
-  /* Disclaimer box */
-  .infoBox{
-    border-radius: var(--radius);
-    border: 1px solid rgba(255,255,255,.10);
-    background:
-      radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
-      radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
-      rgba(255,255,255,.02);
-    box-shadow: 0 10px 22px rgba(0,0,0,.18);
-    padding: 14px 16px;
-    margin-top: 12px;
-  }
+    .infoBox h3{
+      margin:0 0 8px 0;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -.2px;
+      color: var(--text);
+    }
 
-  .infoBox h3{
-    margin:0 0 8px 0;
-    font-size: 14px;
-    font-weight: 900;
-    letter-spacing: -.2px;
-    color: var(--text);
-  }
-
-  .infoBox p{
-    margin:0;
-    color: var(--muted);
-    font-size: 13px;
-  }
-</style>
-
+    .infoBox p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
 </head>
 
 <body>
-<!-- Page view counter -->
-<!-- Visible pageview counter -->
-<div class="counterWrap">
-  <div id="gc-counter"></div>
-</div>
+  <!-- ✅ single, unique counter target (no duplicate IDs) -->
+  <div id="gc-counter" aria-hidden="true"></div>
 
   <div class="wrap">
     <div class="topbar">
@@ -525,122 +528,114 @@
         <span class="grad"><strong>EB25:</strong> Why we still need 20%</span>
       </h1>
 
-   <p class="heroSub">
-  Salaried Public Sector workers have faced poor wage outcomes when compared with CPI since 2021.<br>
-  <strong>We haven't recovered the loss since.</strong><br><br>
-  The current offer as it stands fails to address this.<br>
-  <strong>We all deserve fair pay across the board.</strong><br><br>
-  Check how your current salary looks below.
-</p>
-
+      <p class="heroSub">
+        Salaried Public Sector workers have faced poor wage outcomes when compared with CPI since 2021.<br>
+        <strong>We haven't recovered the loss since.</strong><br><br>
+        The current offer as it stands fails to address this.<br>
+        <strong>We all deserve fair pay across the board.</strong><br><br>
+        Check how your current salary looks below.
+      </p>
     </section>
 
-<!-- ✅ MOVE CALCULATOR ABOVE DASHBOARD + GIVE IT A HERO TITLE -->
-<section class="section" id="calculator" style="margin-top:18px;">
-  <div class="sectionHead" style="margin-bottom:8px;">
-    <h2>
-      <span class="heroGrad">Net Pay Calculator</span>
-    </h2>
-    <div class="small">Estimates only. Use for comparison, not tax advice.</div>
-  </div>
+    <!-- ✅ CALCULATOR ABOVE DASHBOARD -->
+    <section class="section" id="calculator" style="margin-top:18px;">
+      <div class="sectionHead" style="margin-bottom:8px;">
+        <h2>Net Pay Calculator</h2>
+        <div class="small">Estimates only. Use for comparison, not tax advice.</div>
+      </div>
 
-  <div class="grid">
-    <!-- LEFT: Inputs -->
-    <div class="card">
-      <h3>Inputs</h3>
+      <div class="grid">
+        <div class="card">
+          <h3>Inputs</h3>
 
-      <label for="salary">Annual salary (gross, $)</label>
-      <input type="number" id="salary" inputmode="numeric" placeholder="e.g. 85000" />
+          <label for="salary">Annual salary (gross, $)</label>
+          <input type="number" id="salary" inputmode="numeric" placeholder="e.g. 85000" />
 
-      <div class="checkRow">
-        <input type="checkbox" id="hasHELP" />
-        <div>
-          <label for="hasHELP" style="margin:0;">I have a HELP or HECS loan</label>
-          <div class="hint">Simplified estimate for comparison.</div>
+          <div class="checkRow">
+            <input type="checkbox" id="hasHELP" />
+            <div>
+              <label for="hasHELP" style="margin:0;">I have a HELP or HECS loan</label>
+              <div class="hint">Simplified estimate for comparison.</div>
+            </div>
+          </div>
+
+          <div class="checkRow">
+            <input type="checkbox" id="noPrivateHealth" />
+            <div>
+              <label for="noPrivateHealth" style="margin:0;">I do NOT have private hospital insurance (MLS may apply)</label>
+              <div class="hint">Simplified MLS thresholds (single).</div>
+            </div>
+          </div>
+
+          <div class="btnRow">
+            <button class="btn" id="btnCalc" type="button">Calculate</button>
+            <button class="btn" id="btnClear" type="button">Clear</button>
+          </div>
+        </div>
+
+        <div id="recoveryCallout" class="topCohort" style="display:none;" aria-live="polite">
+          <div>
+            <div class="kicker">Recovery snapshot</div>
+            <p class="big">
+              You need <span class="hi" id="recoveryPct">0%</span> now to start recovering past wage erosion and keep up with inflation.
+            </p>
+            <p class="meta" id="recoveryMeta">
+              This compares the CPI scenario against the EA scenario for the entered salary.
+            </p>
+          </div>
+          <div>
+            <div class="chip">Recovery amount: <strong id="recoveryAmt">$0</strong></div><br/>
+            <div class="chip">Based on salary: <strong id="baseSalary">$0</strong></div>
+          </div>
         </div>
       </div>
 
-      <div class="checkRow">
-        <input type="checkbox" id="noPrivateHealth" />
-        <div>
-          <label for="noPrivateHealth" style="margin:0;">I do NOT have private hospital insurance (MLS may apply)</label>
-          <div class="hint">Simplified MLS thresholds (single).</div>
+      <div class="tableWrap" id="wrapResults" style="display:none;">
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th class="num">Annual salary</th>
+              <th class="num">Annual net pay</th>
+              <th class="num">Fortnightly net pay</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="dashboard">
+      <div class="sectionHead">
+        <h2>Interactive dashboard</h2>
+        <div class="small">
+          This shows how the current offer only keeps up with projected inflation, and wouldn't feel much less like a pay increase over time.
         </div>
       </div>
 
-      <div class="btnRow">
-        <button class="btn" id="btnCalc" type="button">Calculate</button>
-        <button class="btn" id="btnClear" type="button">Clear</button>
+      <div class="iframeWrap">
+        <iframe
+          src="https://lookerstudio.google.com/embed/reporting/46ce400d-3552-4931-acd2-7a6d9c781546/page/53clF"
+          loading="lazy"
+          allowfullscreen
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms">
+        </iframe>
       </div>
-    </div>
+    </section>
 
-    <!-- RIGHT: Recovery Snapshot -->
-    <div id="recoveryCallout" class="topCohort" style="display:none;" aria-live="polite">
-      <div>
-        <div class="kicker">Recovery snapshot</div>
-        <p class="big">
-          You need <span class="hi" id="recoveryPct">0%</span> now to start recovering past wage erosion and keep up with inflation.
+    <section class="section" id="disclaimer">
+      <div class="infoBox" style="margin-top:0;">
+        <h3>Disclaimer</h3>
+        <p>
+          This site is a public data explainer only and does not provide industrial relations advice, voting guidance, financial advice, or tax advice.
+          Figures are presented for transparency and comparison using public sources.
         </p>
-        <p class="meta" id="recoveryMeta">
-          This compares the CPI scenario against the EA scenario for the entered salary.
-        </p>
       </div>
-      <div>
-        <div class="chip">Recovery amount: <strong id="recoveryAmt">$0</strong></div><br/>
-        <div class="chip">Based on salary: <strong id="baseSalary">$0</strong></div>
-      </div>
-    </div>
+    </section>
   </div>
-
-  <div class="tableWrap" id="wrapResults" style="display:none;">
-    <table>
-      <thead>
-        <tr>
-          <th>Scenario</th>
-          <th class="num">Annual salary</th>
-          <th class="num">Annual net pay</th>
-          <th class="num">Fortnightly net pay</th>
-        </tr>
-      </thead>
-      <tbody id="resultsBody"></tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ✅ DASHBOARD NOW IN ITS OWN SECTION (BELOW CALCULATOR) -->
-<section class="section" id="dashboard">
-  <div class="sectionHead">
-    <h2>Interactive dashboard</h2><br>
-    <div class="medium">
-      This shows how the current offer only keeps up with projected inflation, and wouldn't feel much less like a pay increase over time.
-    </div>
-  </div>
-
-  <div class="iframeWrap">
-    <iframe
-      src="https://lookerstudio.google.com/embed/reporting/46ce400d-3552-4931-acd2-7a6d9c781546/page/53clF"
-      loading="lazy"
-      allowfullscreen
-      sandbox="allow-scripts allow-same-origin allow-popups allow-forms">
-    </iframe>
-  </div>
-</section>
-
-<!-- ✅ DISCLAIMER IN ITS OWN SECTION ALL THE WAY AT THE BOTTOM -->
-<section class="section" id="disclaimer">
-  <div class="infoBox" style="margin-top:0;">
-    <h3>Disclaimer</h3>
-    <p>
-      This site is a public data explainer only and does not provide industrial relations advice, voting guidance, financial advice, or tax advice.
-      Figures are presented for transparency and comparison using public sources.
-    </p>
-  </div>
-</section>
-
 
   <script>
     // ✅ Set this to the proposed 2025 wage increase you want included in the Recovery Snapshot.
-    // Example: 3.75 means +3.75% is added onto the "gap" percent shown.
     const PROPOSED_WAGE_INCREASE_PCT = 3.75;
 
     function calcIncomeTax(income){
@@ -732,15 +727,12 @@
         `;
       });
 
-      // ✅ Show recovery snapshot BEFORE showing table
       const base = salary;
       const eaScenario = scenarios.find(s => s.name.startsWith("EA"))?.value ?? base;
       const cpiScenario = scenarios.find(s => s.name.startsWith("CPI"))?.value ?? base;
 
       const gap = Math.max(0, cpiScenario - eaScenario);
       const gapPct = base > 0 ? (gap / base) * 100 : 0;
-
-      // ✅ Add proposed wage increase to the displayed % (your requested behaviour)
       const totalPct = gapPct + PROPOSED_WAGE_INCREASE_PCT;
 
       document.getElementById("recoveryPct").textContent = `${totalPct.toFixed(2)}%`;
@@ -751,8 +743,6 @@
         `Shown % = (CPI vs EA gap) + proposed 2025 increase (${PROPOSED_WAGE_INCREASE_PCT.toFixed(2)}%). Illustration only.`;
 
       document.getElementById("recoveryCallout").style.display = "flex";
-
-      // ✅ Now show results table underneath
       document.getElementById("wrapResults").style.display = "block";
     }
 
@@ -768,23 +758,23 @@
     document.getElementById("btnCalc").addEventListener("click", calculate);
     document.getElementById("btnClear").addEventListener("click", clearAll);
   </script>
-<!-- GoatCounter visit counter -->
-<div id="gc-counter" aria-hidden="true"></div>
 
-<script>
-  var t = setInterval(function () {
-    if (window.goatcounter && window.goatcounter.visit_count) {
-      clearInterval(t);
-      window.goatcounter.visit_count({
-        append: '#gc-counter',
-        no_branding: true
-      });
-    }
-  }, 100);
-</script>
+  <!-- ✅ GoatCounter loaded ONCE -->
+  <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
 
-<script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
-        src="//gc.zgo.at/count.js"></script>
-
+  <script>
+    (function(){
+      const t = setInterval(function () {
+        if (window.goatcounter && window.goatcounter.visit_count) {
+          clearInterval(t);
+          window.goatcounter.visit_count({
+            append: '#gc-counter',
+            no_branding: true
+          });
+        }
+      }, 100);
+    })();
+  </script>
 </body>
 </html>
