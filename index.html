@@ -37,7 +37,7 @@
 
     .wrap{ max-width:var(--max); margin:0 auto; padding: 28px 16px; }
 
-/* GoatCounter — perfectly rectangular HUD (no stretching) */
+/* GoatCounter — rectangular micro HUD */
 #gc-counter{
   position: fixed;
   top: 10px;
@@ -47,7 +47,7 @@
   display: inline-block !important;
   width: auto !important;
   height: auto !important;
-  max-height: 40px !important;
+  max-height: 32px !important;
 
   margin: 0 !important;
   padding: 0 !important;
@@ -56,37 +56,38 @@
   pointer-events: none;
 }
 
-/* Style ONLY the injected element inside #gc-counter */
+/* Style ONLY the injected element */
 #gc-counter > *{
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
 
-  /* ✅ rectangular HUD shape */
-  padding: 8px 10px;
-  border-radius: 0 !important;         /* perfectly rectangular */
-  min-height: 32px;                    /* consistent HUD height */
-  min-width: 54px;                     /* avoids tiny wobble */
-  max-width: 140px;                    /* mobile-safe cap */
+  /* HUD sizing */
+  padding: 6px 8px;
+  min-height: 22px;
+  max-width: 120px;
 
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(11,18,32,.55);      /* matches your bg1 vibe */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border-radius: 0;                   /* perfectly rectangular */
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(11,18,32,.6);
 
-  font-size: 12px;
-  font-weight: 900;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  /* smaller, technical font */
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
   line-height: 1;
-  letter-spacing: .12em;               /* HUD-ish feel */
   text-transform: uppercase;
 
-  color: var(--text) !important;
+  color: rgba(245,247,255,.9) !important;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
-  box-shadow: 0 8px 24px rgba(0,0,0,.28);
+  box-shadow: 0 6px 18px rgba(0,0,0,.22);
   opacity: .85;
 
   pointer-events: auto;
@@ -96,27 +97,19 @@
   opacity: 1;
 }
 
-/* Force any injected links to match */
-#gc-counter a{
-  color: var(--text) !important;
-  text-decoration: none !important;
+/* Accent the number only */
+#gc-counter > *::after{
+  content: "";
 }
 
-/* Optional: make the number slightly “signal” colored */
-#gc-counter #gcvc-views{
-  color: var(--accent) !important;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: .02em; /* keep digits readable */
-  text-transform: none;
-}
-
-/* Mobile placement: below the topbar */
+/* Mobile: move below topbar */
 @media (max-width: 520px){
   #gc-counter{
     top: 64px;
     right: 12px;
   }
 }
+
 
 
     /* Top bar */
@@ -759,22 +752,27 @@
     document.getElementById("btnClear").addEventListener("click", clearAll);
   </script>
 
-  <!-- ✅ GoatCounter loaded ONCE -->
-  <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
-          async src="https://gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
 
-  <script>
-    (function(){
-      const t = setInterval(function () {
-        if (window.goatcounter && window.goatcounter.visit_count) {
-          clearInterval(t);
-          window.goatcounter.visit_count({
-            append: '#gc-counter',
-            no_branding: true
-          });
+<script>
+(function(){
+  const t = setInterval(function () {
+    if (window.goatcounter && window.goatcounter.visit_count) {
+      clearInterval(t);
+
+      window.goatcounter.visit_count({
+        append: '#gc-counter',
+        no_branding: true,
+        onload: function(el, count){
+          // Force clean HUD text
+          el.textContent = `Views: ${count}`;
         }
-      }, 100);
-    })();
-  </script>
+      });
+    }
+  }, 100);
+})();
+</script>
+
 </body>
 </html>
