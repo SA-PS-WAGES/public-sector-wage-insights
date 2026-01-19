@@ -18,7 +18,9 @@
       --shadow: 0 14px 40px rgba(0,0,0,.35);
       --max: 1200px;
     }
+
     *{ box-sizing:border-box; }
+
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -29,33 +31,92 @@
         linear-gradient(180deg, var(--bg0), var(--bg1));
       line-height:1.5;
     }
+
     a{ color:var(--accent); text-decoration:none; }
     a:hover{ text-decoration:underline; }
+
     .wrap{ max-width:var(--max); margin:0 auto; padding: 28px 16px; }
 
-    /* Top bar (MATCH HOME/VOTING POWER) */
+    /* =======================
+       GOATCOUNTER HUD (FROM INDEX)
+    ======================= */
+    #gc-hud{
+      position: fixed;
+      top: 10px;
+      right: 12px;
+      z-index: 10000;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 6px 8px;
+      min-height: 22px;
+      max-width: 140px;
+
+      border-radius: 0;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(11,18,32,.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      line-height: 1;
+      color: rgba(245,247,255,.9);
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      box-shadow: 0 6px 18px rgba(0,0,0,.22);
+      opacity: .85;
+      user-select: none;
+    }
+
+    #gc-hud:hover{ opacity: 1; }
+
+    @media (max-width: 520px){
+      #gc-hud{ top: 64px; right: 12px; }
+    }
+
+    /* =======================
+       TOP BAR (MATCH VOTING POWER)
+    ======================= */
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:14px;
-      padding: 10px 12px;
+      padding:10px 12px;
       border:1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,.04);
-      backdrop-filter: blur(8px);
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      margin-bottom:22px; /* consistent spacing under header */
     }
-    .brand{ display:flex; align-items:center; gap:10px; min-width: 0; }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+
     .mark{
-      width:34px; height:34px;
-      border-radius: 12px;
+      width:34px;
+      height:34px;
+      border-radius:12px;
       background:
         radial-gradient(18px 18px at 30% 30%, rgba(110,231,255,.95), transparent 70%),
         radial-gradient(18px 18px at 70% 70%, rgba(167,139,250,.95), transparent 70%);
       border:1px solid rgba(255,255,255,.18);
-      box-shadow: 0 10px 24px rgba(0,0,0,.35);
-      flex: 0 0 auto;
+      box-shadow:0 10px 24px rgba(0,0,0,.35);
+      flex:0 0 auto;
     }
+
     .brandname{
       font-weight:850;
       letter-spacing:.2px;
@@ -63,28 +124,56 @@
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap; /* mobile-proof */
+      justify-content:flex-end;
+      align-items:center;
+    }
+
     .pill{
       display:inline-flex;
       align-items:center;
+      justify-content:center;
       gap:8px;
-      padding: 8px 12px;
-      border-radius: 999px;
+      padding:10px 14px; /* unified pill size */
+      border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color: var(--text);
-      font-size: 13px;
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      font-size:14px; /* unified pill text */
+      line-height:1;
+      white-space:nowrap;
+      -webkit-tap-highlight-color: transparent;
     }
-    .pill strong{
-      color: var(--accent);
-      font-weight: 900;
-      letter-spacing: .2px;
-    }
-    .pill:hover{ background: rgba(255,255,255,.06); }
 
-    /* Hero */
+    .pill strong{
+      color:var(--accent);
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+
+    .pill:hover{ background:rgba(255,255,255,.06); }
+
+    @media (max-width: 720px){
+      .topbar{
+        border-radius:22px;
+        padding:12px;
+        gap:12px;
+      }
+      .pill{
+        padding:10px 12px;
+        font-size:13.5px;
+      }
+    }
+
+    /* =======================
+       HERO
+    ======================= */
     .hero{
-      margin-top: 22px;
+      margin-top:0; /* topbar already provides spacing */
       padding: 28px 18px;
       border-radius: var(--radius);
       border: 1px solid var(--line);
@@ -95,18 +184,21 @@
       box-shadow: var(--shadow);
       overflow:hidden;
     }
+
     .heroTitle{
       margin:0 0 12px 0;
       font-size: clamp(36px, 5vw, 64px);
       line-height: 1.02;
       letter-spacing: -1px;
     }
+
     .heroTitle .grad{
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       -webkit-background-clip:text;
       background-clip:text;
       color: transparent;
     }
+
     .heroSub{
       max-width: 92ch;
       margin: 12px 0 0 0;
@@ -124,7 +216,7 @@
         rgba(255,255,255,.03);
       box-shadow: 0 10px 24px rgba(0,0,0,.25);
     }
-    .heroSub strong{ color: var(--text); font-weight: 900; }
+
     .heroSub strong{
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       -webkit-background-clip: text;
@@ -133,7 +225,9 @@
       font-weight: 900;
     }
 
-    /* Section + Cards */
+    /* =======================
+       SECTION / CONTENT (YOUR ORIGINAL)
+    ======================= */
     .section{
       margin-top: 18px;
       padding: 18px;
@@ -142,6 +236,7 @@
       background: rgba(255,255,255,.03);
       box-shadow: 0 10px 30px rgba(0,0,0,.18);
     }
+
     .sectionHead{
       display:flex;
       justify-content:space-between;
@@ -150,11 +245,13 @@
       gap:12px;
       margin-bottom: 10px;
     }
+
     .sectionHead h2{
       margin:0;
       font-size: 18px;
       letter-spacing: -.2px;
     }
+
     .small{ font-size: 12px; color: var(--muted); }
 
     .grid{
@@ -173,6 +270,7 @@
       padding: 16px;
       box-shadow: 0 10px 24px rgba(0,0,0,.18);
     }
+
     .card h3{
       margin:0 0 8px 0;
       font-size: 16px;
@@ -193,14 +291,9 @@
       color: rgba(245,247,255,.88);
     }
     .list li{ margin: 6px 0; }
+
     .muted{ color: var(--muted); }
 
-    .chipRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top: 10px;
-    }
     .chip{
       display:inline-flex;
       align-items:center;
@@ -212,11 +305,7 @@
       font-size: 12px;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
-    }
-    .chip strong{
-      color: var(--accent);
-      font-weight: 950;
-      margin-left: 6px;
+      text-decoration:none;
     }
 
     .infoBox{
@@ -230,6 +319,7 @@
       padding: 14px 16px;
       margin-top: 12px;
     }
+
     .infoBox h3{
       margin:0 0 8px 0;
       font-size: 14px;
@@ -237,75 +327,64 @@
       letter-spacing: -.2px;
       color: var(--text);
     }
+
     .infoBox p{
       margin:0;
       color: var(--muted);
       font-size: 13px;
     }
 
-    .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 12.5px;
-      word-break: break-all;
+    /* Stacked source boxes */
+    .sourceBox{
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+        rgba(255,255,255,.03);
+      box-shadow: 0 10px 26px rgba(0,0,0,.20);
     }
 
-    .divider{
-      height:1px;
-      background: rgba(255,255,255,.08);
-      margin: 12px 0;
-      border:0;
+    .sourceBox h3{
+      margin: 0 0 6px 0;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -.3px;
     }
-	/* Stacked source boxes */
-.sourceBox{
-  margin-top: 16px;
-  padding: 18px;
-  border-radius: var(--radius);
-  border: 1px solid var(--line);
-  background:
-    radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
-    radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
-    rgba(255,255,255,.03);
-  box-shadow: 0 10px 26px rgba(0,0,0,.20);
-}
 
-.sourceBox h3{
-  margin: 0 0 6px 0;
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing: -.3px;
-}
+    .sourceBox p{
+      margin: 8px 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
 
-.sourceBox p{
-  margin: 8px 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.45;
-}
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 10px;
+    }
 
-.chips{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top: 10px;
-}
+    .sourceLink{
+      text-decoration:none;
+      color: rgba(245,247,255,.86);
+    }
 
-/* Clickable source pill */
-.sourceLink{
-  text-decoration:none;
-  color: rgba(245,247,255,.86);
-}
-
-.sourceLink:hover{
-  text-decoration: underline;
-  color: var(--accent);
-}
-
+    .sourceLink:hover{
+      text-decoration: underline;
+      color: var(--accent);
+    }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
+  <!-- ✅ GoatCounter HUD -->
+  <div id="gc-hud" aria-hidden="true">Views: —</div>
 
+  <div class="wrap">
     <div class="topbar">
       <div class="brand">
         <div class="mark" aria-hidden="true"></div>
@@ -319,150 +398,148 @@
       </div>
     </div>
 
- <section class="hero">
-  <h1 class="heroTitle">
-    <span class="grad">Sources &amp; Method</span>
-  </h1>
-  <p class="heroSub">
-    This site uses <strong>publicly available Australian and South Australian Government data only</strong>.
-    No proprietary, confidential, or union-provided datasets are used.
-  </p>
-</section>
+    <section class="hero">
+      <h1 class="heroTitle">
+        <span class="grad">Sources &amp; Method</span>
+      </h1>
+      <p class="heroSub">
+        This site uses <strong>publicly available Australian and South Australian Government data only</strong>.
+        No proprietary, confidential, or union-provided datasets are used.
+      </p>
+    </section>
 
-<section class="section">
+    <section class="section">
+      <!-- CPI -->
+      <div class="sourceBox">
+        <h3>1. Consumer Price Index (CPI)</h3>
+        <p><strong>What it’s used for:</strong></p>
+        <p>
+          Measuring inflation and cost-of-living changes over time, adjusting wages to show real (inflation-adjusted)
+          outcomes, and comparing Enterprise Agreement wage paths against price growth.
+        </p>
+        <p><strong>Key notes:</strong></p>
+        <p>
+          CPI reflects changes in prices for a basket of goods and services and is the primary inflation benchmark
+          used in Australia. CPI is referenced conceptually and visually throughout the dashboard and calculator.
+        </p>
+        <div class="chips">
+          <a class="chip sourceLink"
+             href="https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia"
+             target="_blank" rel="noopener">
+            Source: abs.gov.au
+          </a>
+        </div>
+      </div>
 
-  <!-- CPI -->
-  <div class="sourceBox">
-    <h3>1. Consumer Price Index (CPI)</h3>
-    <p><strong>What it’s used for:</strong></p>
-    <p>
-      Measuring inflation and cost-of-living changes over time, adjusting wages to show real (inflation-adjusted)
-      outcomes, and comparing Enterprise Agreement wage paths against price growth.
-    </p>
-    <p><strong>Key notes:</strong></p>
-    <p>
-      CPI reflects changes in prices for a basket of goods and services and is the primary inflation benchmark
-      used in Australia. CPI is referenced conceptually and visually throughout the dashboard and calculator.
-    </p>
-    <div class="chips">
-      <a class="chip sourceLink"
-         href="https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia"
-         target="_blank" rel="noopener">
-        Source: abs.gov.au
-      </a>
-    </div>
-  </div>
+      <!-- WPI -->
+      <div class="sourceBox">
+        <h3>2. Wage Price Index (WPI)</h3>
+        <p><strong>What it’s used for:</strong></p>
+        <p>
+          Benchmarking general wage growth across the Australian economy and contextualising
+          public sector wage movements against broader wage trends.
+        </p>
+        <p><strong>Key notes:</strong></p>
+        <p>
+          WPI measures wage growth for a fixed basket of jobs and is not affected by changes in
+          hours worked or workforce composition. It is used as a reference benchmark only.
+        </p>
+        <div class="chips">
+          <a class="chip sourceLink"
+             href="https://www.abs.gov.au/statistics/labour/earnings-and-working-conditions/wage-price-index-australia"
+             target="_blank" rel="noopener">
+            Source: abs.gov.au
+          </a>
+        </div>
+      </div>
 
-  <!-- WPI -->
-  <div class="sourceBox">
-    <h3>2. Wage Price Index (WPI)</h3>
-    <p><strong>What it’s used for:</strong></p>
-    <p>
-      Benchmarking general wage growth across the Australian economy and contextualising
-      public sector wage movements against broader wage trends.
-    </p>
-    <p><strong>Key notes:</strong></p>
-    <p>
-      WPI measures wage growth for a fixed basket of jobs and is not affected by changes in
-      hours worked or workforce composition. It is used as a reference benchmark only.
-    </p>
-    <div class="chips">
-      <a class="chip sourceLink"
-         href="https://www.abs.gov.au/statistics/labour/earnings-and-working-conditions/wage-price-index-australia"
-         target="_blank" rel="noopener">
-        Source: abs.gov.au
-      </a>
-    </div>
-  </div>
+      <!-- Enterprise Agreements -->
+      <div class="sourceBox">
+        <h3>3. South Australian Public Sector Enterprise Agreements</h3>
+        <p><strong>Agreements referenced:</strong></p>
+        <p>
+          South Australian Public Sector Wages Parity Enterprise Agreement: Salaried 2014<br>
+          South Australian Modern Public Sector Enterprise Agreement: Salaried 2017<br>
+          South Australian Public Sector Enterprise Agreement: Salaried 2021
+        </p>
+        <p><strong>What they’re used for:</strong></p>
+        <p>
+          Establishing historical and current EA wage increase schedules and modelling EA wage paths
+          in comparison to CPI and WPI.
+        </p>
+        <p><strong>Key notes:</strong></p>
+        <p>
+          All agreements are publicly published and legally binding. Only headline wage increases are used;
+          allowances and classifications are excluded.
+        </p>
+        <div class="chips">
+          <a class="chip sourceLink"
+             href="https://www.saet.sa.gov.au/industrial-relations/enterprise-agreements"
+             target="_blank" rel="noopener">
+            Source: saet.sa.gov.au
+          </a>
+        </div>
+      </div>
 
-  <!-- Enterprise Agreements -->
-  <div class="sourceBox">
-    <h3>3. South Australian Public Sector Enterprise Agreements</h3>
-    <p><strong>Agreements referenced:</strong></p>
-    <p>
-      South Australian Public Sector Wages Parity Enterprise Agreement: Salaried 2014<br>
-      South Australian Modern Public Sector Enterprise Agreement: Salaried 2017<br>
-      South Australian Public Sector Enterprise Agreement: Salaried 2021
-    </p>
-    <p><strong>What they’re used for:</strong></p>
-    <p>
-      Establishing historical and current EA wage increase schedules and modelling EA wage paths
-      in comparison to CPI and WPI.
-    </p>
-    <p><strong>Key notes:</strong></p>
-    <p>
-      All agreements are publicly published and legally binding. Only headline wage increases are used;
-      allowances and classifications are excluded.
-    </p>
-    <div class="chips">
-      <a class="chip sourceLink"
-         href="https://www.saet.sa.gov.au/industrial-relations/enterprise-agreements"
-         target="_blank" rel="noopener">
-        Source: saet.sa.gov.au
-      </a>
-    </div>
-  </div>
+      <!-- Workforce composition -->
+      <div class="sourceBox">
+        <h3>4. South Australian Public Sector Workforce Composition</h3>
+        <p><strong>What it’s used for:</strong></p>
+        <p>
+          Estimating total headcount by workgroup, identifying the largest cohorts,
+          and approximating relative voting power using a one-person, one-vote framework.
+        </p>
+        <p><strong>Specific reference:</strong></p>
+        <p>
+          “SA public sector by employee and appointment types” table (page 22),
+          2025 Workforce Information Report. Totals only; no FTE weighting applied.
+        </p>
+        <p><strong>Key notes:</strong></p>
+        <p>
+          Allied Health Professionals are excluded where they now sit under a separate
+          industrial instrument. Headcount is used deliberately as a proxy for voting power.
+        </p>
+        <div class="chips">
+          <a class="chip sourceLink"
+             href="https://www.publicsector.sa.gov.au/about-the-public-sector/workforce-information"
+             target="_blank" rel="noopener">
+            Source: publicsector.sa.gov.au
+          </a>
+        </div>
+      </div>
 
-  <!-- Workforce composition -->
-  <div class="sourceBox">
-    <h3>4. South Australian Public Sector Workforce Composition</h3>
-    <p><strong>What it’s used for:</strong></p>
-    <p>
-      Estimating total headcount by workgroup, identifying the largest cohorts,
-      and approximating relative voting power using a one-person, one-vote framework.
-    </p>
-    <p><strong>Specific reference:</strong></p>
-    <p>
-      “SA public sector by employee and appointment types” table (page 22),
-      2025 Workforce Information Report. Totals only; no FTE weighting applied.
-    </p>
-    <p><strong>Key notes:</strong></p>
-    <p>
-      Allied Health Professionals are excluded where they now sit under a separate
-      industrial instrument. Headcount is used deliberately as a proxy for voting power.
-    </p>
-    <div class="chips">
-      <a class="chip sourceLink"
-         href="https://www.publicsector.sa.gov.au/about-the-public-sector/workforce-information"
-         target="_blank" rel="noopener">
-        Source: publicsector.sa.gov.au
-      </a>
-    </div>
-  </div>
+      <!-- Tax & HELP -->
+      <div class="sourceBox">
+        <h3>5. Income Tax, Medicare Levy, and HELP Rules (Calculator)</h3>
+        <p><strong>What it’s used for:</strong></p>
+        <p>
+          Estimating resident income tax, Medicare levy and surcharge (simplified),
+          and HELP/HECS repayments for comparative purposes.
+        </p>
+        <p><strong>Key notes:</strong></p>
+        <p>
+          The calculator is illustrative only. No offsets, deductions, dependants,
+          or individual circumstances are modelled.
+        </p>
+        <div class="chips">
+          <a class="chip sourceLink"
+             href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents"
+             target="_blank" rel="noopener">
+            Source: ato.gov.au
+          </a>
+        </div>
+      </div>
+    </section>
 
-  <!-- Tax & HELP -->
-  <div class="sourceBox">
-    <h3>5. Income Tax, Medicare Levy, and HELP Rules (Calculator)</h3>
-    <p><strong>What it’s used for:</strong></p>
-    <p>
-      Estimating resident income tax, Medicare levy and surcharge (simplified),
-      and HELP/HECS repayments for comparative purposes.
-    </p>
-    <p><strong>Key notes:</strong></p>
-    <p>
-      The calculator is illustrative only. No offsets, deductions, dependants,
-      or individual circumstances are modelled.
-    </p>
-    <div class="chips">
-      <a class="chip sourceLink"
-         href="https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents"
-         target="_blank" rel="noopener">
-        Source: ato.gov.au
-      </a>
-    </div>
-  </div>
-
-</section>
-
-<section class="section">
-  <h2>Methodological Notes</h2>
-  <p class="small">
-    All figures are presented in nominal dollars unless stated otherwise.
-    “Real” outcomes are CPI-adjusted. No behavioural assumptions
-    (overtime, promotion, allowances) are included.
-    The dashboard and calculator are comparison tools, not forecasts or advice.
-  </p>
-</section>
+    <section class="section">
+      <h2>Methodological Notes</h2>
+      <p class="small">
+        All figures are presented in nominal dollars unless stated otherwise.
+        “Real” outcomes are CPI-adjusted. No behavioural assumptions
+        (overtime, promotion, allowances) are included.
+        The dashboard and calculator are comparison tools, not forecasts or advice.
+      </p>
+    </section>
 
     <section class="section">
       <div class="sectionHead">
@@ -478,7 +555,26 @@
         </p>
       </div>
     </section>
-
   </div>
+
+  <!-- ✅ GoatCounter tracking (loaded once) -->
+  <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
+
+  <!-- ✅ Custom JSON counter -> HUD text "Views: 123" -->
+  <script>
+    (function(){
+      const el = document.getElementById('gc-hud');
+      if (!el) return;
+
+      const path = location.pathname || '/';
+      const url = 'https://sa-ps-wages.goatcounter.com/counter/' + encodeURIComponent(path) + '.json?no_branding=1';
+
+      fetch(url, { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(data => { el.textContent = `Views: ${data.count}`; })
+        .catch(() => { el.textContent = 'Views: —'; });
+    })();
+  </script>
 </body>
 </html>

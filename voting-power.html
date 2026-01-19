@@ -42,6 +42,53 @@
   }
 
   /* =======================
+     GOATCOUNTER HUD (FROM INDEX)
+  ======================= */
+  #gc-hud{
+    position: fixed;
+    top: 10px;
+    right: 12px;
+    z-index: 10000;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 6px 8px;
+    min-height: 22px;
+    max-width: 140px;
+
+    border-radius: 0;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(11,18,32,.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    line-height: 1;
+    color: rgba(245,247,255,.9);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,.22);
+    opacity: .85;
+    user-select: none;
+  }
+
+  #gc-hud:hover{ opacity: 1; }
+
+  @media (max-width: 520px){
+    #gc-hud{
+      top: 64px;   /* below topbar on mobile */
+      right: 12px;
+    }
+  }
+
+  /* =======================
      TOP BAR (CONSISTENT)
   ======================= */
   .topbar{
@@ -54,7 +101,7 @@
     border-radius:999px;
     background:rgba(255,255,255,.04);
     backdrop-filter:blur(8px);
-    margin-bottom:22px; /* IMPORTANT: consistent gap under header */
+    margin-bottom:22px;
   }
 
   .brand{
@@ -87,7 +134,7 @@
   .nav{
     display:flex;
     gap:10px;
-    flex-wrap:wrap;            /* mobile-proof */
+    flex-wrap:wrap;
     justify-content:flex-end;
     align-items:center;
   }
@@ -97,12 +144,12 @@
     align-items:center;
     justify-content:center;
     gap:8px;
-    padding:10px 14px;          /* unified pill size */
+    padding:10px 14px;
     border-radius:999px;
     border:1px solid var(--line);
     background:rgba(255,255,255,.03);
     color:var(--text);
-    font-size:14px;             /* unified pill text */
+    font-size:14px;
     line-height:1;
     white-space:nowrap;
     -webkit-tap-highlight-color: transparent;
@@ -120,7 +167,7 @@
 
   @media (max-width: 720px){
     .topbar{
-      border-radius:22px;       /* feels nicer when it wraps */
+      border-radius:22px;
       padding:12px;
       gap:12px;
     }
@@ -134,7 +181,7 @@
      HERO (REUSED)
   ======================= */
   .hero{
-    margin-top:0;              /* topbar already provides spacing */
+    margin-top:0;
     padding:28px 18px;
     border-radius:var(--radius);
     border:1px solid var(--line);
@@ -227,7 +274,7 @@
 
   .bigTitle{
     margin: 0 0 8px 0;
-    font-size: clamp(36px, 4.6vw, 66px); /* BIGGER + matches Home hero vibe */
+    font-size: clamp(36px, 4.6vw, 66px);
     line-height: 1.02;
     letter-spacing: -1px;
     font-weight: 950;
@@ -330,7 +377,7 @@
     width:100%;
     border-collapse: separate;
     border-spacing:0;
-    min-width: 720px;      /* lower so it doesn't feel "tiny" */
+    min-width: 720px;
     font-size: 15px;
   }
 
@@ -426,6 +473,9 @@
 </head>
 
 <body>
+  <!-- ✅ GoatCounter HUD -->
+  <div id="gc-hud" aria-hidden="true">Views: —</div>
+
   <div class="wrap">
     <!-- Header -->
     <div class="topbar">
@@ -441,36 +491,32 @@
       </div>
     </div>
 
-	<!-- BOX 1: Title + callout inside -->
+    <!-- BOX 1: Title + callout inside -->
+    <div class="tableCard">
+      <h1 class="bigTitle">
+        <span class="grad">Where the Voting Power Lies</span>
+      </h1>
 
-  <div class="tableCard">
+      <p class="smallNote">
+        When voting is one person, one vote, headcount shows where the numerical weight sits.
+      </p>
 
-<h1 class="bigTitle">
-  <span class="grad">Where the Voting Power Lies</span>
-</h1>
+      <!-- Top cohort callout -->
+      <div class="topCohort" aria-label="Top cohort by total headcount">
+        <div>
+          <div class="kicker">Top cohort by total headcount</div>
+          <p class="calloutMain">
+            <span class="hi">Administrative Services</span> is the largest workgroup shown,
+            representing <span class="pct">63.64%</span> of the total voter base in this table.
+          </p>
+        </div>
 
-
-    <p class="smallNote">
-      When voting is one person, one vote, headcount shows where the numerical weight sits.
-    </p>
-
-    <!-- Top cohort callout -->
-    <div class="topCohort" aria-label="Top cohort by total headcount">
-      <div>
-        <div class="kicker">Top cohort by total headcount</div>
-        <p class="calloutMain">
-          <span class="hi">Administrative Services</span> is the largest workgroup shown,
-          representing <span class="pct">63.64%</span> of the total voter base in this table.
-        </p>
-      </div>
-
-      <div class="chips" aria-label="Top cohort stats">
-        <div class="chip">Total headcount <strong>23,970</strong></div>
-        <div class="chip">Total shown <strong>37,404</strong></div>
+        <div class="chips" aria-label="Top cohort stats">
+          <div class="chip">Total headcount <strong>23,970</strong></div>
+          <div class="chip">Total shown <strong>37,404</strong></div>
+        </div>
       </div>
     </div>
-
-  </div>
 
     <!-- BOX 2: Table -->
     <section class="section">
@@ -486,7 +532,6 @@
           </thead>
 
           <tbody>
-            <!-- Sorted highest to lowest (Allied Health removed as requested) -->
             <tr>
               <td class="rank">1</td>
               <td class="workgroup"><span class="workgroupAccent">Administrative Services</span></td>
@@ -535,5 +580,25 @@
       </div>
     </section>
   </div>
+
+  <!-- ✅ GoatCounter tracking (loaded once) -->
+  <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
+
+  <!-- ✅ Custom JSON counter -> HUD text "Views: 123" -->
+  <script>
+    (function(){
+      const el = document.getElementById('gc-hud');
+      if (!el) return;
+
+      const path = location.pathname || '/';
+      const url = 'https://sa-ps-wages.goatcounter.com/counter/' + encodeURIComponent(path) + '.json?no_branding=1';
+
+      fetch(url, { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(data => { el.textContent = `Views: ${data.count}`; })
+        .catch(() => { el.textContent = 'Views: —'; });
+    })();
+  </script>
 </body>
 </html>
