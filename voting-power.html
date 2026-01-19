@@ -101,6 +101,7 @@
     border-radius:999px;
     background:rgba(255,255,255,.04);
     backdrop-filter:blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     margin-bottom:22px;
   }
 
@@ -123,10 +124,11 @@
     flex:0 0 auto;
   }
 
+  /* ✅ UPDATED: desktop stays single-line, mobile wraps */
   .brandname{
     font-weight:850;
     letter-spacing:.2px;
-    white-space:nowrap;
+    white-space:nowrap;     /* desktop: single line */
     overflow:hidden;
     text-overflow:ellipsis;
   }
@@ -174,6 +176,15 @@
     .pill{
       padding:10px 12px;
       font-size:13.5px;
+    }
+
+    /* ✅ Mobile wrap fix */
+    .brand{ align-items:flex-start; }
+    .brandname{
+      white-space: normal;   /* allow wrapping */
+      overflow: visible;
+      text-overflow: unset;
+      line-height: 1.15;
     }
   }
 
