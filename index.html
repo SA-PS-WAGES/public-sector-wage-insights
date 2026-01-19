@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SA Public Sector Salaried Employees Wage Insights – Public Data Explainer</title>
   
-    <!-- GoatCounter (privacy-preserving analytics) -->
-  <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+<!-- GoatCounter (privacy-preserving analytics) -->
+<script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
 
   <style>
     :root{
@@ -36,6 +36,40 @@
     a{ color:var(--accent); text-decoration:none; }
     a:hover{ text-decoration:underline; }
     .wrap{ max-width:var(--max); margin:0 auto; padding: 28px 16px; }
+/* GoatCounter visible counter (above topbar, centred) */
+.counterWrap{
+  display:flex;
+  justify-content:center;
+  margin: 0 0 10px 0; /* space above header pill */
+}
+
+#gc-counter{
+  /* We style GoatCounter's injected HTML to look like your pills */
+}
+
+#gc-counter div{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+  color: var(--text);
+}
+
+#gc-counter #gcvc-views{
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color: transparent;
+  font-weight: 950;
+}
+
+#gc-counter #gcvc-by{ display:none; }   /* hide “stats by GoatCounter” */
+#gc-counter #gcvc-for{ display:none; }  /* hide “Views for this page” line */
 
     /* Top bar */
     .topbar{
@@ -391,11 +425,11 @@
 
 <body>
 <!-- Page view counter -->
-<div class="counterWrap" aria-hidden="true">
-  <span class="counterPill">
-    👁️ <strong id="goatcounter-visits">—</strong> views
-  </span>
+<!-- Visible pageview counter -->
+<div class="counterWrap">
+  <div id="gc-counter"></div>
 </div>
+
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
@@ -658,5 +692,25 @@
     document.getElementById("btnCalc").addEventListener("click", calculate);
     document.getElementById("btnClear").addEventListener("click", clearAll);
   </script>
+  <script>
+  // Visible counter: renders GoatCounter's HTML counter into #gc-counter
+  // NOTE: Enable "Allow adding visitor counts on your website" in GoatCounter settings.
+  (function(){
+    var t = setInterval(function() {
+      if (window.goatcounter && window.goatcounter.visit_count) {
+        clearInterval(t);
+
+        window.goatcounter.visit_count({
+          append: '#gc-counter',
+          type: 'html',
+          no_branding: 1,
+          // Optional: show site total instead of per-page count:
+          path: 'TOTAL'
+        });
+      }
+    }, 100);
+  })();
+</script>
+
 </body>
 </html>
