@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voting Power – SA Public Sector Wage Insights</title>
+
+<style>
+  :root{
+    --bg0:#070A12;
+    --bg1:#0B1220;
+    --line:rgba(255,255,255,.10);
+    --text:#F5F7FF;
+    --muted:rgba(245,247,255,.72);
+    --accent:#6EE7FF;
+    --accent2:#A78BFA;
+    --radius:18px;
+    --shadow: 0 14px 40px rgba(0,0,0,.35);
+    --max: 1200px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(900px 500px at 12% 10%, rgba(110,231,255,.20), transparent 60%),
+      radial-gradient(700px 500px at 88% 0%, rgba(167,139,250,.22), transparent 55%),
+      linear-gradient(180deg, var(--bg0), var(--bg1));
+    line-height:1.5;
+  }
+
+  a{ color:var(--accent); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:28px 16px;
+  }
+
+  /* =======================
+     TOP BAR (CONSISTENT)
+  ======================= */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(8px);
+    margin-bottom:22px; /* IMPORTANT: consistent gap under header */
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+  }
+
+  .mark{
+    width:34px;
+    height:34px;
+    border-radius:12px;
+    background:
+      radial-gradient(18px 18px at 30% 30%, rgba(110,231,255,.95), transparent 70%),
+      radial-gradient(18px 18px at 70% 70%, rgba(167,139,250,.95), transparent 70%);
+    border:1px solid rgba(255,255,255,.18);
+    box-shadow:0 10px 24px rgba(0,0,0,.35);
+    flex:0 0 auto;
+  }
+
+  .brandname{
+    font-weight:850;
+    letter-spacing:.2px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .nav{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;            /* mobile-proof */
+    justify-content:flex-end;
+    align-items:center;
+  }
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:10px 14px;          /* unified pill size */
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.03);
+    color:var(--text);
+    font-size:14px;             /* unified pill text */
+    line-height:1;
+    white-space:nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .pill strong{
+    color:var(--accent);
+    font-weight:900;
+    letter-spacing:.2px;
+  }
+
+  .pill:hover{
+    background:rgba(255,255,255,.06);
+  }
+
+  @media (max-width: 720px){
+    .topbar{
+      border-radius:22px;       /* feels nicer when it wraps */
+      padding:12px;
+      gap:12px;
+    }
+    .pill{
+      padding:10px 12px;
+      font-size:13.5px;
+    }
+  }
+
+  /* =======================
+     HERO (REUSED)
+  ======================= */
+  .hero{
+    margin-top:0;              /* topbar already provides spacing */
+    padding:28px 18px;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    background:
+      radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.16), transparent 55%),
+      radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.16), transparent 55%),
+      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+
+  .heroTitle{
+    margin:0 0 12px 0;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -1px;
+  }
+
+  .heroTitle .grad,
+  .heroGrad{
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color: transparent;
+  }
+
+  .heroSub{
+    max-width: 92ch;
+    margin: 12px 0 0 0;
+    font-size: clamp(16px, 1.35vw, 20px);
+    line-height: 1.35;
+    font-weight: 750;
+    letter-spacing: -0.15px;
+    color: rgba(245,247,255,.88);
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.12);
+    background:
+      radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.12), transparent 60%),
+      radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.12), transparent 60%),
+      rgba(255,255,255,.03);
+    box-shadow: 0 10px 24px rgba(0,0,0,.25);
+  }
+
+  .heroSub strong{ color: var(--text); font-weight: 900; }
+
+  /* =======================
+     SECTIONS
+  ======================= */
+  .section{
+    margin-top:18px;
+    padding:18px;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.03);
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+  }
+
+  .sectionHead{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:10px;
+  }
+
+  .sectionHead h2{
+    margin:0;
+    font-size:18px;
+    letter-spacing:-.2px;
+  }
+
+  .small{ font-size:12px; color:var(--muted); }
+
+  /* =======================
+     VOTING POWER: TITLE CARD
+  ======================= */
+  .tableCard{
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(900px 280px at 20% 0%, rgba(110,231,255,.12), transparent 60%),
+      radial-gradient(900px 280px at 80% 0%, rgba(167,139,250,.12), transparent 60%),
+      rgba(255,255,255,.03);
+    padding: 18px;
+    box-shadow: var(--shadow);
+    overflow:hidden;
+  }
+
+  .bigTitle{
+    margin: 0 0 8px 0;
+    font-size: clamp(36px, 4.6vw, 66px); /* BIGGER + matches Home hero vibe */
+    line-height: 1.02;
+    letter-spacing: -1px;
+    font-weight: 950;
+  }
+
+  .bigTitle .grad{
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color: transparent;
+  }
+
+  /* =======================
+     TOP COHORT CALLOUT
+  ======================= */
+  .topCohort{
+    margin: 14px 0 0 0;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.12);
+    background:
+      radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+      radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+      rgba(0,0,0,.14);
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+
+  .kicker{
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    margin: 0 0 6px 0;
+  }
+
+  .calloutMain{
+    margin: 0;
+    font-size: clamp(16px, 1.2vw, 18px);
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: -0.2px;
+    color: rgba(245,247,255,.92);
+    max-width: 70ch;
+  }
+
+  .calloutMain .hi{
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color: transparent;
+    font-weight: 950;
+  }
+
+  .calloutMain .pct{
+    color: var(--accent);
+    font-weight: 950;
+  }
+
+  .chips{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.18);
+    color: rgba(245,247,255,.86);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .chip strong{
+    color: var(--accent);
+    font-weight: 950;
+    margin-left: 6px;
+  }
+
+  /* =======================
+     TABLE (MOBILE-PROOF)
+  ======================= */
+  .tableWrap{
+    margin-top: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.10);
+    overflow:auto;
+    background: rgba(0,0,0,.18);
+  }
+
+  table{
+    width:100%;
+    border-collapse: separate;
+    border-spacing:0;
+    min-width: 720px;      /* lower so it doesn't feel "tiny" */
+    font-size: 15px;
+  }
+
+  thead th{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-align: left;
+    padding: 10px 12px;
+    background: rgba(11,18,32,.92);
+    color: rgba(245,247,255,.92);
+    border-bottom: 1px solid rgba(255,255,255,.10);
+    backdrop-filter: blur(6px);
+    white-space: nowrap;
+  }
+
+  tbody td{
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    color: rgba(245,247,255,.88);
+    white-space: nowrap;
+  }
+
+  tbody tr:nth-child(odd){ background: rgba(255,255,255,.02); }
+  tbody tr:hover{ background: rgba(110,231,255,.06); }
+
+  .rank{
+    width: 64px;
+    text-align: right;
+    color: rgba(245,247,255,.70);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .num{
+    text-align:right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .workgroupAccent,
+  .headcountAccent{
+    color: var(--accent);
+    font-weight: 950;
+  }
+
+  @media (max-width: 520px){
+    table{ min-width: 640px; }
+    tbody td, thead th{ padding: 9px 10px; }
+  }
+
+  /* =======================
+     CAPTION / URLS
+  ======================= */
+  .captionLine{
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.35;
+  }
+  .captionLine a{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    word-break: break-all;
+  }
+
+  /* =======================
+     INFO BOX (OPTIONAL)
+  ======================= */
+  .infoBox{
+    border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,.10);
+    background:
+      radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+      radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+      rgba(255,255,255,.02);
+    box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    padding: 14px 16px;
+    margin-top: 12px;
+  }
+  .infoBox h3{
+    margin:0 0 8px 0;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: -.2px;
+    color: var(--text);
+  }
+  .infoBox p{
+    margin:0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+</style>
+
+</head>
+
+<body>
+  <div class="wrap">
+    <!-- Header -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="brandname">SA Public Sector Salaried Employees Wage Insights (Public Data)</div>
+      </div>
+
+      <div class="nav">
+        <a class="pill" href="index.html"><strong>Home</strong></a>
+        <a class="pill" href="voting-power.html"><strong>Voting Power</strong></a>
+        <a class="pill" href="methodology.html"><strong>Sources &amp; Method</strong></a>
+      </div>
+    </div>
+
+	<!-- BOX 1: Title + callout inside -->
+
+  <div class="tableCard">
+
+<h1 class="bigTitle">
+  <span class="grad">Where the Voting Power Lies</span>
+</h1>
+
+
+    <p class="smallNote">
+      When voting is one person, one vote, headcount shows where the numerical weight sits.
+    </p>
+
+    <!-- Top cohort callout -->
+    <div class="topCohort" aria-label="Top cohort by total headcount">
+      <div>
+        <div class="kicker">Top cohort by total headcount</div>
+        <p class="calloutMain">
+          <span class="hi">Administrative Services</span> is the largest workgroup shown,
+          representing <span class="pct">63.64%</span> of the total voter base in this table.
+        </p>
+      </div>
+
+      <div class="chips" aria-label="Top cohort stats">
+        <div class="chip">Total headcount <strong>23,970</strong></div>
+        <div class="chip">Total shown <strong>37,404</strong></div>
+      </div>
+    </div>
+
+  </div>
+
+    <!-- BOX 2: Table -->
+    <section class="section">
+      <div class="tableWrap" role="region" aria-label="Voting power table">
+        <table>
+          <thead>
+            <tr>
+              <th class="rank">#</th>
+              <th>Employee Workgroup</th>
+              <th class="num">Total headcount</th>
+              <th class="num">% of total headcount</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- Sorted highest to lowest (Allied Health removed as requested) -->
+            <tr>
+              <td class="rank">1</td>
+              <td class="workgroup"><span class="workgroupAccent">Administrative Services</span></td>
+              <td class="num"><span class="headcountAccent">23,970</span></td>
+              <td class="num">63.64%</td>
+            </tr>
+
+            <tr>
+              <td class="rank">2</td>
+              <td class="workgroup">Operational Services</td>
+              <td class="num">3,805</td>
+              <td class="num">10.17%</td>
+            </tr>
+
+            <tr>
+              <td class="rank">3</td>
+              <td class="workgroup">Professional Officers</td>
+              <td class="num">1,816</td>
+              <td class="num">4.86%</td>
+            </tr>
+
+            <tr>
+              <td class="rank">4</td>
+              <td class="workgroup">Correctional Officers</td>
+              <td class="num">1,055</td>
+              <td class="num">2.82%</td>
+            </tr>
+
+            <tr>
+              <td class="rank">5</td>
+              <td class="workgroup">Technical Services</td>
+              <td class="num">758</td>
+              <td class="num">2.03%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="captionLine">
+        Extracted from the “SA public sector by employee and appointment types” table on page 22. Totals shown only.
+        <br/>
+        Source:
+        <a href="https://www.publicsector.sa.gov.au/__data/assets/pdf_file/0020/1205462/2025-Workforce-Information-Report.pdf" target="_blank" rel="noopener">
+          https://www.publicsector.sa.gov.au/__data/assets/pdf_file/0020/1205462/2025-Workforce-Information-Report.pdf
+        </a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

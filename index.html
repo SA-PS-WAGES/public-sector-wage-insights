@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SA Public Sector Salaried Employees Wage Insights – Public Data Explainer</title>
+
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1220;
+      --line:rgba(255,255,255,.10);
+      --text:#F5F7FF;
+      --muted:rgba(245,247,255,.72);
+      --accent:#6EE7FF;
+      --accent2:#A78BFA;
+      --radius:18px;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --max: 1200px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 12% 10%, rgba(110,231,255,.20), transparent 60%),
+        radial-gradient(700px 500px at 88% 0%, rgba(167,139,250,.22), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      line-height:1.5;
+    }
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding: 28px 16px; }
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding: 10px 12px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(8px);
+    }
+    .brand{ display:flex; align-items:center; gap:10px; min-width: 0; }
+    .mark{
+      width:34px; height:34px;
+      border-radius: 12px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(110,231,255,.95), transparent 70%),
+        radial-gradient(18px 18px at 70% 70%, rgba(167,139,250,.95), transparent 70%);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      flex: 0 0 auto;
+    }
+    .brandname{
+      font-weight:850;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .nav{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      font-size: 13px;
+    }
+    .pill strong{
+      color: var(--accent);
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 22px;
+      padding: 28px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.16), transparent 55%),
+        radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.16), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .heroTitle{
+      margin:0 0 12px 0;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -1px;
+    }
+    .heroTitle .grad{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+
+    .heroSub{
+      max-width: 92ch;
+      margin: 12px 0 0 0;
+      font-size: clamp(16px, 1.35vw, 20px);
+      line-height: 1.35;
+      font-weight: 750;
+      letter-spacing: -0.15px;
+      color: rgba(245,247,255,.88);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.12), transparent 60%),
+        radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.12), transparent 60%),
+        rgba(255,255,255,.03);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .heroSub strong{ color: var(--text); font-weight: 900; }
+
+    /* Section */
+    .section{
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    }
+    .sectionHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-bottom: 10px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: -.2px;
+    }
+    .small{ font-size: 12px; color: var(--muted); }
+
+    /* Embed */
+    .iframeWrap{
+      width:100%;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      overflow:hidden;
+      background: rgba(0,0,0,.25);
+    }
+    iframe{
+      width:100%;
+      height: 76vh;
+      min-height: 620px;
+      border:0;
+      display:block;
+    }
+    @media (max-width: 520px){
+      iframe{ height: 78vh; min-height: 560px; }
+    }
+	.heroSub strong{
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 900;
+}
+
+
+    /* Calculator */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    /* ✅ Make the input card span full width now that the other card is removed */
+    .grid.oneCol{
+      grid-template-columns: 1fr;
+    }
+
+    .card{
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding: 16px;
+    }
+    .card h3{
+      margin:0 0 10px 0;
+      font-size: 16px;
+      letter-spacing: -.2px;
+    }
+    .card p{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    label{
+      display:block;
+      margin-top: 10px;
+      font-size: 13px;
+      color: rgba(245,247,255,.86);
+    }
+    input[type="number"]{
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
+    input[type="number"]:focus{
+      border-color: rgba(110,231,255,.45);
+      box-shadow: 0 0 0 4px rgba(110,231,255,.12);
+    }
+    .checkRow{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+    }
+    .checkRow input{ margin-top: 2px; }
+    .checkRow .hint{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .btnRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .btn{
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(420px 160px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
+        radial-gradient(420px 160px at 80% 0%, rgba(167,139,250,.14), transparent 60%),
+        rgba(255,255,255,.03);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 850;
+    }
+    .btn:hover{ background: rgba(255,255,255,.06); }
+
+    /* Results table */
+    .tableWrap{
+      margin-top: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      overflow:auto;
+      background: rgba(0,0,0,.18);
+    }
+    table{
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 980px;
+      font-size: 15px;
+    }
+    thead th{
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      text-align: left;
+      padding: 10px 12px;
+      background: rgba(11,18,32,.92);
+      color: rgba(245,247,255,.92);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(6px);
+      white-space: nowrap;
+    }
+    tbody td{
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      color: rgba(245,247,255,.86);
+      white-space: nowrap;
+    }
+    tbody tr:nth-child(odd){ background: rgba(255,255,255,.02); }
+    tbody tr:hover{ background: rgba(110,231,255,.06); }
+    .rowLabel{ font-weight: 900; }
+    .num{ text-align: right; font-variant-numeric: tabular-nums; }
+    .numStrong{ color: var(--accent); font-weight: 900; }
+
+    /* Recovery callout */
+    .topCohort{
+      margin: 12px 0 0 0;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+        rgba(0,0,0,.14);
+      color: rgba(245,247,255,.88);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .topCohort .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin: 0 0 4px 0;
+    }
+    .topCohort .big{
+      margin: 0;
+      font-size: clamp(16px, 1.2vw, 18px);
+      font-weight: 900;
+      letter-spacing: -.2px;
+      line-height: 1.25;
+    }
+    .topCohort .hi{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+    .topCohort .meta{
+      margin: 6px 0 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .topCohort .chip{
+      display:inline-flex;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: rgba(245,247,255,.86);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      margin-top: 6px;
+      white-space: nowrap;
+    }
+
+    /* Disclaimer box */
+    .infoBox{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+        rgba(255,255,255,.02);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
+    .infoBox h3{
+      margin:0 0 8px 0;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -.2px;
+      color: var(--text);
+    }
+    .infoBox p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="brandname">SA Public Sector Salaried Employees Wage Insights (Public Data)</div>
+      </div>
+
+      <div class="nav">
+        <a class="pill" href="index.html"><strong>Home</strong></a>
+        <a class="pill" href="voting-power.html"><strong>Voting Power</strong></a>
+        <a class="pill" href="methodology.html"><strong>Sources &amp; Method</strong></a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h1 class="heroTitle">
+        <span class="grad"><strong>EB25:</strong> Why we still need 20%</span>
+      </h1>
+
+   <p class="heroSub">
+  Salaried Public Sector workers have faced poor wage outcomes when compared with CPI since 2021.<br>
+  <strong>We haven't recovered the loss since.</strong><br><br>
+  The current offer as it stands fails to address this.<br>
+  <strong>We all deserve fair pay across the board.</strong><br><br>
+  Check how your current salary looks below.
+</p>
+
+    </section>
+
+<!-- ✅ MOVE CALCULATOR ABOVE DASHBOARD + GIVE IT A HERO TITLE -->
+<section class="section" id="calculator" style="margin-top:18px;">
+  <div class="sectionHead" style="margin-bottom:8px;">
+    <h2>
+      <span class="heroGrad">Net Pay Calculator</span>
+    </h2>
+    <div class="small">Estimates only. Use for comparison, not tax advice.</div>
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: Inputs -->
+    <div class="card">
+      <h3>Inputs</h3>
+
+      <label for="salary">Annual salary (gross, $)</label>
+      <input type="number" id="salary" inputmode="numeric" placeholder="e.g. 85000" />
+
+      <div class="checkRow">
+        <input type="checkbox" id="hasHELP" />
+        <div>
+          <label for="hasHELP" style="margin:0;">I have a HELP or HECS loan</label>
+          <div class="hint">Simplified estimate for comparison.</div>
+        </div>
+      </div>
+
+      <div class="checkRow">
+        <input type="checkbox" id="noPrivateHealth" />
+        <div>
+          <label for="noPrivateHealth" style="margin:0;">I do NOT have private hospital insurance (MLS may apply)</label>
+          <div class="hint">Simplified MLS thresholds (single).</div>
+        </div>
+      </div>
+
+      <div class="btnRow">
+        <button class="btn" id="btnCalc" type="button">Calculate</button>
+        <button class="btn" id="btnClear" type="button">Clear</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: Recovery Snapshot -->
+    <div id="recoveryCallout" class="topCohort" style="display:none;" aria-live="polite">
+      <div>
+        <div class="kicker">Recovery snapshot</div>
+        <p class="big">
+          You need <span class="hi" id="recoveryPct">0%</span> now to recover past wage erosion and keep up with inflation.
+        </p>
+        <p class="meta" id="recoveryMeta">
+          This compares the CPI scenario against the EA scenario for the entered salary.
+        </p>
+      </div>
+      <div>
+        <div class="chip">Recovery amount: <strong id="recoveryAmt">$0</strong></div><br/>
+        <div class="chip">Based on salary: <strong id="baseSalary">$0</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tableWrap" id="wrapResults" style="display:none;">
+    <table>
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th class="num">Annual salary</th>
+          <th class="num">Annual net pay</th>
+          <th class="num">Fortnightly net pay</th>
+        </tr>
+      </thead>
+      <tbody id="resultsBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ✅ DASHBOARD NOW IN ITS OWN SECTION (BELOW CALCULATOR) -->
+<section class="section" id="dashboard">
+  <div class="sectionHead">
+    <h2>Interactive dashboard</h2><br>
+    <div class="medium">
+      This shows how the current offer only keeps up with projected inflation, and wouldn't feel much less like a pay increase over time.
+    </div>
+  </div>
+
+  <div class="iframeWrap">
+    <iframe
+      src="https://lookerstudio.google.com/embed/reporting/46ce400d-3552-4931-acd2-7a6d9c781546/page/53clF"
+      loading="lazy"
+      allowfullscreen
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms">
+    </iframe>
+  </div>
+</section>
+
+<!-- ✅ DISCLAIMER IN ITS OWN SECTION ALL THE WAY AT THE BOTTOM -->
+<section class="section" id="disclaimer">
+  <div class="infoBox" style="margin-top:0;">
+    <h3>Disclaimer</h3>
+    <p>
+      This site is a public data explainer only and does not provide industrial relations advice, voting guidance, financial advice, or tax advice.
+      Figures are presented for transparency and comparison using public sources.
+    </p>
+  </div>
+</section>
+
+
+  <script>
+    // ✅ Set this to the proposed 2025 wage increase you want included in the Recovery Snapshot.
+    // Example: 3.75 means +3.75% is added onto the "gap" percent shown.
+    const PROPOSED_WAGE_INCREASE_PCT = 3.75;
+
+    function calcIncomeTax(income){
+      let tax = 0;
+      if (income > 190000){ tax += (income - 190000) * 0.45; income = 190000; }
+      if (income > 135000){ tax += (income - 135000) * 0.37; income = 135000; }
+      if (income > 45000){ tax += (income - 45000) * 0.30; income = 45000; }
+      if (income > 18200){ tax += (income - 18200) * 0.16; }
+      return tax;
+    }
+
+    function calcMedicareLevy(income){ return income * 0.02; }
+
+    function calcMLS(income, noPrivate){
+      if (!noPrivate) return 0;
+      if (income <= 101000) return 0;
+      if (income <= 118000) return income * 0.01;
+      if (income <= 158000) return income * 0.0125;
+      return income * 0.015;
+    }
+
+    function calcHELP(income){
+      const thresholds = [
+        { limit: 54435, rate: 0 },
+        { limit: 62850, rate: 0.01 },
+        { limit: 66620, rate: 0.02 },
+        { limit: 70618, rate: 0.025 },
+        { limit: 74855, rate: 0.03 },
+        { limit: 79346, rate: 0.035 },
+        { limit: 84107, rate: 0.04 },
+        { limit: 89154, rate: 0.045 },
+        { limit: 94503, rate: 0.05 },
+        { limit: 100174, rate: 0.055 },
+        { limit: 106185, rate: 0.06 },
+        { limit: 112556, rate: 0.065 },
+        { limit: 119309, rate: 0.07 },
+        { limit: 126467, rate: 0.075 },
+        { limit: 134056, rate: 0.08 },
+        { limit: 142100, rate: 0.085 },
+        { limit: 150626, rate: 0.09 },
+        { limit: 159663, rate: 0.095 },
+        { limit: Infinity, rate: 0.10 }
+      ];
+      for (const b of thresholds){
+        if (income <= b.limit) return income * b.rate;
+      }
+      return 0;
+    }
+
+    function netPay(income, hasHELP, noPrivate){
+      const tax = calcIncomeTax(income);
+      const med = calcMedicareLevy(income);
+      const mls = calcMLS(income, noPrivate);
+      const help = hasHELP ? calcHELP(income) : 0;
+      return income - tax - med - mls - help;
+    }
+
+    function fmtMoney(n, decimals=0){
+      return "$" + n.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function calculate(){
+      const salary = Number(document.getElementById("salary").value);
+      const hasHELP = document.getElementById("hasHELP").checked;
+      const noPrivate = document.getElementById("noPrivateHealth").checked;
+
+      if (!salary || salary <= 0) return;
+
+      const scenarios = [
+        { name: "EA Increase (example)", value: salary < 72000 ? salary * 1.06 : salary * 1.0375 },
+        { name: "WPI Increase (example)", value: salary * 1.10 },
+        { name: "CPI Increase (example)", value: salary * 1.14 }
+      ];
+
+      const tbody = document.getElementById("resultsBody");
+      tbody.innerHTML = "";
+
+      scenarios.forEach(s => {
+        const annNet = netPay(s.value, hasHELP, noPrivate);
+        const finNet = annNet / 26;
+
+        tbody.innerHTML += `
+          <tr>
+            <td class="rowLabel">${s.name}</td>
+            <td class="num">${fmtMoney(s.value, 0)}</td>
+            <td class="num"><span class="numStrong">${fmtMoney(annNet, 2)}</span></td>
+            <td class="num"><span class="numStrong">${fmtMoney(finNet, 2)}</span></td>
+          </tr>
+        `;
+      });
+
+      // ✅ Show recovery snapshot BEFORE showing table
+      const base = salary;
+      const eaScenario = scenarios.find(s => s.name.startsWith("EA"))?.value ?? base;
+      const cpiScenario = scenarios.find(s => s.name.startsWith("CPI"))?.value ?? base;
+
+      const gap = Math.max(0, cpiScenario - eaScenario);
+      const gapPct = base > 0 ? (gap / base) * 100 : 0;
+
+      // ✅ Add proposed wage increase to the displayed % (your requested behaviour)
+      const totalPct = gapPct + PROPOSED_WAGE_INCREASE_PCT;
+
+      document.getElementById("recoveryPct").textContent = `${totalPct.toFixed(2)}%`;
+      document.getElementById("recoveryAmt").textContent = `${fmtMoney(gap, 0)}`;
+      document.getElementById("baseSalary").textContent = `${fmtMoney(base, 0)}`;
+
+      document.getElementById("recoveryMeta").textContent =
+        `Shown % = (CPI vs EA gap) + proposed 2025 increase (${PROPOSED_WAGE_INCREASE_PCT.toFixed(2)}%). Illustration only.`;
+
+      document.getElementById("recoveryCallout").style.display = "flex";
+
+      // ✅ Now show results table underneath
+      document.getElementById("wrapResults").style.display = "block";
+    }
+
+    function clearAll(){
+      document.getElementById("salary").value = "";
+      document.getElementById("hasHELP").checked = false;
+      document.getElementById("noPrivateHealth").checked = false;
+      document.getElementById("wrapResults").style.display = "none";
+      document.getElementById("resultsBody").innerHTML = "";
+      document.getElementById("recoveryCallout").style.display = "none";
+    }
+
+    document.getElementById("btnCalc").addEventListener("click", calculate);
+    document.getElementById("btnClear").addEventListener("click", clearAll);
+  </script>
+</body>
+</html>
