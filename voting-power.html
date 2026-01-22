@@ -3,492 +3,729 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Voting Power – SA Public Sector Wage Insights</title>
+  <title>EB25: It's still about pay - Voting Power</title>
 
-<style>
-  :root{
-    --bg0:#070A12;
-    --bg1:#0B1220;
-    --line:rgba(255,255,255,.10);
-    --text:#F5F7FF;
-    --muted:rgba(245,247,255,.72);
-    --accent:#6EE7FF;
-    --accent2:#A78BFA;
-    --radius:18px;
-    --shadow: 0 14px 40px rgba(0,0,0,.35);
-    --max: 1200px;
-  }
-
-  *{ box-sizing:border-box; }
-
-  body{
-    margin:0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color:var(--text);
-    background:
-      radial-gradient(900px 500px at 12% 10%, rgba(110,231,255,.20), transparent 60%),
-      radial-gradient(700px 500px at 88% 0%, rgba(167,139,250,.22), transparent 55%),
-      linear-gradient(180deg, var(--bg0), var(--bg1));
-    line-height:1.5;
-  }
-
-  a{ color:var(--accent); text-decoration:none; }
-  a:hover{ text-decoration:underline; }
-
-  .wrap{
-    max-width:var(--max);
-    margin:0 auto;
-    padding:28px 16px;
-  }
-
-  /* =======================
-     GOATCOUNTER HUD (FROM INDEX)
-  ======================= */
-  #gc-hud{
-    position: fixed;
-    top: 10px;
-    right: 12px;
-    z-index: 10000;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 6px 8px;
-    min-height: 22px;
-    max-width: 140px;
-
-    border-radius: 0;
-    border: 1px solid rgba(255,255,255,.08);
-    background: rgba(11,18,32,.6);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .06em;
-    line-height: 1;
-    color: rgba(245,247,255,.9);
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    box-shadow: 0 6px 18px rgba(0,0,0,.22);
-    opacity: .85;
-    user-select: none;
-  }
-
-  #gc-hud:hover{ opacity: 1; }
-
-  @media (max-width: 520px){
-    #gc-hud{
-      top: 64px;   /* below topbar on mobile */
-      right: 12px;
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1220;
+      --line:rgba(255,255,255,.10);
+      --text:#F5F7FF;
+      --muted:rgba(245,247,255,.72);
+      --accent:#6EE7FF;
+      --accent2:#A78BFA;
+      --radius:18px;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --max: 1100px;
     }
-  }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 12% 10%, rgba(110,231,255,.20), transparent 60%),
+        radial-gradient(700px 500px at 88% 0%, rgba(167,139,250,.22), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      line-height:1.45;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding: 18px 14px 28px; }
 
-  /* =======================
-     TOP BAR (CONSISTENT)
-  ======================= */
-  .topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:14px;
-    padding:10px 12px;
-    border:1px solid var(--line);
-    border-radius:999px;
-    background:rgba(255,255,255,.04);
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    margin-bottom:22px;
-  }
+    /* GoatCounter HUD */
+    #gc-hud{
+      position: fixed; top: 10px; right: 12px; z-index: 10000;
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 6px 8px; min-height: 22px; max-width: 140px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(11,18,32,.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      font-size: 10px; font-weight: 900; letter-spacing: .06em;
+      color: rgba(245,247,255,.9);
+      box-shadow: 0 6px 18px rgba(0,0,0,.22);
+      opacity: .88;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      user-select: none;
+    }
+    #gc-hud:hover{ opacity: 1; }
+    @media (max-width: 520px){
+      #gc-hud{ top: 64px; right: 12px; }
+    }
 
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    min-width:0;
-  }
-
-  .mark{
-    width:34px;
-    height:34px;
-    border-radius:12px;
-    background:
-      radial-gradient(18px 18px at 30% 30%, rgba(110,231,255,.95), transparent 70%),
-      radial-gradient(18px 18px at 70% 70%, rgba(167,139,250,.95), transparent 70%);
-    border:1px solid rgba(255,255,255,.18);
-    box-shadow:0 10px 24px rgba(0,0,0,.35);
-    flex:0 0 auto;
-  }
-
-  /* ✅ UPDATED: desktop stays single-line, mobile wraps */
-  .brandname{
-    font-weight:850;
-    letter-spacing:.2px;
-    white-space:nowrap;     /* desktop: single line */
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-
-  .nav{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    justify-content:flex-end;
-    align-items:center;
-  }
-
-  .pill{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-    padding:10px 14px;
-    border-radius:999px;
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.03);
-    color:var(--text);
-    font-size:14px;
-    line-height:1;
-    white-space:nowrap;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .pill strong{
-    color:var(--accent);
-    font-weight:900;
-    letter-spacing:.2px;
-  }
-
-  .pill:hover{
-    background:rgba(255,255,255,.06);
-  }
-
-  @media (max-width: 720px){
+    /* TOP BAR (MATCH VOTING POWER) */
     .topbar{
-      border-radius:22px;
-      padding:12px;
-      gap:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      margin-bottom:22px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .mark{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(110,231,255,.95), transparent 70%),
+        radial-gradient(18px 18px at 70% 70%, rgba(167,139,250,.95), transparent 70%);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 10px 24px rgba(0,0,0,.35);
+      flex:0 0 auto;
+    }
+    .brandname{
+      font-weight:850;
+      letter-spacing:.2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      color: rgba(245,247,255,.92);
+      line-height:1.15;
+      font-size: 14px;
+    }
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
     }
     .pill{
-      padding:10px 12px;
-      font-size:13.5px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      font-size:14px;
+      line-height:1;
+      white-space:nowrap;
+      font-weight: 900;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pill strong{
+      color:var(--accent);
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .pill:hover{ background:rgba(255,255,255,.06); }
+    .pill.isActive{
+      border-color: rgba(110,231,255,.35);
+      background: rgba(110,231,255,.08);
+    }
+    @media (max-width: 720px){
+      .topbar{
+        border-radius:22px;
+        padding:12px;
+        gap:12px;
+      }
+      .pill{
+        padding:10px 12px;
+        font-size:13.5px;
+      }
+      .brand{ align-items:flex-start; }
+      .brandname{
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        line-height: 1.15;
+      }
     }
 
-    /* ✅ Mobile wrap fix */
-    .brand{ align-items:flex-start; }
-    .brandname{
-      white-space: normal;   /* allow wrapping */
-      overflow: visible;
-      text-overflow: unset;
-      line-height: 1.15;
+    .grad{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
     }
+
+    /* HERO */
+    .hero{
+      padding: 18px 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.16), transparent 55%),
+        radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.16), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.16);
+      font-weight: 950;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 11.5px;
+      color: rgba(245,247,255,.88);
+    }
+    .h1{
+      margin: 10px 0 8px 0;
+      font-size: clamp(30px, 8vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -1px;
+      font-weight: 980;
+    }
+    .sub{
+      margin: 0;
+      font-size: clamp(16px, 4.6vw, 20px);
+      font-weight: 900;
+      color: rgba(245,247,255,.90);
+      line-height: 1.35;
+      max-width: 70ch;
+    }
+
+    /* Sections */
+    .section{
+      margin-top: 14px;
+      padding: 14px 12px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 30px rgba(0,0,0,.16);
+    }
+
+    /* Callouts */
+    .mega{
+      margin-top: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      padding: 14px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    }
+    .megaK{ margin:0 0 6px 0; font-size: 12px; letter-spacing:.14em; text-transform:uppercase; color: rgba(245,247,255,.75); font-weight: 950;}
+    .megaT{ margin:0; font-size: clamp(22px, 6vw, 36px); font-weight: 980; letter-spacing:-.6px; line-height:1.06; }
+    .megaP{ margin: 10px 0 0 0; font-size: 15px; font-weight: 850; color: rgba(245,247,255,.88); }
+
+    /* Strong gradient text utility */
+    .gText{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .num{ font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+    /* ✅ Space after voting table */
+    .afterVotingGap{ margin-bottom: 18px; }
+
+    /* ===========================
+       VOTING POWER (MOBILE FIRST)
+       - No horizontal scroll
+       - Column widths controlled
+       - Labels shown per-cell on mobile
+    ============================ */
+    .tableCard{
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      background:
+        radial-gradient(900px 260px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(900px 260px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+        rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+      padding: 16px 14px;
+      margin-bottom: 14px;
+    }
+    .bigTitle{
+      margin: 0 0 8px 0;
+      font-size: clamp(26px, 7vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.9px;
+      font-weight: 980;
+    }
+    .smallNote{
+      margin: 0 0 14px 0;
+      font-size: 15px;
+      font-weight: 850;
+      color: rgba(245,247,255,.82);
+      max-width: 75ch;
+    }
+    .topCohort{
+      display:flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: flex-start;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      background: rgba(0,0,0,.18);
+      padding: 12px;
+    }
+    @media (max-width: 780px){ .topCohort{ flex-direction: column; } }
+    .kicker{
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(245,247,255,.72);
+      font-weight: 950;
+      margin-bottom: 8px;
+    }
+    .calloutMain{
+      margin: 0;
+      font-size: 16px;
+      font-weight: 900;
+      color: rgba(245,247,255,.92);
+      line-height: 1.4;
+      max-width: 70ch;
+    }
+    .hi{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      font-weight: 980;
+    }
+    .pct{ font-variant-numeric: tabular-nums; font-weight: 980; }
+    .chips{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+      align-items: center;
+      min-width: 220px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      font-size: 13px;
+      font-weight: 900;
+      color: rgba(245,247,255,.9);
+      white-space: nowrap;
+    }
+    .chip strong{
+      color: var(--accent);
+      font-weight: 980;
+      margin-left: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tableWrap{
+      margin-top: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      overflow:hidden; /* ✅ keep it clean */
+      background: rgba(0,0,0,.22);
+      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    }
+    table{ width:100%; border-collapse: collapse; table-layout: fixed; } /* ✅ fixed layout = predictable columns */
+
+    thead th{
+      text-align:left;
+      padding: 12px;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 980;
+      color: rgba(245,247,255,.9);
+      background:
+        radial-gradient(520px 160px at 20% 0%, rgba(110,231,255,.18), transparent 60%),
+        radial-gradient(520px 160px at 80% 0%, rgba(167,139,250,.18), transparent 60%),
+        rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    tbody td{
+      padding: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      font-size: 15px;
+      font-weight: 900;
+      color: rgba(245,247,255,.92);
+      vertical-align: top;
+      word-break: normal;
+      overflow-wrap: anywhere; /* ✅ prevent spill */
+    }
+
+    /* Desktop column widths */
+    th.col-rank, td.col-rank{ width: 44px; }
+    th.col-wg,   td.col-wg  { width: 48%; }
+    th.col-hc,   td.col-hc  { width: 26%; }
+    th.col-pct,  td.col-pct { width: 26%; }
+
+    .workgroupAccent{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      font-weight: 980;
+    }
+    .headcountAccent{ color: var(--accent); font-weight: 980; }
+
+    .captionLine{
+      margin-top: 12px;
+      font-size: 13.5px;
+      font-weight: 820;
+      color: rgba(245,247,255,.78);
+      line-height: 1.45;
+    }
+
+    /* ✅ Mobile: no scroll, readable, per-cell labels */
+    @media (max-width: 560px){
+      thead{ display:none; }                 /* hide header row */
+      tbody tr{ display:block; padding: 10px 12px; }
+      tbody td{
+        display:flex;
+        gap:10px;
+        justify-content:space-between;
+        align-items:flex-start;
+        padding: 8px 0;
+        border-top: 1px solid rgba(255,255,255,.08);
+        font-size: 14.5px;
+      }
+      tbody td:first-child{ border-top: none; } /* first “row” line cleaner */
+
+      /* Each cell gets a label via data-label */
+      tbody td::before{
+        content: attr(data-label);
+        flex: 0 0 44%;
+        font-size: 11px;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        font-weight: 980;
+        color: rgba(245,247,255,.70);
+        padding-top: 2px;
+      }
+
+      /* Make the value area align nicely */
+      tbody td .val{
+        flex: 1 1 auto;
+        text-align: right;
+        font-weight: 950;
+      }
+
+      /* Rank looks like a badge on mobile */
+      td.col-rank{
+        justify-content:space-between;
+      }
+      td.col-rank .val{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        min-width: 46px;
+        height: 30px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.14);
+        background: rgba(255,255,255,.05);
+      }
+    }
+
+    /* Stat window (unchanged) */
+    .statWindow{
+      margin-top: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(520px 200px at 15% 0%, rgba(110,231,255,.12), transparent 60%),
+        radial-gradient(520px 200px at 85% 0%, rgba(167,139,250,.12), transparent 60%),
+        rgba(0,0,0,.18);
+      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+      padding: 14px;
+    }
+    .statGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (min-width: 860px){
+      .statGrid{ grid-template-columns: 1.1fr .9fr; }
+    }
+    .statCard{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      padding: 14px;
+    }
+    .statK{
+      margin:0 0 8px 0;
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(245,247,255,.75);
+      font-weight: 950;
+    }
+    .statBig{
+      margin:0;
+      font-size: clamp(26px, 7vw, 44px);
+      font-weight: 980;
+      letter-spacing: -0.8px;
+      line-height: 1.03;
+    }
+    .statP{
+      margin: 10px 0 0 0;
+      font-size: 15px;
+      font-weight: 850;
+      color: rgba(245,247,255,.86);
+      line-height: 1.45;
+    }
+
+    /* Ranked list */
+    .rankList{ margin-top: 10px; display:grid; gap: 8px; }
+    .rankRow{
+      display:grid;
+      grid-template-columns: 64px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.16);
+    }
+    .rankBadge{
+      height: 44px;
+      width: 64px;
+      border-radius: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 980;
+      letter-spacing: .04em;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      color: rgba(245,247,255,.92);
+    }
+    .rankBadge.isASO{
+      background: linear-gradient(135deg, rgba(110,231,255,.95), rgba(167,139,250,.85));
+      color: rgba(0,0,0,.88);
+      border: none;
+      box-shadow: 0 16px 36px rgba(0,0,0,.35);
+    }
+    .rankMain{ display:flex; flex-direction:column; gap: 4px; }
+    .rankTitle{ margin:0; font-size: 16px; font-weight: 980; letter-spacing: -.2px; }
+    .rankMeta{ margin:0; color: rgba(245,247,255,.78); font-size: 14px; font-weight: 850; }
+
+    /* Steps */
+    .steps{ display:grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
+    .step{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      padding: 14px;
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+    }
+    .stepTitle{
+      margin:0;
+      font-size: clamp(22px, 6.2vw, 34px);
+      font-weight: 990;
+      letter-spacing: -0.8px;
+      line-height: 1.03;
+    }
+    .ruleTag{
+      margin-top: 8px;
+      display:inline-flex;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      font-weight: 950;
+      font-size: 12.5px;
+      color: rgba(245,247,255,.86);
+    }
+    .ruleTag strong{ color: var(--accent); font-weight: 980; }
+    .stepText{
+      margin: 10px 0 0 0;
+      font-size: 15px;
+      font-weight: 850;
+      color: rgba(245,247,255,.88);
+      line-height: 1.45;
+    }
+    .bullets{
+      margin: 10px 0 0 18px;
+      padding: 0;
+      color: rgba(245,247,255,.88);
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 850;
+    }
+    .bullets li{ margin: 6px 0; }
+
+    .footerLink{
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 850;
+      color: rgba(245,247,255,.86);
+    }
+  /* ===== Voting Power: compact responsive layout ===== */
+
+  /* Desktop/tablet: normal table */
+  .vpTableWrap{
+    margin-top: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.14);
+    overflow: hidden;
+    background: rgba(0,0,0,.22);
+    box-shadow: 0 14px 34px rgba(0,0,0,.22);
   }
-
-  /* =======================
-     HERO (REUSED)
-  ======================= */
-  .hero{
-    margin-top:0;
-    padding:28px 18px;
-    border-radius:var(--radius);
-    border:1px solid var(--line);
-    background:
-      radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.16), transparent 55%),
-      radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.16), transparent 55%),
-      linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-    box-shadow:var(--shadow);
-    overflow:hidden;
+  .vpTable{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
   }
-
-  .heroTitle{
-    margin:0 0 12px 0;
-    font-size: clamp(36px, 5vw, 64px);
-    line-height: 1.02;
-    letter-spacing: -1px;
-  }
-
-  .heroTitle .grad,
-  .heroGrad{
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color: transparent;
-  }
-
-  .heroSub{
-    max-width: 92ch;
-    margin: 12px 0 0 0;
-    font-size: clamp(16px, 1.35vw, 20px);
-    line-height: 1.35;
-    font-weight: 750;
-    letter-spacing: -0.15px;
-    color: rgba(245,247,255,.88);
-    padding: 12px 14px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.12);
-    background:
-      radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.12), transparent 60%),
-      radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.12), transparent 60%),
-      rgba(255,255,255,.03);
-    box-shadow: 0 10px 24px rgba(0,0,0,.25);
-  }
-
-  .heroSub strong{ color: var(--text); font-weight: 900; }
-
-  /* =======================
-     SECTIONS
-  ======================= */
-  .section{
-    margin-top:18px;
-    padding:18px;
-    border-radius:var(--radius);
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.03);
-    box-shadow:0 10px 30px rgba(0,0,0,.18);
-  }
-
-  .sectionHead{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    flex-wrap:wrap;
-    gap:12px;
-    margin-bottom:10px;
-  }
-
-  .sectionHead h2{
-    margin:0;
-    font-size:18px;
-    letter-spacing:-.2px;
-  }
-
-  .small{ font-size:12px; color:var(--muted); }
-
-  /* =======================
-     VOTING POWER: TITLE CARD
-  ======================= */
-  .tableCard{
-    border-radius: var(--radius);
-    border: 1px solid var(--line);
-    background:
-      radial-gradient(900px 280px at 20% 0%, rgba(110,231,255,.12), transparent 60%),
-      radial-gradient(900px 280px at 80% 0%, rgba(167,139,250,.12), transparent 60%),
-      rgba(255,255,255,.03);
-    padding: 18px;
-    box-shadow: var(--shadow);
-    overflow:hidden;
-  }
-
-  .bigTitle{
-    margin: 0 0 8px 0;
-    font-size: clamp(36px, 4.6vw, 66px);
-    line-height: 1.02;
-    letter-spacing: -1px;
-    font-weight: 950;
-  }
-
-  .bigTitle .grad{
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color: transparent;
-  }
-
-  /* =======================
-     TOP COHORT CALLOUT
-  ======================= */
-  .topCohort{
-    margin: 14px 0 0 0;
-    padding: 14px 16px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.12);
-    background:
-      radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
-      radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
-      rgba(0,0,0,.14);
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:14px;
-  }
-
-  .kicker{
+  .vpTable thead th{
+    text-align:left;
+    padding: 12px;
     font-size: 12px;
-    color: var(--muted);
-    text-transform: uppercase;
     letter-spacing: .12em;
-    margin: 0 0 6px 0;
+    text-transform: uppercase;
+    font-weight: 980;
+    color: rgba(245,247,255,.9);
+    background:
+      radial-gradient(520px 160px at 20% 0%, rgba(110,231,255,.18), transparent 60%),
+      radial-gradient(520px 160px at 80% 0%, rgba(167,139,250,.18), transparent 60%),
+      rgba(255,255,255,.04);
+    border-bottom: 1px solid rgba(255,255,255,.10);
   }
-
-  .calloutMain{
-    margin: 0;
-    font-size: clamp(16px, 1.2vw, 18px);
+  .vpTable tbody td{
+    padding: 12px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    font-size: 15px;
     font-weight: 900;
-    line-height: 1.25;
-    letter-spacing: -0.2px;
     color: rgba(245,247,255,.92);
-    max-width: 70ch;
+    vertical-align: top;
+    overflow-wrap: anywhere;
   }
-
-  .calloutMain .hi{
+  .vpColRank{ width: 54px; }
+  .vpColWG{ width: 52%; }
+  .vpColHC{ width: 22%; }
+  .vpColPct{ width: 26%; }
+  .vpNum{ font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .vpAccentWG{
     background: linear-gradient(90deg, var(--accent), var(--accent2));
     -webkit-background-clip:text;
     background-clip:text;
     color: transparent;
-    font-weight: 950;
+    font-weight: 980;
   }
+  .vpAccentHC{ color: var(--accent); font-weight: 980; }
 
-  .calloutMain .pct{
-    color: var(--accent);
-    font-weight: 950;
+  /* Mobile: compact “rank list” cards (no long stacked labels) */
+  .vpList{ display:none; margin-top: 12px; gap: 8px; }
+  .vpRow{
+    display:grid;
+    grid-template-columns: 58px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(0,0,0,.16);
   }
-
-  .chips{
+  .vpBadge{
+    height: 44px;
+    width: 58px;
+    border-radius: 16px;
     display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    font-weight: 980;
+    letter-spacing: .04em;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    color: rgba(245,247,255,.92);
   }
-
-  .chip{
+  .vpBadge.isTop{
+    background: linear-gradient(135deg, rgba(110,231,255,.95), rgba(167,139,250,.85));
+    color: rgba(0,0,0,.88);
+    border: none;
+    box-shadow: 0 16px 36px rgba(0,0,0,.35);
+  }
+  .vpMain{ display:flex; flex-direction:column; gap: 6px; min-width:0; }
+  .vpTitle{
+    margin:0;
+    font-size: 16px;
+    font-weight: 980;
+    letter-spacing: -.2px;
+    line-height: 1.15;
+  }
+  .vpMeta{
+    margin:0;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 850;
+    color: rgba(245,247,255,.78);
+  }
+  .vpPill{
     display:inline-flex;
     align-items:center;
-    padding: 7px 10px;
+    gap: 6px;
+    padding: 6px 10px;
     border-radius: 999px;
     border: 1px solid rgba(255,255,255,.12);
-    background: rgba(0,0,0,.18);
-    color: rgba(245,247,255,.86);
-    font-size: 12px;
-    font-variant-numeric: tabular-nums;
+    background: rgba(255,255,255,.04);
     white-space: nowrap;
   }
-
-  .chip strong{
-    color: var(--accent);
-    font-weight: 950;
-    margin-left: 6px;
-  }
-
-  /* =======================
-     TABLE (MOBILE-PROOF)
-  ======================= */
-  .tableWrap{
-    margin-top: 12px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.10);
-    overflow:auto;
-    background: rgba(0,0,0,.18);
-  }
-
-  table{
-    width:100%;
-    border-collapse: separate;
-    border-spacing:0;
-    min-width: 720px;
-    font-size: 15px;
-  }
-
-  thead th{
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    text-align: left;
-    padding: 10px 12px;
-    background: rgba(11,18,32,.92);
+  .vpPill strong{
     color: rgba(245,247,255,.92);
-    border-bottom: 1px solid rgba(255,255,255,.10);
-    backdrop-filter: blur(6px);
-    white-space: nowrap;
+    font-weight: 980;
   }
 
-  tbody td{
-    padding: 10px 12px;
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    color: rgba(245,247,255,.88);
-    white-space: nowrap;
+  /* Switch breakpoint */
+  @media (max-width: 620px){
+    .vpTableWrap{ display:none; }
+    .vpList{ display:grid; }
   }
 
-  tbody tr:nth-child(odd){ background: rgba(255,255,255,.02); }
-  tbody tr:hover{ background: rgba(110,231,255,.06); }
-
-  .rank{
-    width: 64px;
-    text-align: right;
-    color: rgba(245,247,255,.70);
-    font-variant-numeric: tabular-nums;
+  /* Slightly tighter spacing on very small screens */
+  @media (max-width: 420px){
+    .vpRow{ padding: 10px; grid-template-columns: 54px 1fr; }
+    .vpBadge{ width: 54px; }
+    .vpTitle{ font-size: 15px; }
+    .vpMeta{ font-size: 13px; }
+  }
+  /* Stack voting power pills vertically on mobile */
+@media (max-width: 620px){
+  .vpMeta{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
   }
 
-  .num{
-    text-align:right;
-    font-variant-numeric: tabular-nums;
+  .vpPill{
+    width: 100%;
+    justify-content: space-between;
   }
+}
+/* Force long URLs to wrap instead of overflowing */
+.captionLine a{
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
 
-  .workgroupAccent,
-  .headcountAccent{
-    color: var(--accent);
-    font-weight: 950;
-  }
-
-  @media (max-width: 520px){
-    table{ min-width: 640px; }
-    tbody td, thead th{ padding: 9px 10px; }
-  }
-
-  /* =======================
-     CAPTION / URLS
-  ======================= */
-  .captionLine{
-    margin-top: 10px;
-    color: var(--muted);
-    font-size: 12.5px;
-    line-height: 1.35;
-  }
-  .captionLine a{
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 12.5px;
-    word-break: break-all;
-  }
-
-  /* =======================
-     INFO BOX (OPTIONAL)
-  ======================= */
-  .infoBox{
-    border-radius: var(--radius);
-    border: 1px solid rgba(255,255,255,.10);
-    background:
-      radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
-      radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
-      rgba(255,255,255,.02);
-    box-shadow: 0 10px 22px rgba(0,0,0,.18);
-    padding: 14px 16px;
-    margin-top: 12px;
-  }
-  .infoBox h3{
-    margin:0 0 8px 0;
-    font-size: 14px;
-    font-weight: 900;
-    letter-spacing: -.2px;
-    color: var(--text);
-  }
-  .infoBox p{
-    margin:0;
-    color: var(--muted);
-    font-size: 13px;
-  }
 </style>
-
 </head>
 
 <body>
-  <!-- ✅ GoatCounter HUD -->
   <div id="gc-hud" aria-hidden="true">Views: —</div>
 
   <div class="wrap">
-    <!-- Header -->
+    <!-- TOPBAR -->
     <div class="topbar">
       <div class="brand">
         <div class="mark" aria-hidden="true"></div>
@@ -502,7 +739,7 @@
       </div>
     </div>
 
-    <!-- BOX 1: Title + callout inside -->
+    <!-- Voting Power preview -->
     <div class="tableCard">
       <h1 class="bigTitle">
         <span class="grad">Where the Voting Power Lies</span>
@@ -512,7 +749,6 @@
         When voting is one person, one vote, headcount shows where the numerical weight sits.
       </p>
 
-      <!-- Top cohort callout -->
       <div class="topCohort" aria-label="Top cohort by total headcount">
         <div>
           <div class="kicker">Top cohort by total headcount</div>
@@ -529,74 +765,361 @@
       </div>
     </div>
 
-    <!-- BOX 2: Table -->
-    <section class="section">
-      <div class="tableWrap" role="region" aria-label="Voting power table">
-        <table>
-          <thead>
-            <tr>
-              <th class="rank">#</th>
-              <th>Employee Workgroup</th>
-              <th class="num">Total headcount</th>
-              <th class="num">% of total headcount</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td class="rank">1</td>
-              <td class="workgroup"><span class="workgroupAccent">Administrative Services</span></td>
-              <td class="num"><span class="headcountAccent">23,970</span></td>
-              <td class="num">63.64%</td>
-            </tr>
-
-            <tr>
-              <td class="rank">2</td>
-              <td class="workgroup">Operational Services</td>
-              <td class="num">3,805</td>
-              <td class="num">10.17%</td>
-            </tr>
-
-            <tr>
-              <td class="rank">3</td>
-              <td class="workgroup">Professional Officers</td>
-              <td class="num">1,816</td>
-              <td class="num">4.86%</td>
-            </tr>
-
-            <tr>
-              <td class="rank">4</td>
-              <td class="workgroup">Correctional Officers</td>
-              <td class="num">1,055</td>
-              <td class="num">2.82%</td>
-            </tr>
-
-            <tr>
-              <td class="rank">5</td>
-              <td class="workgroup">Technical Services</td>
-              <td class="num">758</td>
-              <td class="num">2.03%</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="captionLine">
-        Extracted from the “SA public sector by employee and appointment types” table on page 22. Totals shown only.
-        <br/>
-        Source:
-        <a href="https://www.publicsector.sa.gov.au/__data/assets/pdf_file/0020/1205462/2025-Workforce-Information-Report.pdf" target="_blank" rel="noopener">
-          https://www.publicsector.sa.gov.au/__data/assets/pdf_file/0020/1205462/2025-Workforce-Information-Report.pdf
-        </a>
-      </div>
-    </section>
+    <section class="section afterVotingGap">
+  <!-- Desktop/tablet table -->
+  <div class="vpTableWrap" role="region" aria-label="Voting power table">
+    <table class="vpTable">
+      <thead>
+        <tr>
+          <th class="vpColRank">#</th>
+          <th class="vpColWG">Employee Workgroup</th>
+          <th class="vpColHC vpNum">Total headcount</th>
+          <th class="vpColPct vpNum">% of total headcount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="vpNum">1</td>
+          <td><span class="vpAccentWG">Administrative Services</span></td>
+          <td class="vpNum"><span class="vpAccentHC">23,970</span></td>
+          <td class="vpNum">63.64%</td>
+        </tr>
+        <tr>
+          <td class="vpNum">2</td>
+          <td>Operational Services</td>
+          <td class="vpNum">3,805</td>
+          <td class="vpNum">10.17%</td>
+        </tr>
+        <tr>
+          <td class="vpNum">3</td>
+          <td>Professional Officers</td>
+          <td class="vpNum">1,816</td>
+          <td class="vpNum">4.86%</td>
+        </tr>
+        <tr>
+          <td class="vpNum">4</td>
+          <td>Correctional Officers</td>
+          <td class="vpNum">1,055</td>
+          <td class="vpNum">2.82%</td>
+        </tr>
+        <tr>
+          <td class="vpNum">5</td>
+          <td>Technical Services</td>
+          <td class="vpNum">758</td>
+          <td class="vpNum">2.03%</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <!-- ✅ GoatCounter tracking (loaded once) -->
+  <!-- Mobile compact card list -->
+  <div class="vpList" aria-label="Voting power list (mobile)">
+    <div class="vpRow">
+      <div class="vpBadge isTop">#1</div>
+      <div class="vpMain">
+        <p class="vpTitle"><span class="vpAccentWG">Administrative Services</span></p>
+        <p class="vpMeta">
+          <span class="vpPill">Headcount <strong class="vpNum vpAccentHC">23,970</strong></span>
+          <span class="vpPill">% of total headcount <strong class="vpNum">63.64%</strong></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="vpRow">
+      <div class="vpBadge">#2</div>
+      <div class="vpMain">
+        <p class="vpTitle">Operational Services</p>
+        <p class="vpMeta">
+          <span class="vpPill">Headcount <strong class="vpNum">3,805</strong></span>
+          <span class="vpPill">% of total headcount <strong class="vpNum">10.17%</strong></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="vpRow">
+      <div class="vpBadge">#3</div>
+      <div class="vpMain">
+        <p class="vpTitle">Professional Officers</p>
+        <p class="vpMeta">
+          <span class="vpPill">Headcount <strong class="vpNum">1,816</strong></span>
+          <span class="vpPill">% of total headcount <strong class="vpNum">4.86%</strong></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="vpRow">
+      <div class="vpBadge">#4</div>
+      <div class="vpMain">
+        <p class="vpTitle">Correctional Officers</p>
+        <p class="vpMeta">
+          <span class="vpPill">Headcount <strong class="vpNum">1,055</strong></span>
+          <span class="vpPill">% of total headcount <strong class="vpNum">2.82%</strong></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="vpRow">
+      <div class="vpBadge">#5</div>
+      <div class="vpMain">
+        <p class="vpTitle">Technical Services</p>
+        <p class="vpMeta">
+          <span class="vpPill">Headcount <strong class="vpNum">758</strong></span>
+          <span class="vpPill">% of total headcount <strong class="vpNum">2.03%</strong></span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="captionLine">
+    Extracted from the “SA public sector by employee and appointment types” table on page 22. Totals shown only.
+    <br/>
+    Source:
+    <a href="https://www.publicsector.sa.gov.au/__data/assets/pdf_file/0020/1205462/2025-Workforce-Information-Report.pdf" target="_blank" rel="noopener">
+      https://www.publicsector.sa.gov.au/__data/assets/pdf_file/0020/1205462/2025-Workforce-Information-Report.pdf
+    </a>
+  </div>
+</section>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="tag">MYTH BUST • ASO POWER</div>
+
+      <h1 class="h1">
+        <span class="grad">Myth:</span> “PSA can’t fight because ASOs aren’t members.”
+      </h1>
+
+      <p class="sub">
+        <span class="grad"><strong>Reality check:</strong></span> using the councillor-based member estimates,
+        ASOs are about <span class="grad"><strong>31.25%</strong></span> of the <strong>average implied membership</strong> shown below —
+        the <strong>biggest slice</strong>.<br><br>
+        In a <strong>member-run union</strong>, that means: <span class="grad"><strong>you’ve got power</strong></span>.
+      </p>
+
+      <div class="mega" style="margin-top:12px;">
+        <p class="megaK">Plain English</p>
+        <p class="megaT">More ASO members = more ASO councillors.</p>
+        <p class="megaP">
+          The rules scale councillors by membership. So if ASOs are the biggest bloc,
+          the question isn’t “why aren’t there more ASO members?” — it’s:
+        </p>
+        <p class="megaT" style="margin-top:10px;">
+          <span class="grad"><strong>Why aren't the biggest bloc being backed by the PSA?</strong></span>
+        </p>
+      </div>
+    </section>
+
+    <!-- 500 RULE -->
+    <section class="section">
+      <div class="mega">
+        <p class="megaK">The councillor rule (simple)</p>
+        <p class="megaT"><span class="grad">~500 members</span> = <span class="grad">1 councillor</span></p>
+        <p class="megaP">
+          That’s why the numbers below matter: councillors are meant to follow members.
+        </p>
+      </div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="section" id="numbers">
+      <div class="statWindow" aria-label="ASO highlight">
+        <p class="statK">ASO myth bust (in one hit)</p>
+        <p class="statBig"><span class="gText">ASOs ≈ 31.25%</span> of implied avg membership</p>
+        <p class="statP">
+          That’s the largest slice in this estimate not including overlap into Health and Education:
+          so “ASOs aren’t members” is not the point. The point is:
+          <span class="gText"><strong>Why aren't they being backed like the biggest bloc?</strong></span>
+        </p>
+
+        <div class="statGrid">
+          <div class="statCard">
+            <p class="statK">ASO electorate (Electorate 5)</p>
+            <p class="statBig"><span class="gText">2,501 – 3,000</span></p>
+            <p class="statP">
+              Avg: <strong class="num">2,750.5</strong> members • Councillors: <strong class="num">6</strong>
+            </p>
+          </div>
+
+          <div class="statCard">
+            <p class="statK">Total implied membership shown</p>
+            <p class="statBig"><span class="gText">7,604 – 10,000</span></p>
+            <p class="statP">
+              Avg: <strong class="num">8,802</strong> members across the electorates listed.
+            </p>
+          </div>
+        </div>
+
+        <div class="rankList" aria-label="Ranked list">
+          <div class="rankRow">
+            <div class="rankBadge isASO">#1</div>
+            <div class="rankMain">
+              <p class="rankTitle"><span class="gText">ASOs</span> (Electorate 5)</p>
+              <p class="rankMeta">
+                Avg <span class="num">2,750.5</span> • % of total members <span class="num">31.25%</span> • Councillors <span class="num">6</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="rankRow">
+            <div class="rankBadge">#2</div>
+            <div class="rankMain">
+              <p class="rankTitle">Health (Electorate 2)</p>
+              <p class="rankMeta">
+                Avg <span class="num">2,250.5</span> • % of total members <span class="num">25.57%</span> • Councillors <span class="num">5</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="rankRow">
+            <div class="rankBadge">#2</div>
+            <div class="rankMain">
+              <p class="rankTitle">Operational Services (Electorate 7)</p>
+              <p class="rankMeta">
+                Avg <span class="num">2,250.5</span> • % of total members <span class="num">25.57%</span> • Councillors <span class="num">5</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="rankRow">
+            <div class="rankBadge">#4</div>
+            <div class="rankMain">
+              <p class="rankTitle">Professionals (Electorate 6)</p>
+              <p class="rankMeta">
+                Avg <span class="num">750.5</span> • % of total members <span class="num">8.52%</span> • Councillors <span class="num">2</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="rankRow">
+            <div class="rankBadge">#5</div>
+            <div class="rankMain">
+              <p class="rankTitle">Schools (Electorate 3)</p>
+              <p class="rankMeta">
+                Avg <span class="num">400</span> • % of total members <span class="num">4.54%</span> • Councillors <span class="num">1</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="rankRow">
+            <div class="rankBadge">#5</div>
+            <div class="rankMain">
+              <p class="rankTitle">Other (Electorate 8)</p>
+              <p class="rankMeta">
+                Avg <span class="num">400</span> • % of total members <span class="num">4.54%</span> • Councillors <span class="num">1</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ Updated bottom-line copy -->
+      <div class="mega">
+        <p class="megaK">Bottom line</p>
+        <p class="megaT">The ASO myth from PSA officials is busted, but has caused division, in reality: <span class="grad"><strong>Every Member Counts.</strong></span></p>
+        <p class="megaP">
+          So if any member speak up and get shut down, that’s not “low density”.
+          That’s a <span class="grad"><strong>representation problem</strong></span>.
+        </p>
+      </div>
+    </section>
+
+    <!-- TAKE IT BACK -->
+    <section class="section" id="next">
+      <div class="mega">
+        <p class="megaK">What you can do next</p>
+        <p class="megaT"><span class="grad">Take it back</span> for members.</p>
+        <p class="megaP">
+          You don’t have to leave. You can use the rules to <strong>force a meeting</strong>,
+          <strong>force a vote</strong>, and <strong>hold officers accountable</strong>.
+        </p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <h3 class="stepTitle"><span class="gText">1) Start with the idea: members control the union</span></h3>
+          <div class="ruleTag">Rule reference: <strong>CPSU SA Branch Rule 24</strong> (“Control by members”)</div>
+          <p class="stepText">This is the key mindset shift. You’re not “customers”. You’re the owners.</p>
+          <ul class="bullets">
+            <li>Turn up, vote, and bring others.</li>
+            <li>Use meetings + ballots to set direction.</li>
+            <li>Don’t get shouted down — get organised.</li>
+          </ul>
+        </div>
+
+        <div class="step">
+          <h3 class="stepTitle"><span class="gText">2) Force a member meeting (Special General Meeting)</span></h3>
+          <div class="ruleTag">Rule reference: <strong>PSA Rule 78–79</strong> (100-member requisition + members can convene)</div>
+          <p class="stepText">If leadership won’t listen, you make it formal: call a meeting with a clear motion.</p>
+          <ul class="bullets">
+            <li>Get <strong>100 members</strong> to sign a written requisition (state the objective).</li>
+            <li>If the Council drags it out, the rules say members can convene it themselves (after time limits).</li>
+            <li>Keep the motion simple: “Rescind X” / “Require Y” / “Publish Z”.</li>
+          </ul>
+        </div>
+
+        <div class="step">
+          <h3 class="stepTitle"><span class="gText">3) Force a vote of all members (Referendum)</span></h3>
+          <div class="ruleTag">Rule reference: <strong>CPSU SA Branch Rule 25</strong> (10% of financial members)</div>
+          <p class="stepText">If you want the whole membership to decide, you can push a referendum.</p>
+          <ul class="bullets">
+            <li>Get signatures from <strong>10% of financial members</strong>.</li>
+            <li>Write it as an <strong>affirmative question</strong> (“Yes/No”).</li>
+            <li>Attach a short, factual statement supporting it.</li>
+          </ul>
+        </div>
+
+        <div class="step">
+          <h3 class="stepTitle"><span class="gText">4) Hold officers accountable (No-confidence / censure motion)</span></h3>
+          <div class="ruleTag">Rule reference: <strong>CPSU SA Branch Rule 19</strong> (notice + 21 days + 2/3 vote)</div>
+          <p class="stepText">If an officer’s conduct is the problem, you can make it official.</p>
+          <ul class="bullets">
+            <li>Give notice at a prior meeting.</li>
+            <li>Give the officer the allegations in writing <strong>at least 21 days</strong> before the meeting.</li>
+            <li>It passes with a <strong>two-thirds majority</strong> of those present and entitled to vote.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mega">
+        <p class="megaK">If the deal is voted down</p>
+        <p class="megaT">A NO vote means: back to the table.</p>
+        <p class="megaP">
+          It doesn’t “break everything”. It’s a signal: “This isn’t good enough.”
+          The power move is pairing a NO vote with a clear member plan: what’s required next, and what escalation members will support.
+        </p>
+      </div>
+
+      <p class="footerLink">
+        Want to read the PSA rulebook yourself? 👉
+        <a href="https://www.saet.sa.gov.au/app/uploads/2017/07/public_service_association_of_south_australia_incorporated.pdf" target="_blank" rel="noopener">
+          PSA Rulebook (SAET PDF)
+        </a>
+      </p>
+
+      <p class="footerLink">
+        If you're interested in the CPSU rulebook, go here 👉
+        <a href="https://www.fwc.gov.au/documents/organisations/current_rulebooks/Current-RB-090VSAS.docx" target="_blank" rel="noopener">
+          CPSU Rulebook (Fairwork Commission Word Document)
+        </a>
+      </p>
+    </section>
+
+    <!-- DISCLAIMER -->
+    <section class="section" id="disclaimer">
+      <div class="mega">
+        <p class="megaK">Disclaimer</p>
+        <p class="megaP">
+          This page is an educational explainer. It’s not legal advice. Always check the latest registered rules and get proper advice if you plan formal motions, ballots, or industrial steps.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- GoatCounter -->
   <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
           async src="https://gc.zgo.at/count.js"></script>
 
-  <!-- ✅ Custom JSON counter -> HUD text "Views: 123" -->
+  <!-- GoatCounter HUD -->
   <script>
     (function(){
       const el = document.getElementById('gc-hud');
