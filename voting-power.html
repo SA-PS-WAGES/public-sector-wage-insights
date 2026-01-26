@@ -33,31 +33,11 @@
     }
     a{ color:var(--accent); text-decoration:none; }
     a:hover{ text-decoration:underline; }
-    .wrap{ max-width:var(--max); margin:0 auto; padding: 18px 14px 28px; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding: 32px 14px 28px; }
 
-    /* GoatCounter HUD */
-    #gc-hud{
-      position: fixed; top: 10px; right: 12px; z-index: 10000;
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 6px 8px; min-height: 22px; max-width: 140px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(11,18,32,.6);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      font-size: 10px; font-weight: 900; letter-spacing: .06em;
-      color: rgba(245,247,255,.9);
-      box-shadow: 0 6px 18px rgba(0,0,0,.22);
-      opacity: .88;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      user-select: none;
-    }
-    #gc-hud:hover{ opacity: 1; }
-    @media (max-width: 520px){
-      #gc-hud{ top: 64px; right: 12px; }
-    }
-
-    /* TOP BAR (MATCH VOTING POWER) */
+    /* Header */
     .topbar{
+      position: relative;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -69,6 +49,25 @@
       backdrop-filter:blur(8px);
       -webkit-backdrop-filter: blur(8px);
       margin-bottom:22px;
+    }
+
+    #gc-hud{
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      color: rgba(245,247,255,.95);
+      opacity: .7;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+      z-index: 2;
     }
     .brand{
       display:flex;
@@ -90,12 +89,13 @@
     .brandname{
       font-weight:850;
       letter-spacing:.2px;
+      padding-left: 6px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
       color: rgba(245,247,255,.92);
       line-height:1.15;
-      font-size: 14px;
+      font-size: 18px;
     }
     .nav{
       display:flex;
@@ -103,32 +103,74 @@
       flex-wrap:wrap;
       justify-content:flex-end;
       align-items:center;
+      margin-left: auto;
     }
-    .pill{
+    .iconPill{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:8px;
-      padding:10px 14px;
+      width:36px;
+      height:36px;
       border-radius:999px;
       border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      color:var(--text);
-      font-size:14px;
-      line-height:1;
-      white-space:nowrap;
-      font-weight: 900;
+      background: rgba(255,255,255,.03);
+      color: var(--accent);
+      flex:0 0 auto;
+      cursor:pointer;
       -webkit-tap-highlight-color: transparent;
     }
-    .pill strong{
-      color:var(--accent);
-      font-weight:900;
-      letter-spacing:.2px;
+    .iconPill svg{ width:16px; height:16px; fill: currentColor; }
+    .iconPill:hover{ background: rgba(255,255,255,.06); text-decoration:none; }
+    .homePill{ text-decoration:none; }
+
+    .menuIconWrap{ position: relative; }
+    details.menu{ position: relative; z-index: 2; }
+    details.menu summary{ list-style:none; }
+    details.menu summary::-webkit-details-marker{ display:none; }
+    .menuList{
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 240px;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(110,231,255,.25);
+      background: rgba(7,10,18,.98);
+      box-shadow: 0 20px 44px rgba(0,0,0,.5);
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: all .2s ease;
     }
-    .pill:hover{ background:rgba(255,255,255,.06); }
-    .pill.isActive{
-      border-color: rgba(110,231,255,.35);
-      background: rgba(110,231,255,.08);
+    .menu[open] .menuList{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .menuLink{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 8px 10px;
+      border-radius: 12px;
+      color: rgba(245,247,255,.92);
+      font-weight: 850;
+      font-size: 13px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid transparent;
+    }
+    .menuLink:hover{
+      border-color: rgba(110,231,255,.45);
+      background: rgba(110,231,255,.12);
+      text-decoration:none;
+    }
+    .menuLink.isActive{
+      border-color: rgba(110,231,255,.6);
+      background: linear-gradient(135deg, rgba(110,231,255,.18), rgba(167,139,250,.18));
+      color: rgba(245,247,255,.98);
     }
     @media (max-width: 720px){
       .topbar{
@@ -136,16 +178,26 @@
         padding:12px;
         gap:12px;
       }
-      .pill{
-        padding:10px 12px;
-        font-size:13.5px;
-      }
       .brand{ align-items:flex-start; }
       .brandname{
-        white-space: normal;
-        overflow: visible;
-        text-overflow: unset;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         line-height: 1.15;
+        font-size: 13px;
+      }
+      .nav{
+        width: auto;
+        justify-content: flex-end;
+      }
+      .iconPill{ width:32px; height:32px; }
+      .iconPill svg{ width:14px; height:14px; }
+      .menuList{
+        left: auto;
+        right: 0;
+        min-width: 240px;
+        width: 240px;
+        max-width: 90vw;
       }
     }
 
@@ -718,24 +770,71 @@
   white-space: normal;
 }
 
-</style>
+  /* Footer */
+  .footer{
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.03);
+    text-align: center;
+    box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  }
+  .backToTop{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(110,231,255,.4);
+    background: rgba(110,231,255,.12);
+    color: var(--accent);
+    font-weight: 900;
+    letter-spacing: .2px;
+    text-decoration: none;
+  }
+  .backToTop:hover{
+    background: rgba(110,231,255,.2);
+    text-decoration: none;
+  }
+
+  </style>
+  <link rel="stylesheet" href="assets/css/theme.css">
 </head>
 
-<body>
-  <div id="gc-hud" aria-hidden="true">Views: —</div>
-
+<body id="top">
   <div class="wrap">
     <!-- TOPBAR -->
     <div class="topbar">
+      <div id="gc-hud" aria-hidden="true">Views: —</div>
       <div class="brand">
         <div class="mark" aria-hidden="true"></div>
-        <div class="brandname">SA Public Sector Salaried Employees Wage Insights (Public Data)</div>
+        <div class="brandname">EB25 It's <i>still</i> about pay</div>
       </div>
 
       <div class="nav">
-        <a class="pill" href="index.html"><strong>Home</strong></a>
-        <a class="pill" href="voting-power.html"><strong>Voting Power</strong></a>
-        <a class="pill" href="methodology.html"><strong>Sources &amp; Method</strong></a>
+        <a class="iconPill homePill" href="index.html" aria-label="Home">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.2 3 10.4v9.1c0 .7.6 1.3 1.3 1.3h5.4v-6.1h4.6v6.1h5.4c.7 0 1.3-.6 1.3-1.3v-9.1L12 3.2z"/>
+          </svg>
+        </a>
+
+        <div class="menuIconWrap" aria-label="Menu">
+          <details class="menu">
+            <summary class="iconPill" aria-label="Open menu">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 6.5h16c.6 0 1-.4 1-1s-.4-1-1-1H4c-.6 0-1 .4-1 1s.4 1 1 1zm16 5.5H4c-.6 0-1 .4-1 1s.4 1 1 1h16c.6 0 1-.4 1-1s-.4-1-1-1zm0 7H4c-.6 0-1 .4-1 1s.4 1 1 1h16c.6 0 1-.4 1-1s-.4-1-1-1z"/>
+              </svg>
+            </summary>
+
+            <div class="menuList">
+              <a class="menuLink" href="index.html">Home</a>
+              <a class="menuLink" href="voting-power.html">Voting Power</a>
+              <a class="menuLink isActive" href="Union Reform.html">The Member's Union</a>
+              <a class="menuLink" href="methodology.html">Sources &amp; Method</a>
+            </div>
+          </details>
+        </div>
       </div>
     </div>
 
@@ -910,13 +1009,11 @@
 
     <!-- 500 RULE -->
     <section class="section">
-      <div class="mega">
-        <p class="megaK">The councillor rule (simple)</p>
-        <p class="megaT"><span class="grad">~500 members</span> = <span class="grad">1 councillor</span></p>
-        <p class="megaP">
-          That’s why the numbers below matter: councillors are meant to follow members.
-        </p>
-      </div>
+      <p class="megaK">The councillor rule (simple)</p>
+      <p class="megaT"><span class="grad">~500 members</span> = <span class="grad">1 councillor</span></p>
+      <p class="megaP">
+        That’s why the numbers below matter: councillors are meant to follow members.
+      </p>
     </section>
 
     <!-- SUMMARY -->
@@ -1012,26 +1109,22 @@
       </div>
 
       <!-- ✅ Updated bottom-line copy -->
-      <div class="mega">
-        <p class="megaK">Bottom line</p>
-        <p class="megaT">The ASO myth from PSA officials is busted, but has caused division, in reality: <span class="grad"><strong>Every Member Counts.</strong></span></p>
-        <p class="megaP">
-          So if any member speak up and get shut down, that’s not “low density”.
-          That’s a <span class="grad"><strong>representation problem</strong></span>.
-        </p>
-      </div>
+      <p class="megaK">Bottom line</p>
+      <p class="megaT">The ASO myth from PSA officials is busted, but has caused division, in reality: <span class="grad"><strong>Every Member Counts.</strong></span></p>
+      <p class="megaP">
+        So if any member speak up and get shut down, that’s not “low density”.
+        That’s a <span class="grad"><strong>representation problem</strong></span>.
+      </p>
     </section>
 
     <!-- TAKE IT BACK -->
     <section class="section" id="next">
-      <div class="mega">
-        <p class="megaK">What you can do next</p>
-        <p class="megaT"><span class="grad">Take it back</span> for members.</p>
-        <p class="megaP">
-          You don’t have to leave. You can use the rules to <strong>force a meeting</strong>,
-          <strong>force a vote</strong>, and <strong>hold officers accountable</strong>.
-        </p>
-      </div>
+      <p class="megaK">What you can do next</p>
+      <p class="megaT"><span class="grad">Take it back</span> for members.</p>
+      <p class="megaP">
+        You don’t have to leave. You can use the rules to <strong>force a meeting</strong>,
+        <strong>force a vote</strong>, and <strong>hold officers accountable</strong>.
+      </p>
 
       <div class="steps">
         <div class="step">
@@ -1054,6 +1147,9 @@
             <li>If the Council drags it out, the rules say members can convene it themselves (after time limits).</li>
             <li>Keep the motion simple: “Rescind X” / “Require Y” / “Publish Z”.</li>
           </ul>
+          <p class="footerLink">
+            <a href="/assets/downloads/psa-sgm-requisition-final-v3" download>Download a copy of the requisition template here</a>
+          </p>
         </div>
 
         <div class="step">
@@ -1079,14 +1175,12 @@
         </div>
       </div>
 
-      <div class="mega">
-        <p class="megaK">If the deal is voted down</p>
-        <p class="megaT">A NO vote means: back to the table.</p>
-        <p class="megaP">
-          It doesn’t “break everything”. It’s a signal: “This isn’t good enough.”
-          The power move is pairing a NO vote with a clear member plan: what’s required next, and what escalation members will support.
-        </p>
-      </div>
+      <p class="megaK">If the deal is voted down</p>
+      <p class="megaT">A NO vote means: back to the table.</p>
+      <p class="megaP">
+        It doesn’t “break everything”. It’s a signal: “This isn’t good enough.”
+        The power move is pairing a NO vote with a clear member plan: what’s required next, and what escalation members will support.
+      </p>
 
       <p class="footerLink">
         Want to read the PSA rulebook yourself? 👉
@@ -1105,15 +1199,35 @@
 
     <!-- DISCLAIMER -->
     <section class="section" id="disclaimer">
-      <div class="mega">
-        <p class="megaK">Disclaimer</p>
-        <p class="megaP">
-          This page is an educational explainer. It’s not legal advice. Always check the latest registered rules and get proper advice if you plan formal motions, ballots, or industrial steps.
-        </p>
-      </div>
+      <p class="megaK">Disclaimer</p>
+      <p class="megaP">
+        This page is an educational explainer. It’s not legal advice. Always check the latest registered rules and get proper advice if you plan formal motions, ballots, or industrial steps.
+      </p>
     </section>
 
+    <footer class="footer">
+      <a class="backToTop" href="#top">Back to top</a>
+    </footer>
+
   </div>
+
+  <script>
+    document.addEventListener('click', (event) => {
+      document.querySelectorAll('details.menu[open]').forEach((menu) => {
+        if (!menu.contains(event.target)) {
+          menu.removeAttribute('open');
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('details.menu[open]').forEach((menu) => {
+          menu.removeAttribute('open');
+        });
+      }
+    });
+  </script>
 
   <!-- GoatCounter -->
   <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"

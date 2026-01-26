@@ -1,0 +1,1137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EB25: It's still about pay - The Member's Union</title>
+
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1220;
+      --line:rgba(255,255,255,.10);
+      --text:#F5F7FF;
+      --muted:rgba(245,247,255,.72);
+      --accent:#6EE7FF;   /* neon blue */
+      --accent2:#A78BFA;  /* neon purple */
+      --radius:18px;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --max: 1100px;
+
+      --glass: rgba(255,255,255,.03);
+      --glass2: rgba(255,255,255,.04);
+      --dark: rgba(0,0,0,.18);
+
+      /* row highlight fills */
+      --rowBlue: rgba(110,231,255,.10);
+      --rowPurple: rgba(167,139,250,.10);
+      --rowBorderBlue: rgba(110,231,255,.28);
+      --rowBorderPurple: rgba(167,139,250,.28);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 12% 10%, rgba(110,231,255,.20), transparent 60%),
+        radial-gradient(700px 500px at 88% 0%, rgba(167,139,250,.22), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      line-height:1.45;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    a, .footerLink a{ overflow-wrap:anywhere; word-break: break-word; }
+
+    .wrap{ max-width:var(--max); margin:0 auto; padding: 32px 14px 28px; }
+
+    /* === STRONG GRADIENT / EMPHASIS === */
+    .grad{
+      background: linear-gradient(92deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+    .hi{
+      background: linear-gradient(92deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      font-weight: 980;
+    }
+    .k{ color: var(--accent); font-weight: 950; }
+    .k2{ color: rgba(167,139,250,.98); font-weight: 950; }
+
+    /* ✅ NEW: uniform gradient strong you can re-use anywhere */
+    .strongGrad,
+    strong.strongGrad{
+      font-weight: 990;
+      background: linear-gradient(92deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+
+    /* Strong header label */
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(135deg, rgba(110,231,255,.12), rgba(167,139,250,.12)),
+        rgba(0,0,0,.14);
+      font-weight: 950;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 11.5px;
+      color: rgba(245,247,255,.92);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
+
+    /* Header */
+    .topbar{
+      position: relative;
+      display:flex;
+      align-items:center; /* keep icons centered even if text wraps */
+      justify-content:space-between;
+      gap:14px;
+      padding: 10px 12px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      margin-bottom: 22px;
+    }
+
+    #gc-hud{
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      color: rgba(245,247,255,.95);
+      opacity: .7;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+      z-index: 2;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .mark{
+      width:34px;
+      height:34px;
+      border-radius: 12px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(110,231,255,.95), transparent 70%),
+        radial-gradient(18px 18px at 70% 70%, rgba(167,139,250,.95), transparent 70%);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      flex:0 0 auto;
+    }
+    .brandname{
+      font-weight: 850;
+      letter-spacing: .2px;
+      padding-left: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.15;
+      font-size: 18px;
+      color: rgba(245,247,255,.92);
+    }
+
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+      margin-left: auto;
+    }
+
+    /* icon pills (home + menu) */
+    .iconPill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:36px;
+      height:36px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--accent);
+      flex:0 0 auto;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .iconPill svg{ width:16px; height:16px; fill: currentColor; }
+    .iconPill:hover{ background: rgba(255,255,255,.06); text-decoration:none; }
+    .homePill{ text-decoration:none; }
+
+    /* Menu icon dropdown */
+    .menuIconWrap{ position: relative; }
+    details.menu{ position: relative; z-index: 3; }
+    details.menu summary{ list-style:none; }
+    details.menu summary::-webkit-details-marker{ display:none; }
+
+    .menuList{
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 240px;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(110,231,255,.25);
+      background: rgba(7,10,18,.98);
+      box-shadow: 0 20px 44px rgba(0,0,0,.5);
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: all .2s ease;
+    }
+    details.menu[open] .menuList{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .menuLink{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 8px 10px;
+      border-radius: 12px;
+      color: rgba(245,247,255,.92);
+      font-weight: 850;
+      font-size: 13px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid transparent;
+    }
+    .menuLink:hover{
+      border-color: rgba(110,231,255,.45);
+      background: rgba(110,231,255,.12);
+      text-decoration:none;
+    }
+    .menuLink.isActive{
+      border-color: rgba(110,231,255,.6);
+      background: linear-gradient(135deg, rgba(110,231,255,.18), rgba(167,139,250,.18));
+      color: rgba(245,247,255,.98);
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 0;
+      padding: 18px 14px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(110,231,255,.22);
+      background:
+        radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.20), transparent 55%),
+        radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.20), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .h1{
+      margin: 10px 0 8px 0;
+      font-size: clamp(32px, 8.8vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -1px;
+      font-weight: 990;
+    }
+    .sub{
+      margin: 10px 0 0 0;
+      font-size: clamp(16px, 4.6vw, 20px);
+      font-weight: 850;
+      color: rgba(245,247,255,.90);
+      line-height: 1.55;
+      max-width: 70ch;
+    }
+
+    /* Sections */
+    .section{
+      margin-top: 14px;
+      padding: 14px 12px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 30px rgba(0,0,0,.16);
+    }
+
+    /* BIG callout */
+    .mega{
+      margin-top: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(520px 180px at 18% 0%, rgba(110,231,255,.12), transparent 62%),
+        radial-gradient(520px 180px at 82% 0%, rgba(167,139,250,.12), transparent 62%),
+        rgba(0,0,0,.18);
+      padding: 14px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.22);
+    }
+
+    .megaK{
+      margin:0 0 8px 0;
+      font-size: 12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color: rgba(245,247,255,.76);
+      font-weight: 950;
+    }
+
+    .megaT{
+      margin:0;
+      font-size: clamp(26px, 7.2vw, 46px);
+      font-weight: 990;
+      letter-spacing:-.8px;
+      line-height:1.05;
+    }
+    .megaT .pop{
+      background: linear-gradient(92deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      text-shadow: 0 10px 30px rgba(0,0,0,.28);
+    }
+
+    .megaP{
+      margin: 12px 0 0 0;
+      font-size: clamp(15px, 4.2vw, 19px);
+      font-weight: 800;
+      color: rgba(245,247,255,.90);
+      line-height: 1.6;
+    }
+
+    /* Quick highlight callouts */
+    .callouts{
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .callout{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(135deg, rgba(110,231,255,.10), rgba(167,139,250,.10)),
+        rgba(0,0,0,.14);
+      padding: 10px 12px;
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+    }
+    .calloutK{
+      margin:0;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(245,247,255,.76);
+      font-weight: 950;
+    }
+    .calloutV{
+      margin: 8px 0 0 0;
+      font-size: 15px;
+      font-weight: 950;
+      color: rgba(245,247,255,.96);
+      line-height: 1.35;
+    }
+    .calloutV .hi{ font-weight: 990; }
+
+    /* === Stacked “step” layout === */
+    .steps{
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .step{
+      display:grid;
+      grid-template-columns: 42px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+      box-shadow: 0 12px 26px rgba(0,0,0,.14);
+    }
+    .step:nth-child(odd){
+      border-color: rgba(110,231,255,.28);
+      background: linear-gradient(135deg, rgba(110,231,255,.10), rgba(0,0,0,.18));
+    }
+    .step:nth-child(even){
+      border-color: rgba(167,139,250,.28);
+      background: linear-gradient(135deg, rgba(167,139,250,.10), rgba(0,0,0,.18));
+    }
+    .stepN{
+      width:42px;
+      height:42px;
+      border-radius: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 990;
+      font-variant-numeric: tabular-nums;
+      color: rgba(7,10,18,.98);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+    }
+    .step:nth-child(odd) .stepN{ background: rgba(110,231,255,.95); }
+    .step:nth-child(even) .stepN{ background: rgba(167,139,250,.95); }
+    .stepT{
+      margin:0;
+      font-weight: 980;
+      font-size: 16px;
+      color: rgba(245,247,255,.98);
+      line-height: 1.25;
+    }
+    .stepP{
+      margin: 6px 0 0 0;
+      font-weight: 820;
+      font-size: 15px;
+      line-height: 1.55;
+      color: rgba(245,247,255,.90);
+    }
+
+    /* ✅ NEW: side-by-side cards for the “process” questions */
+    .qCards{
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .qCard{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        linear-gradient(135deg, rgba(110,231,255,.10), rgba(167,139,250,.10)),
+        rgba(0,0,0,.14);
+      padding: 12px 12px;
+      box-shadow: 0 12px 26px rgba(0,0,0,.18);
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 120px;
+    }
+    .qCard:nth-child(odd){
+      border-color: rgba(110,231,255,.28);
+      background: linear-gradient(135deg, rgba(110,231,255,.12), rgba(0,0,0,.18));
+    }
+    .qCard:nth-child(even){
+      border-color: rgba(167,139,250,.28);
+      background: linear-gradient(135deg, rgba(167,139,250,.12), rgba(0,0,0,.18));
+    }
+    .qPill{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      font-weight: 950;
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(245,247,255,.92);
+      background: rgba(255,255,255,.04);
+      white-space: nowrap;
+      width: fit-content;
+    }
+    .qCard:nth-child(odd) .qPill{
+      border-color: rgba(110,231,255,.30);
+      background: rgba(110,231,255,.10);
+    }
+    .qCard:nth-child(even) .qPill{
+      border-color: rgba(167,139,250,.30);
+      background: rgba(167,139,250,.10);
+    }
+    .qTitle{
+      margin:0;
+      font-weight: 990;
+      font-size: 16px;
+      line-height: 1.2;
+      color: rgba(245,247,255,.98);
+    }
+    .qText{
+      margin:0;
+      font-weight: 820;
+      font-size: 15px;
+      line-height: 1.55;
+      color: rgba(245,247,255,.90);
+    }
+
+    /* Bullets with alternating neon rows (dot perfectly centred to the block) */
+    .bullets{
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 0 0;
+      display: grid;
+      gap: 10px;
+    }
+    .bullets li{
+      position: relative;
+      padding: 12px 12px 12px 46px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      color: rgba(245,247,255,.92);
+      font-size: clamp(15px, 4.1vw, 19px);
+      font-weight: 820;
+      line-height: 1.6;
+    }
+    .bullets li::before{
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,.16),
+        0 10px 22px rgba(0,0,0,.25);
+    }
+    .bullets li:nth-child(odd){
+      background: var(--rowBlue);
+      border-color: var(--rowBorderBlue);
+    }
+    .bullets li:nth-child(odd)::before{
+      background: rgba(110,231,255,.98);
+      box-shadow:
+        0 0 0 4px rgba(110,231,255,.14),
+        0 0 18px rgba(110,231,255,.28),
+        0 10px 22px rgba(0,0,0,.22);
+    }
+    .bullets li:nth-child(even){
+      background: var(--rowPurple);
+      border-color: var(--rowBorderPurple);
+    }
+    .bullets li:nth-child(even)::before{
+      background: rgba(167,139,250,.98);
+      box-shadow:
+        0 0 0 4px rgba(167,139,250,.14),
+        0 0 18px rgba(167,139,250,.26),
+        0 10px 22px rgba(0,0,0,.22);
+    }
+
+    /* Promises list kept as its own style (claims/commitments) */
+    .promises{
+      counter-reset: item;
+      list-style: none;
+      padding-left: 0;
+      margin: 12px 0 0 0;
+      display: grid;
+      gap: 10px;
+    }
+    .promises li{
+      counter-increment: item;
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+    }
+    .promises li::before{
+      content: counter(item);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(220px 90px at 20% 0%, rgba(110,231,255,.22), transparent 60%),
+        radial-gradient(220px 90px at 80% 0%, rgba(167,139,250,.22), transparent 60%),
+        rgba(255,255,255,.03);
+      color: rgba(245,247,255,.98);
+      font-weight: 990;
+      font-variant-numeric: tabular-nums;
+    }
+    .promises li:nth-child(odd){
+      border-color: rgba(110,231,255,.26);
+      background: linear-gradient(135deg, rgba(110,231,255,.10), rgba(0,0,0,.18));
+    }
+    .promises li:nth-child(even){
+      border-color: rgba(167,139,250,.26);
+      background: linear-gradient(135deg, rgba(167,139,250,.10), rgba(0,0,0,.18));
+    }
+
+    .footerLink{
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 900;
+      color: rgba(245,247,255,.88);
+    }
+    .footerLink a{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(110,231,255,.35);
+      background: linear-gradient(135deg, rgba(110,231,255,.16), rgba(167,139,250,.16));
+      color: rgba(245,247,255,.98);
+      text-decoration:none;
+      box-shadow: 0 14px 30px rgba(0,0,0,.22);
+    }
+    .footerLink a:hover{
+      background: linear-gradient(135deg, rgba(110,231,255,.22), rgba(167,139,250,.22));
+      text-decoration:none;
+    }
+
+    .footer{
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+    .backToTop{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(110,231,255,.4);
+      background: rgba(110,231,255,.12);
+      color: var(--accent);
+      font-weight: 900;
+      letter-spacing: .2px;
+      text-decoration: none;
+    }
+    .backToTop:hover{
+      background: rgba(110,231,255,.2);
+      text-decoration: none;
+    }
+
+    @media (max-width: 860px){
+      .callouts{ grid-template-columns: 1fr; }
+      .calloutV{ font-size: 16px; }
+      .qCards{ grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px){
+      .topbar{ border-radius:22px; padding:12px; gap:12px; }
+      .brand{ align-items:center; }
+      .brandname{ font-size: 13px; }
+      .nav{ justify-content: flex-end; align-items:center; }
+      .iconPill{ width:32px; height:32px; }
+      .iconPill svg{ width:14px; height:14px; }
+      .menuList{ right: 0; width: 240px; max-width: 90vw; }
+
+      .promises li{ grid-template-columns: 34px 1fr; }
+      .promises li::before{ width:34px; height:34px; border-radius: 13px; }
+
+      .bullets li{ padding-left: 44px; }
+      .bullets li::before{ left: 14px; width: 11px; height: 11px; }
+
+      .step{ grid-template-columns: 40px 1fr; }
+      .stepN{ width:40px; height:40px; border-radius: 15px; }
+      .stepT{ font-size: 15.5px; }
+      .stepP{ font-size: 15px; }
+    }
+	/* === NEW: stacked cards (scan-and-go) === */
+.stackCards{
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.stackCard{
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.14);
+  box-shadow: 0 12px 26px rgba(0,0,0,.16);
+  padding: 12px 12px;
+}
+
+.stackCard:nth-child(odd){
+  border-color: rgba(110,231,255,.28);
+  background: linear-gradient(135deg, rgba(110,231,255,.10), rgba(0,0,0,.18));
+}
+.stackCard:nth-child(even){
+  border-color: rgba(167,139,250,.28);
+  background: linear-gradient(135deg, rgba(167,139,250,.10), rgba(0,0,0,.18));
+}
+
+.stackTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.stackLabel{
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  font-weight: 950;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(245,247,255,.92);
+  background: rgba(255,255,255,.04);
+}
+
+.stackCard:nth-child(odd) .stackLabel{
+  border-color: rgba(110,231,255,.30);
+  background: rgba(110,231,255,.10);
+}
+.stackCard:nth-child(even) .stackLabel{
+  border-color: rgba(167,139,250,.30);
+  background: rgba(167,139,250,.10);
+}
+
+.stackTitle{
+  margin:0;
+  font-weight: 990;
+  font-size: 16px;
+  line-height: 1.2;
+  color: rgba(245,247,255,.98);
+}
+
+.stackList{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.stackList li{
+  position: relative;
+  padding-left: 26px;
+  font-weight: 820;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(245,247,255,.90);
+}
+
+/* small bright dot, vertically centered per line */
+.stackList li::before{
+  content:"";
+  position:absolute;
+  left: 6px;
+  top: .72em;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 4px rgba(0,0,0,.16),
+    0 10px 22px rgba(0,0,0,.22);
+}
+
+.stackCard:nth-child(odd) .stackList li::before{
+  background: rgba(110,231,255,.98);
+  box-shadow:
+    0 0 0 4px rgba(110,231,255,.14),
+    0 0 18px rgba(110,231,255,.24),
+    0 10px 22px rgba(0,0,0,.22);
+}
+.stackCard:nth-child(even) .stackList li::before{
+  background: rgba(167,139,250,.98);
+  box-shadow:
+    0 0 0 4px rgba(167,139,250,.14),
+    0 0 18px rgba(167,139,250,.22),
+    0 10px 22px rgba(0,0,0,.22);
+}
+
+.stackBottom{
+  margin-top: 10px;
+  font-weight: 850;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(245,247,255,.92);
+}
+/* Make ALL commitments bold – keeps nth-child stable */
+.promises li{
+  font-weight: 900;
+}
+/* ======= SINGLE WINDOW MODE (remove the double “section + mega” frame) ======= */
+
+/* Make .section behave like your old .mega (the nice inner gradient window) */
+.section{
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.14);
+  background:
+    radial-gradient(520px 180px at 18% 0%, rgba(110,231,255,.12), transparent 62%),
+    radial-gradient(520px 180px at 82% 0%, rgba(167,139,250,.12), transparent 62%),
+    rgba(0,0,0,.18);
+  box-shadow: 0 14px 34px rgba(0,0,0,.22);
+}
+
+/* Turn .mega into a plain “content wrapper” (no border, no extra padding/shadow) */
+.mega{
+  margin-top: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Slightly reduce padding on small screens */
+@media (max-width: 720px){
+  .section{ padding: 12px; }
+}
+
+  </style>
+  <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+
+<body id="top">
+  <div class="wrap">
+    <div class="topbar">
+      <div id="gc-hud" aria-hidden="true">Views: —</div>
+
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="brandname">EB25 It's <i>still</i> about pay</div>
+      </div>
+
+      <div class="nav">
+        <a class="iconPill homePill" href="index.html" aria-label="Home">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.2 3 10.4v9.1c0 .7.6 1.3 1.3 1.3h5.4v-6.1h4.6v6.1h5.4c.7 0 1.3-.6 1.3-1.3v-9.1L12 3.2z"/>
+          </svg>
+        </a>
+
+        <div class="menuIconWrap" aria-label="Menu">
+          <details class="menu">
+            <summary class="iconPill" aria-label="Open menu">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 6.5h16c.6 0 1-.4 1-1s-.4-1-1-1H4c-.6 0-1 .4-1 1s.4 1 1 1zm16 5.5H4c-.6 0-1 .4-1 1s.4 1 1 1h16c.6 0 1-.4 1-1s-.4-1-1-1zm0 7H4c-.6 0-1 .4-1 1s.4 1 1 1h16c.6 0 1-.4 1-1s-.4-1-1-1z"/>
+              </svg>
+            </summary>
+
+            <div class="menuList">
+              <a class="menuLink" href="index.html">Home</a>
+              <a class="menuLink" href="voting-power.html">Voting Power</a>
+              <a class="menuLink isActive" href="Union Reform.html">The Member's Union</a>
+              <a class="menuLink" href="methodology.html">Sources &amp; Method</a>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="tag">The Member's Union • Accountability</div>
+
+      <h1 class="h1"><span class="grad">The Member's Union</span></h1>
+
+      <p class="sub">
+        Simple idea: <span class="hi">members deserve clear information</span> before they vote.<br>
+        This page explains why some members are asking for transparency about the offer and the process.
+      </p>
+
+      <div class="callouts" aria-label="Quick summary">
+        <div class="callout">
+          <p class="calloutK">What this is</p>
+          <p class="calloutV">A <span class="hi">member-led</span> request for clarity and accountability.</p>
+        </div>
+        <div class="callout">
+          <p class="calloutK">What this is not</p>
+          <p class="calloutV">Not a smear. Not factions. Just <span class="hi">good governance</span>.</p>
+        </div>
+        <div class="callout">
+          <p class="calloutK">What members want</p>
+          <p class="calloutV"><span class="hi">Full info</span>: what was promised, what’s delivered, and why.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="megaK">Context</p>
+      <h2 class="megaT"><span class="pop">Why questions are being raised</span></h2>
+      <p class="megaP">
+        Some members believe the current offer does not match what was presented during the PSA Change campaign or the “log of claims” as members understood it.
+      </p>
+      <p class="megaP">
+        That’s why people are asking for <span class="k">clear answers</span> — before any ballot outcome is locked in.
+      </p>
+    </section>
+
+    <!-- Keep the stacked step layout here (it breaks up the page nicely) -->
+    <section class="section">
+      <p class="megaK">SGM request</p>
+      <h2 class="megaT"><span class="pop">What members are doing now</span></h2>
+
+      <div class="steps" role="list" aria-label="SGM request steps">
+        <div class="step" role="listitem">
+          <div class="stepN" aria-hidden="true">1</div>
+          <div>
+            <p class="stepT"><span class="k">Using the union rules</span></p>
+            <p class="stepP">Members are using the union rules to request a Special General Meeting (SGM) so questions can be reviewed openly and lawfully.</p>
+          </div>
+        </div>
+
+        <div class="step" role="listitem">
+          <div class="stepN" aria-hidden="true">2</div>
+          <div>
+            <p class="stepT"><span class="k">Collecting signatures</span></p>
+            <p class="stepP">Signatures are from current, financial PSA members only.</p>
+          </div>
+        </div>
+
+        <div class="step" role="listitem">
+          <div class="stepN" aria-hidden="true">3</div>
+          <div>
+            <p class="stepT"><span class="k">Submitting together</span></p>
+            <p class="stepP">People are coordinating to consolidate pages so the requisition is progressed under the rules.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="footerLink">
+<a
+  href="/public-sector-wage-insights/assets/downloads/sgm-requisition-v2.pdf"
+  download
+>
+  <span class="k">Download the SGM requisition template</span>
+</a>
+
+      </p>
+
+      <p class="megaP">
+        Below is the list of commitments that PSA has stated so far for the ongoing Enterprise Bargaining.
+      </p>
+    </section>
+
+    <section class="section">
+      <p class="megaK">Commitments</p>
+      <h2 class="megaT"><span class="pop">Commitments members want accounted for</span></h2>
+      <p class="megaP">
+        People are asking for a simple, fair summary:
+        <span class="hi">what was delivered</span>, <span class="hi">what wasn’t</span>, and <span class="hi">why</span>.
+      </p>
+
+        <!-- ✅ FIXED: only #1 and #21 are bold, and tags are balanced -->
+        <ol class="promises">
+          <li>Improved classification streams and new increments across OPS, ASO, CO and PO classifications.</li>
+          <li>OPS1 to be trainee-only, with new increments for OPS2 and OPS3.</li>
+          <li>New increments for CO3, PO3, ASO2, ASO3 and ASO6.</li>
+          <li>Automatic progression from CO2 to CO3 on completion of Certificate IV.</li>
+          <li>Operational Supervisor classification at CO5 (not CO4).</li>
+          <li>Separate enterprise agreement for Correctional Officers and ICU.</li>
+          <li>Up to 20% wage increase in the first 12 months, backdated to October 2024.</li>
+          <li>Conversion to permanency clause.</li>
+          <li>Six weeks annual leave for seven-day roster workers.</li>
+          <li>Saturday penalties at 175% and Sunday penalties at 200%.</li>
+          <li>Additional paid leave for regional employees.</li>
+          <li>Regional incentives allowance.</li>
+          <li>Paid parental leave reforms.</li>
+          <li>Two weeks paid partner leave.</li>
+          <li>Reproductive leave.</li>
+          <li>Seven days paid wellbeing leave for specified agencies.</li>
+          <li>20% Officer-in-Charge allowance.</li>
+          <li>Improved on-call and recall provisions (annualised allowance).</li>
+          <li>Health-site parking caps or free public transport access.</li>
+          <li>Reduction of membership fees, funded by significantly cutting the General Secretary’s wage.</li>
+          <li>A formal offer received within a reasonable timeframe before the ballot opens.</li>
+        </ol>
+
+      <p class="megaP">
+        This list is included so members can judge outcomes against commitments, in plain sight.
+      </p>
+    </section>
+
+<section class="section">
+  <p class="megaK">SGM requisition</p>
+  <h2 class="megaT"><span class="pop">SGM requisition — the short version</span></h2>
+  <p class="megaP">
+    How the Member's Requisition for a Special General Meeting process works.
+  </p>
+
+    <div class="stackCards" role="list" aria-label="SGM requisition short version">
+      <!-- Card 1 -->
+      <div class="stackCard" role="listitem">
+        <div class="stackTop">
+          <span class="stackLabel">Before it’s submitted</span>
+        </div>
+        <ul class="stackList">
+          <li>100 current, financial PSA members must sign a written requisition.</li>
+          <li>Signatures can be collected on multiple copies and pooled together.</li>
+          <li>Each signature must be genuine and signed by the member themselves.</li>
+        </ul>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="stackCard" role="listitem">
+        <div class="stackTop">
+          <span class="stackLabel">After it’s submitted</span>
+        </div>
+        <ul class="stackList">
+          <li>Once lodged, PSA must call a Special General Meeting (SGM).</li>
+          <li>The SGM exists so members—not Council—decide what happens next.</li>
+          <li>30 members attending = quorum, so decisions can be made.</li>
+        </ul>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="stackCard" role="listitem">
+        <div class="stackTop">
+          <span class="stackLabel">If PSA or Council don’t cooperate</span>
+        </div>
+        <ul class="stackList">
+          <li>A valid requisition cannot be ignored under the rules.</li>
+          <li>If PSA delays or refuses, members can convene the SGM themselves.</li>
+          <li>Decisions made at a properly convened SGM still stand.</li>
+        </ul>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="stackCard" role="listitem">
+        <div class="stackTop">
+          <span class="stackLabel">What PSA / Council are required to do</span>
+        </div>
+        <ul class="stackList">
+          <li>Recognise the requisition as valid if it meets the rules.</li>
+          <li>Notify members and convene the SGM.</li>
+          <li>Put the issue to members, not decide it internally.</li>
+        </ul>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="stackCard" role="listitem">
+        <div class="stackTop">
+          <span class="stackLabel">What members can decide</span>
+        </div>
+        <ul class="stackList">
+          <li>Rescind (undo) a Council or Executive decision.</li>
+          <li>Require a ballot of the wider membership.</li>
+          <li>Direct Council to take or stop an action.</li>
+          <li>Remove or censure officials, if stated in the requisition.</li>
+        </ul>
+      </div>
+    </div>
+
+  <p class="stackBottom">
+    <span class="strongGrad">Bottom line:</span> This is the formal way members take control when they’re not being heard.
+  </p>
+</section>
+
+
+    <section class="section">
+      <p class="megaK">The member's call</p>
+      <h2 class="megaT"><span class="pop">Take action now</span></h2>
+
+      <p class="footerLink">
+<a
+  href="/TESTpublic-sector-wage-insights/assets/downloads/sgm-requisition-v2.pdf"
+  download
+>
+  <span class="k">Download the SGM requisition template</span>
+</a>
+      </p>
+
+      <div class="steps" role="list" aria-label="Take action steps">
+        <div class="step" role="listitem">
+          <div class="stepN" aria-hidden="true">1</div>
+          <div>
+            <p class="stepT"><span class="k">Share</span></p>
+            <p class="stepP">Send the template to colleagues you trust.</p>
+          </div>
+        </div>
+
+        <div class="step" role="listitem">
+          <div class="stepN" aria-hidden="true">2</div>
+          <div>
+            <p class="stepT"><span class="k">Sign</span></p>
+            <p class="stepP">Collect signatures from current PSA members only.</p>
+          </div>
+        </div>
+
+        <div class="step" role="listitem">
+          <div class="stepN" aria-hidden="true">3</div>
+          <div>
+            <p class="stepT"><span class="k">Coordinate</span></p>
+            <p class="stepP">Combine pages with other members you may be in touch with so you can submit collectively.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ FIXED: missing closing angle bracket + span close -->
+      <p class="megaP">
+        This is how members exercise democratic rights inside their union <span class="k">calmly, lawfully, and collectively.</span>
+      </p>
+    </section>
+
+    <footer class="footer">
+      <a class="backToTop" href="#top">Back to top</a>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('click', (event) => {
+      document.querySelectorAll('details.menu[open]').forEach((menu) => {
+        if (!menu.contains(event.target)) menu.removeAttribute('open');
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        document.querySelectorAll('details.menu[open]').forEach((menu) => {
+          menu.removeAttribute('open');
+        });
+      }
+    });
+  </script>
+
+  <!-- GoatCounter -->
+  <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
+
+  <!-- GoatCounter HUD -->
+  <script>
+    (function(){
+      const el = document.getElementById('gc-hud');
+      if (!el) return;
+
+      const path = location.pathname || '/';
+      const url = 'https://sa-ps-wages.goatcounter.com/counter/' + encodeURIComponent(path) + '.json?no_branding=1';
+
+      fetch(url, { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(data => { el.textContent = `Views: ${data.count}`; })
+        .catch(() => { el.textContent = 'Views: —'; });
+    })();
+  </script>
+</body>
+</html>
+
+
+
+
