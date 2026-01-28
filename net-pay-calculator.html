@@ -1,0 +1,1812 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EB25: It's still about pay - Home</title>
+
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1220;
+      --line:rgba(255,255,255,.10);
+      --text:#F5F7FF;
+      --muted:rgba(245,247,255,.72);
+      --accent:#6EE7FF;
+      --accent2:#A78BFA;
+      --radius:18px;
+      --shadow: 0 14px 40px rgba(0,0,0,.35);
+      --max: 1100px;
+      --good:#4ADE80;
+      --warn:#FBBF24;
+      --bad:#F87171;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 12% 10%, rgba(110,231,255,.20), transparent 60%),
+        radial-gradient(700px 500px at 88% 0%, rgba(167,139,250,.22), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      line-height:1.45;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a{ color:var(--accent); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding: 32px 16px 28px; }
+
+    /* Header */
+    .topbar{
+      position: relative;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding: 10px 12px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      margin-bottom: 22px;
+    }
+    #gc-hud{
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      color: rgba(245,247,255,.95);
+      opacity: .7;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+      z-index: 2;
+    }
+    .brand{ display:flex; align-items:center; gap:10px; min-width: 0; }
+    .mark{
+      width:34px; height:34px;
+      border-radius: 12px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(110,231,255,.95), transparent 70%),
+        radial-gradient(18px 18px at 70% 70%, rgba(167,139,250,.95), transparent 70%);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(0,0,0,.35);
+      flex: 0 0 auto;
+    }
+    .brandname{
+      font-weight:850;
+      letter-spacing:.2px;
+      padding-left: 6px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      color: rgba(245,247,255,.92);
+      line-height: 1.15;
+      font-size: 18px;
+    }
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end; align-items:center;
+      margin-left: auto;
+    }
+    .iconPill{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:36px; height:36px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--accent);
+      flex:0 0 auto;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .iconPill svg{ width:16px; height:16px; fill: currentColor; }
+    .iconPill:hover{ background: rgba(255,255,255,.06); text-decoration:none; }
+    .homePill{ text-decoration:none; }
+    .menuIconWrap{ position: relative; }
+    details.menu{ position: relative; z-index: 2; }
+    details.menu summary{ list-style:none; }
+    details.menu summary::-webkit-details-marker{ display:none; }
+    .menuList{
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 240px;
+      padding: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(110,231,255,.25);
+      background: rgba(7,10,18,.98);
+      box-shadow: 0 20px 44px rgba(0,0,0,.5);
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+      transition: all .2s ease;
+    }
+    .menu[open] .menuList{
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .menuLink{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 8px 10px;
+      border-radius: 12px;
+      color: rgba(245,247,255,.92);
+      font-weight: 850;
+      font-size: 13px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid transparent;
+    }
+    .menuLink:hover{
+      border-color: rgba(110,231,255,.45);
+      background: rgba(110,231,255,.12);
+      text-decoration:none;
+    }
+    .menuLink.isActive{
+      border-color: rgba(110,231,255,.6);
+      background: linear-gradient(135deg, rgba(110,231,255,.18), rgba(167,139,250,.18));
+      color: rgba(245,247,255,.98);
+    }
+    @media (max-width: 720px){
+      .topbar{ border-radius: 22px; padding: 12px; gap: 12px; }
+      .brand{ align-items: flex-start; }
+      .brandname{ font-size: 13px; }
+      .iconPill{ width:32px; height:32px; }
+      .iconPill svg{ width:14px; height:14px; }
+      .menuList{ right: 0; min-width: 240px; width: 240px; max-width: 90vw; }
+    }
+
+    /* Hero */
+    .hero{
+      margin-top: 0;
+      padding: 28px 18px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.16), transparent 55%),
+        radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.16), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .heroTitle{
+      margin:0 0 12px 0;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -1px;
+    }
+    .heroTitle .grad{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+    }
+    .heroSub{
+      max-width: 100%;
+      margin: 12px 0 0 0;
+      font-size: clamp(16px, 1.35vw, 20px);
+      line-height: 1.35;
+      font-weight: 750;
+      letter-spacing: -0.15px;
+      color: rgba(245,247,255,.88);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.12), transparent 60%),
+        radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.12), transparent 60%),
+        rgba(255,255,255,.03);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+    }
+    .heroSub strong{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color: transparent;
+      font-weight: 900;
+    }
+
+    /* Section */
+    .section{
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    }
+    .sectionHead{
+      display:flex; justify-content:space-between; align-items:flex-end;
+      flex-wrap:wrap; gap:12px; margin-bottom: 10px;
+    }
+    .sectionHead h2{ margin:0; font-size: 18px; letter-spacing: -.2px; }
+    .small{ font-size: 12px; color: var(--muted); }
+
+    /* Calculator cards */
+    .grid{ display:grid; grid-template-columns: 1fr; gap: 12px; }
+    .card{
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding: 16px;
+      min-width: 0;
+    }
+    .card h3{ margin:0 0 10px 0; font-size: 16px; letter-spacing: -.2px; }
+    label{ display:block; margin-top: 10px; font-size: 13px; color: rgba(245,247,255,.86); }
+    input[type="number"], input[type="text"], input[type="search"]{
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
+    select{
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus{
+      border-color: rgba(110,231,255,.45);
+      box-shadow: 0 0 0 4px rgba(110,231,255,.12);
+    }
+
+    .checkRow{
+      display:flex; align-items:flex-start; gap:10px;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+    }
+    .checkRow input{ margin-top: 2px; }
+    .checkRow .hint{ font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    .btnRow{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 14px; }
+    .btn{
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(420px 160px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
+        radial-gradient(420px 160px at 80% 0%, rgba(167,139,250,.14), transparent 60%),
+        rgba(255,255,255,.03);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 850;
+    }
+    .btn:hover{ background: rgba(255,255,255,.06); }
+
+    /* Searchable dropdown */
+    .comboWrap{ position: relative; }
+    .comboList{
+      position:absolute;
+      top: calc(100% + 8px);
+      left:0; right:0;
+      max-height: 320px;
+      overflow:auto;
+      border-radius: 14px;
+      border: 1px solid rgba(110,231,255,.35);
+      background: rgba(7,10,18,.98);
+      box-shadow: 0 18px 44px rgba(0,0,0,.45);
+      z-index: 10;
+      display:none;
+    }
+    .comboItem{
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      cursor:pointer;
+    }
+    .comboItem:last-child{ border-bottom:0; }
+    .comboItem:hover, .comboItem.isActive{ background: rgba(110,231,255,.10); }
+    .comboTop{
+      display:flex; justify-content:space-between; gap:10px; align-items:baseline;
+      font-weight: 900;
+    }
+    .comboSub{
+      margin-top: 2px;
+      font-size: 12px;
+      color: rgba(245,247,255,.72);
+    }
+    .badge{
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing:.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: rgba(245,247,255,.86);
+      white-space: nowrap;
+    }
+
+    .formSection{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
+    }
+    .formSection h4{
+      margin: 0 0 6px 0;
+      font-size: 13px;
+      letter-spacing: .1px;
+      text-transform: uppercase;
+      color: rgba(245,247,255,.82);
+    }
+    .inputGrid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    @media (max-width: 720px){
+      .inputGrid{ grid-template-columns: 1fr; }
+    }
+    .helperText{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Conditions */
+    .condGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 900px){
+      .condGrid{ grid-template-columns: 1fr; }
+    }
+    .condList{
+      margin-top: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+      overflow:hidden;
+      max-height: 420px;
+      overflow:auto;
+    }
+    .condItem{
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+    }
+    .condItem:last-child{ border-bottom:0; }
+    .condItem .condMeta{ flex: 1; min-width: 0; }
+    .condItem .condTitle{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      font-weight: 900;
+    }
+    .condRef{
+      font-size: 11px;
+      font-weight: 950;
+      letter-spacing:.12em;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(110,231,255,.35);
+      background: rgba(110,231,255,.10);
+      color: rgba(245,247,255,.95);
+      white-space: nowrap;
+    }
+    .condDesc{
+      margin-top: 2px;
+      font-size: 12px;
+      color: rgba(245,247,255,.72);
+      white-space: pre-wrap;
+    }
+    .condInputs{ margin-top: 8px; display:flex; gap:10px; flex-wrap:wrap; }
+    .condInputs .inputGroup{
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 180px;
+    }
+    .inputWithTip{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+    }
+    .inputTip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(110,231,255,.45);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+      cursor: help;
+      user-select: none;
+    }
+    .condInputs input[type="number"]{
+      width: 220px;
+      max-width: 100%;
+      margin-top: 0;
+    }
+    details.condDetails{
+      width: 100%;
+    }
+    details.condDetails summary{
+      cursor: pointer;
+      list-style: none;
+    }
+    details.condDetails summary::-webkit-details-marker{ display:none; }
+    .infoHint{
+      font-size: 12px;
+      color: rgba(245,247,255,.72);
+      margin-top: 2px;
+    }
+    .condQuick{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    @media (max-width: 820px){ .condQuick{ grid-template-columns: 1fr; } }
+    .condCard{
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      padding: 12px;
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+    }
+    .condCard .condMeta{ flex: 1; min-width: 0; }
+    .condSummary{
+      margin-top: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.12);
+      padding: 12px;
+    }
+    .condSummary h4{
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: rgba(245,247,255,.8);
+    }
+    .condSummary ul{
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(245,247,255,.86);
+      font-size: 13px;
+    }
+    .condSummary li{ margin-bottom: 6px; }
+    .condSummary li:last-child{ margin-bottom: 0; }
+
+    /* Outputs */
+    .kpiGrid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media (max-width: 980px){ .kpiGrid{ grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 520px){ .kpiGrid{ grid-template-columns: 1fr;} }
+
+    .kpi{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+        rgba(0,0,0,.12);
+      padding: 12px 12px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
+    .kpi .k{ font-size: 12px; color: var(--muted); font-weight: 900; letter-spacing:.12em; text-transform: uppercase; }
+    .kpi .v{ margin-top: 6px; font-size: 18px; font-weight: 950; letter-spacing:-.2px; }
+    .kpi .s{ margin-top: 4px; font-size: 12px; color: rgba(245,247,255,.78); }
+
+    .tableWrap{
+      margin-top: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      overflow:auto;
+      max-width: 100%;
+      background: rgba(0,0,0,.18);
+    }
+    table{
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 1040px;
+      font-size: 14px;
+    }
+    thead th{
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      text-align: left;
+      padding: 10px 12px;
+      background: rgba(11,18,32,.92);
+      color: rgba(245,247,255,.92);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      white-space: nowrap;
+    }
+    tbody td{
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      color: rgba(245,247,255,.86);
+      white-space: nowrap;
+    }
+    tbody tr:nth-child(odd){ background: rgba(255,255,255,.02); }
+    tbody tr:hover{ background: rgba(110,231,255,.06); }
+    .rowLabel{ font-weight: 900; }
+    .num{ text-align: right; font-variant-numeric: tabular-nums; }
+    .numStrong{ color: var(--accent); font-weight: 900; }
+    .pos{ color: var(--good); font-weight: 900; }
+    .neg{ color: var(--bad); font-weight: 900; }
+
+    #calculator.has-results{
+      overflow-x: hidden;
+    }
+    #calculator.has-results .grid,
+    #calculator.has-results .grid > .card,
+    #calculator.has-results .condGrid,
+    #calculator.has-results .kpiGrid{
+      min-width: 0;
+    }
+    #calculator.has-results .tableWrap{
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
+    }
+    #calculator.has-results .tableWrap table{
+      width: 100%;
+      max-width: 100%;
+    }
+    #calculator.has-results #resultsBody td,
+    #calculator.has-results .rowLabel,
+    #calculator.has-results .condDesc,
+    #calculator.has-results .infoBox{
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .infoBox{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+        rgba(255,255,255,.02);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
+    .infoBox h3{ margin:0 0 8px 0; font-size: 14px; font-weight: 900; letter-spacing: -.2px; }
+    .infoBox p{ margin:0; color: var(--muted); font-size: 13px; }
+
+    .footer{
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
+    }
+    .backToTop{
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(110,231,255,.4);
+      background: rgba(110,231,255,.12);
+      color: var(--accent);
+      font-weight: 900;
+      letter-spacing: .2px;
+      text-decoration: none;
+    }
+    .backToTop:hover{ background: rgba(110,231,255,.2); text-decoration: none; }
+
+    /* Bubble */
+    .recoveryBubble{
+      margin-bottom: 14px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(520px 200px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
+        radial-gradient(520px 200px at 80% 0%, rgba(167,139,250,.14), transparent 60%),
+        rgba(0,0,0,.18);
+      box-shadow: 0 10px 24px rgba(0,0,0,.22);
+    }
+    .rbTitle{ margin: 0; font-size: clamp(18px, 2vw, 22px); font-weight: 950; letter-spacing: -.4px; line-height: 1.15; }
+    .rbTitle .grad{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+.rbGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 12px;
+}
+
+/* NEW: when only one card remains, make it full width */
+.rbGrid.rbGridSingle{
+  grid-template-columns: 1fr;
+}
+.rbGrid.rbGridSingle > .rbBlock{
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 820px){
+  .rbGrid{ grid-template-columns: 1fr; }
+}
+
+    .rbBlock{
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.10);
+    }
+    .rbKicker{
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin: 0 0 8px 0;
+    }
+    .rbBig{
+      margin: 0;
+      font-size: clamp(18px, 2.2vw, 24px);
+      line-height: 1.15;
+      font-weight: 950;
+      letter-spacing: -0.3px;
+      color: rgba(245,247,255,.95);
+    }
+    .rbBig strong{
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 950;
+    }
+    .rbSub{
+      margin: 8px 0 0 0;
+      font-size: 14.5px;
+      line-height: 1.35;
+      color: rgba(245,247,255,.86);
+    }
+    .rbLink{
+      color: rgba(245,247,255,.95);
+      text-decoration: none;
+      border-bottom: 2px solid rgba(110,231,255,.40);
+      padding-bottom: 1px;
+    }
+    .rbLink:hover{
+      color: var(--accent);
+      border-bottom-color: rgba(110,231,255,.85);
+      text-decoration: none;
+    }
+    .rbCTA{
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(420px 160px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
+        radial-gradient(420px 160px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
+        rgba(0,0,0,.12);
+    }
+    .rbPill{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(245,247,255,.90);
+      font-size: 12px;
+      font-weight: 950;
+      letter-spacing: .14em;
+      margin-bottom: 10px;
+    }
+    @media (max-width: 720px){
+      .wrap{ padding: 24px 12px; }
+      .card{ padding: 14px; }
+      label{ font-size: 14px; }
+      input[type="number"], input[type="text"], input[type="search"]{ font-size: 15px; }
+      .btn{ width: 100%; justify-content: center; }
+      .btnRow{ flex-direction: column; }
+    }
+  </style>
+
+  <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+
+<body id="top">
+  <div class="wrap">
+    <div class="topbar">
+      <div id="gc-hud" aria-hidden="true">Views: —</div>
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="brandname">EB25 It's <i>still</i> about pay</div>
+      </div>
+
+      <div class="nav">
+        <a class="iconPill homePill" href="index.html" aria-label="Home">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.2 3 10.4v9.1c0 .7.6 1.3 1.3 1.3h5.4v-6.1h4.6v6.1h5.4c.7 0 1.3-.6 1.3-1.3v-9.1L12 3.2z"/>
+          </svg>
+        </a>
+
+        <div class="menuIconWrap" aria-label="Menu">
+          <details class="menu">
+            <summary class="iconPill" aria-label="Open menu">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 6.5h16c.6 0 1-.4 1-1s-.4-1-1-1H4c-.6 0-1 .4-1 1s.4 1 1 1zm16 5.5H4c-.6 0-1 .4-1 1s.4 1 1 1h16c.6 0 1-.4 1-1s-.4-1-1-1zm0 7H4c-.6 0-1 .4-1 1s.4 1 1 1h16c.6 0 1-.4 1-1s-.4-1-1-1z"/>
+              </svg>
+            </summary>
+
+            <div class="menuList">
+              <a class="menuLink" href="index.html">Home</a>
+              <a class="menuLink isActive" href="index_with_new_calculator.html">Updated Calculator</a>
+              <a class="menuLink" href="voting-power.html">Voting Power</a>
+              <a class="menuLink" href="Union Reform.html">The Member's Union</a>
+              <a class="menuLink" href="methodology.html">Sources &amp; Method</a>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h1 class="heroTitle">
+        <span class="grad"><strong>Net Pay Calculator</strong></span>
+      </h1>
+
+      <p class="heroSub">
+        We've updated the calculator to reflect the formal enterprise agreement received 28/01/2025.<br><br>
+		Please note that we will continue to optimise the layout in the coming days, we didn't anticipate such a small 'reasonable notice' window;<br><br>
+		<strong>After some review, we hope these aren't the actual final pay outcomes for the sake of the worker's and their families.</strong>
+      </p>
+    </section>
+
+    <section class="section" id="calculator" style="margin-top:18px;">
+      <div class="recoveryBubble" role="note" aria-label="Wage erosion message">
+        <div class="rbTop">
+          <h3 class="rbTitle">
+            <span class="grad">Use your classification to estimate your take-home pay under the proposed salary schedule.</span>
+          </h3>
+        </div>
+
+<div class="rbGrid rbGridSingle">
+  <div class="rbBlock">
+    <div class="rbCTA">
+      <div class="rbPill">CALCULATOR</div>
+      <p class="rbBig" style="margin:0;">
+        See your <strong>TAKE-HOME PAY</strong><br/>
+        by classification + conditions
+      </p>
+      <p class="rbSub" style="margin:8px 0 0 0;">
+        Search your classification (e.g. <strong>ASO4.1</strong>) and tick any applicable conditions<br><br>
+        Hover over the i icons for more information on fields below<br><br>
+        We've included the simple inputs first, then some complex filters below the table
+      </p>
+    </div>
+  </div>
+</div>
+
+      <div class="sectionHead" style="margin-bottom:8px;">
+        <h2>Net Pay Calculator</h2>
+        <div class="small">Estimates only. Use for comparison, not tax advice.</div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Inputs</h3>
+
+          <div class="formSection">
+            <h4>1. Classification</h4>
+            <label for="classSearch">Search your classification</label>
+            <div class="comboWrap">
+              <input type="search" id="classSearch" placeholder="Type ASO4.1, OPS2.3, CO3.1…" autocomplete="off" />
+              <div id="classList" class="comboList" role="listbox" aria-label="Classification results"></div>
+            </div>
+            <div class="small" id="classSelectedHelp" style="margin-top:8px;">No classification selected yet.</div>
+
+            <div class="inputGrid">
+              <div>
+                <label for="fte">FTE (1.0 = full-time)</label>
+                <input type="number" id="fte" step="0.01" min="0.1" max="1.0" value="1.0" />
+              </div>
+              <div id="unitOverrideWrap" style="display:none;">
+                <label for="annualisedOverride">Annualised gross (if not an annual salary)</label>
+                <input type="number" id="annualisedOverride" inputmode="numeric" placeholder="e.g. 85000" />
+                <div class="helperText">Only needed for hourly/unit rate roles.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="formSection">
+            <h4>2. Tax &amp; Medicare basics</h4>
+            <div class="checkRow">
+              <input type="checkbox" id="hasHELP" />
+              <div>
+                <label for="hasHELP" style="margin:0;">I have a HELP or HECS loan</label>
+                <div class="hint">Simplified estimate for comparison.</div>
+              </div>
+            </div>
+
+            <div class="checkRow">
+              <input type="checkbox" id="noPrivateHealth" />
+              <div>
+                <label for="noPrivateHealth" style="margin:0;">I do NOT have private hospital insurance (MLS may apply)</label>
+                <div class="hint">Simplified MLS thresholds (single).</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="formSection">
+            <h4>3. Most common allowances</h4>
+            <div class="small">Tick to apply, then enter counts. We’ll convert per week to per fortnight automatically.</div>
+            <div id="condQuick" class="condQuick" aria-label="Quick allowances"></div>
+          </div>
+
+          <div class="btnRow">
+            <button class="btn" id="btnCalc" type="button">Calculate</button>
+            <button class="btn" id="btnClear" type="button">Clear</button>
+          </div>
+
+          <div id="outputs" style="display:none; margin-top:18px;">
+            <div class="tableWrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Scenario</th>
+                    <th class="num">Base gross</th>
+                    <th class="num">Extras</th>
+                    <th class="num">Total gross</th>
+                    <th class="num">Change vs current</th>
+                    <th class="num">Annual net</th>
+                    <th class="num">Fortnight net</th>
+                  </tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+              </table>
+            </div>
+
+            <div class="kpiGrid" id="kpiGrid"></div>
+
+            <div class="infoBox">
+              <h3>Notes</h3>
+              <p id="notesText">—</p>
+            </div>
+          </div>
+
+          <div class="infoBox" style="margin-top:12px;">
+            <h3>Automatic award floor</h3>
+            <p id="awardNote">If an award minimum exists, the calculator uses whichever is higher: the schedule base or the award minimum, then applies that floor to the next three pay points.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Conditions &amp; allowances</h3>
+          <div class="small">Only items relevant to your selected classification will appear. Clause numbers match the agreement for easy reference.</div>
+
+          <label for="condSearch">Search conditions (e.g. “on-call”, “17.1”, “CIO”)</label>
+          <input type="search" id="condSearch" placeholder="Type to filter the list…" autocomplete="off" />
+
+          <div class="condGrid">
+            <div>
+              <div class="small" style="margin-top:10px;">Changes pay (tick to apply)</div>
+              <div id="condCalc" class="condList" aria-label="Calculable conditions"></div>
+            </div>
+
+            <div>
+              <div class="small" style="margin-top:10px;">Eligibility / notes (expand to read)</div>
+              <div id="condInfo" class="condList" aria-label="Informational conditions"></div>
+            </div>
+          </div>
+
+          <div class="condSummary" id="condSummary" aria-live="polite">
+            <h4>Selected conditions summary</h4>
+            <div class="small" id="condSummaryEmpty">No conditions selected yet.</div>
+            <ul id="condSummaryList" style="display:none;"></ul>
+          </div>
+
+          <div class="infoBox" style="margin-top:12px;">
+            <h3>What this does (and doesn’t) do</h3>
+            <p>
+              This tool estimates base salary + selected allowances/penalties, then estimates tax, Medicare, MLS and HELP.
+              It does <strong>not</strong> model overtime, shift patterns, leave loading, super, or agency-specific arrangements unless they are covered by the listed allowances.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      
+    </section>
+
+    <section class="section" id="disclaimer">
+      <div class="infoBox" style="margin-top:0;">
+        <h3>Disclaimer</h3>
+        <p>
+          This site is a public data explainer only and does not provide industrial relations advice, voting guidance, financial advice, or tax advice.
+          Figures are presented for transparency and comparison using published schedules and simplified assumptions.
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <a class="backToTop" href="#top">Back to top</a>
+    </footer>
+  </div>
+
+  <script>
+    function calcIncomeTax(income){
+      let tax = 0;
+      if (income > 190000){ tax += (income - 190000) * 0.45; income = 190000; }
+      if (income > 135000){ tax += (income - 135000) * 0.37; income = 135000; }
+      if (income > 45000){  tax += (income - 45000)  * 0.30; income = 45000; }
+      if (income > 18200){  tax += (income - 18200)  * 0.16; }
+      return tax;
+    }
+    function calcMedicareLevy(income){ return income * 0.02; }
+    function calcMLS(income, noPrivate){
+      if (!noPrivate) return 0;
+      if (income <= 101000) return 0;
+      if (income <= 118000) return income * 0.01;
+      if (income <= 158000) return income * 0.0125;
+      return income * 0.015;
+    }
+    function calcHELP(income){
+      const thresholds = [
+        { limit: 54435, rate: 0 },
+        { limit: 62850, rate: 0.01 },
+        { limit: 66620, rate: 0.02 },
+        { limit: 70618, rate: 0.025 },
+        { limit: 74855, rate: 0.03 },
+        { limit: 79346, rate: 0.035 },
+        { limit: 84107, rate: 0.04 },
+        { limit: 89154, rate: 0.045 },
+        { limit: 94503, rate: 0.05 },
+        { limit: 100174, rate: 0.055 },
+        { limit: 106185, rate: 0.06 },
+        { limit: 112556, rate: 0.065 },
+        { limit: 119309, rate: 0.07 },
+        { limit: 126467, rate: 0.075 },
+        { limit: 134056, rate: 0.08 },
+        { limit: 142100, rate: 0.085 },
+        { limit: 150626, rate: 0.09 },
+        { limit: 159663, rate: 0.095 },
+        { limit: Infinity, rate: 0.10 }
+      ];
+      for (const b of thresholds){
+        if (income <= b.limit) return income * b.rate;
+      }
+      return 0;
+    }
+    function netPay(income, hasHELP, noPrivate){
+      const tax  = calcIncomeTax(income);
+      const med  = calcMedicareLevy(income);
+      const mls  = calcMLS(income, noPrivate);
+      const help = hasHELP ? calcHELP(income) : 0;
+      return {
+        net: income - tax - med - mls - help,
+        breakdown: { tax, med, mls, help }
+      };
+    }
+    function fmtMoney(n, decimals=0){
+      if (n === null || n === undefined || isNaN(n)) return "—";
+      return "$" + Number(n).toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    let DATA = null;
+    let AWARD_MIN = null;
+
+    async function loadJson(url){
+      const r = await fetch(url, { cache: "no-store" });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return await r.json();
+    }
+
+    async function init(){
+      try{
+        DATA = await loadJson("assets/data/sa_salaried_rates.json");
+      }catch(e){
+        console.error(e);
+        document.getElementById("classSelectedHelp").textContent =
+          "ERROR: Missing assets/data/sa_salaried_rates.json";
+        return;
+      }
+
+      try{
+        AWARD_MIN = await loadJson("assets/data/award_minimums.json");
+        document.getElementById("awardNote").textContent =
+          "Award minimums loaded. If your award minimum is higher than the schedule base, it will be applied automatically.";
+      }catch(e){
+        AWARD_MIN = null;
+        document.getElementById("awardNote").textContent =
+          "Award minimum file not found (optional). If you add assets/data/award_minimums.json, the calculator will automatically apply award floors when they lift pay.";
+      }
+
+      buildClassificationIndex();
+      buildConditionsLists();
+      wireUI();
+    }
+
+    let ROLE_INDEX = [];
+    let SELECTED_ROLE = null;
+    let ACTIVE_CLASS_IDX = -1;
+
+    function buildClassificationIndex(){
+      const roles = DATA.roles || [];
+      ROLE_INDEX = roles.map(r => {
+        const code = (r.code || "").toUpperCase();
+        const label = (r.classification_label || "").toUpperCase();
+        const stream = (r.stream || "").toUpperCase();
+        const schedule = (r.schedule_title || "").toUpperCase();
+        const key = (code + " " + label + " " + stream + " " + schedule).trim();
+        return { r, key };
+      });
+    }
+
+    function filterRoles(q){
+      const s = (q || "").trim().toUpperCase();
+      if (!s) return ROLE_INDEX.slice(0, 30);
+      const out = ROLE_INDEX.filter(x => x.key.includes(s));
+      out.sort((a,b) => {
+        const ap = a.r.code?.toUpperCase()?.startsWith(s) ? 0 : 1;
+        const bp = b.r.code?.toUpperCase()?.startsWith(s) ? 0 : 1;
+        if (ap !== bp) return ap - bp;
+        return (a.r.code || "").localeCompare(b.r.code || "");
+      });
+      return out.slice(0, 50);
+    }
+
+    function renderClassList(items){
+      const box = document.getElementById("classList");
+      box.innerHTML = "";
+      if (!items.length){
+        box.style.display = "none";
+        return;
+      }
+      items.forEach((x, idx) => {
+        const r = x.r;
+        const div = document.createElement("div");
+        div.className = "comboItem" + (idx === ACTIVE_CLASS_IDX ? " isActive" : "");
+        div.setAttribute("role","option");
+        div.innerHTML = `
+          <div class="comboTop">
+            <span>${r.code || "—"}</span>
+            <span class="badge">${r.stream || "—"}</span>
+          </div>
+          <div class="comboSub">${(r.classification_label || "—")}${r.increment_label ? " · " + r.increment_label : ""}</div>
+        `;
+        div.addEventListener("click", () => selectRole(r));
+        box.appendChild(div);
+      });
+      box.style.display = "block";
+    }
+
+    function selectRole(role){
+      SELECTED_ROLE = role;
+      const input = document.getElementById("classSearch");
+      input.value = role.code || "";
+      document.getElementById("classList").style.display = "none";
+
+      const help = document.getElementById("classSelectedHelp");
+      const base = role.salary_current;
+      help.textContent = `${role.code || "—"} — ${role.classification_label || "—"} · ${role.stream || "—"} · ${role.rate_type || "—"}${base ? " · current " + fmtMoney(base,0) : ""}`;
+
+      const rt = (role.rate_type || "").toLowerCase();
+      const needsOverride = !(rt.includes("annual"));
+      document.getElementById("unitOverrideWrap").style.display = needsOverride ? "block" : "none";
+      document.getElementById("annualisedOverride").value = "";
+
+      applyRoleEligibilityToConditions();
+      filterConditions(document.getElementById("condSearch").value || "");
+      clearOutputsOnly();
+    }
+
+    function closeClassListIfClickedOutside(e){
+      const wrap = document.querySelector(".comboWrap");
+      if (wrap && !wrap.contains(e.target)){
+        document.getElementById("classList").style.display = "none";
+      }
+    }
+
+    let COND_STATE = {};
+    let COND_ELEMS = {};
+    let COND_META = {};
+
+    function wrapWithTooltip(control, tooltipText){
+      if (!tooltipText){
+        return control;
+      }
+      const wrap = document.createElement("div");
+      wrap.className = "inputWithTip";
+      const tip = document.createElement("span");
+      tip.className = "inputTip";
+      tip.textContent = "i";
+      tip.title = tooltipText;
+      tip.setAttribute("role", "img");
+      tip.setAttribute("aria-label", tooltipText);
+      wrap.appendChild(control);
+      wrap.appendChild(tip);
+      return wrap;
+    }
+
+    function buildConditionsLists(){
+      const all = DATA.conditions_catalog || [];
+      const calcBox = document.getElementById("condCalc");
+      const infoBox = document.getElementById("condInfo");
+      const quickBox = document.getElementById("condQuick");
+      calcBox.innerHTML = "";
+      infoBox.innerHTML = "";
+      quickBox.innerHTML = "";
+      COND_STATE = {};
+      COND_ELEMS = {};
+      COND_META = {};
+
+      const calcItems = all.filter(x => x.kind !== "info");
+      const infoItems = all.filter(x => x.kind === "info");
+
+      calcItems.forEach(item => {
+        const isQuick = item.id === "night_shift" || item.id === "on_call";
+        const el = document.createElement("div");
+        el.className = isQuick ? "condCard" : "condItem";
+        el.dataset.ref = item.ref || "";
+        el.dataset.label = (item.label || "").toLowerCase();
+
+        const chk = document.createElement("input");
+        chk.type = "checkbox";
+        chk.id = "c_" + item.id;
+        COND_STATE[item.id] = { checked:false };
+        chk.addEventListener("change", () => {
+          COND_STATE[item.id].checked = chk.checked;
+          updateConditionsSummary();
+        });
+
+        const meta = document.createElement("div");
+        meta.className = "condMeta";
+        const title = document.createElement("div");
+        title.className = "condTitle";
+        title.innerHTML = `<span class="condRef">${item.ref || "—"}</span><span>${item.label || "—"}</span>`;
+        meta.appendChild(title);
+
+        const desc = document.createElement("div");
+        desc.className = "condDesc";
+        if (item.id === "night_shift"){
+          desc.textContent = "Night shift penalty. Enter how many night shifts you do per week or per fortnight.";
+        } else if (item.id === "on_call"){
+          desc.textContent = "On-call allowance. Enter on-call counts per week or per fortnight.";
+        } else {
+          desc.textContent =
+            item.kind === "fixed_allowance" ? "Allowance (fixed amount)." :
+            item.kind === "percent_share_of_base" ? "Adds a percentage of your base salary (you enter the share)." :
+            item.kind === "per_occurrence" ? "Adds an amount per occurrence (you enter counts)." :
+            "Adds to gross pay.";
+        }
+        meta.appendChild(desc);
+
+        const inputsWrap = document.createElement("div");
+        inputsWrap.className = "condInputs";
+
+        if (item.id === "night_shift"){
+          const group = document.createElement("div");
+          group.className = "inputGroup";
+
+          const inp = document.createElement("input");
+          inp.type = "number";
+          inp.min = 0;
+          inp.max = 14;
+          inp.step = 1;
+          inp.value = 0;
+          inp.placeholder = "Night shifts";
+          inp.addEventListener("input", () => {
+            COND_STATE[item.id].nightShiftCount = Number(inp.value || 0);
+            updateConditionsSummary();
+          });
+          COND_STATE[item.id].nightShiftCount = Number(inp.value || 0);
+          const nightShiftTip = "How many night shifts you do per week or per fortnight.";
+
+          const sel = document.createElement("select");
+          sel.innerHTML = `
+            <option value="week">per week</option>
+            <option value="fortnight" selected>per fortnight</option>
+          `;
+          sel.addEventListener("change", () => {
+            COND_STATE[item.id].nightShiftPeriod = sel.value;
+            updateConditionsSummary();
+          });
+          COND_STATE[item.id].nightShiftPeriod = sel.value;
+
+          group.appendChild(wrapWithTooltip(inp, nightShiftTip));
+          group.appendChild(wrapWithTooltip(sel, "Choose whether the night shift count is per week or per fortnight."));
+          inputsWrap.appendChild(group);
+        } else if (item.kind === "percent_share_of_base" && item.input){
+          const inp = document.createElement("input");
+          inp.type = "number";
+          inp.min = item.input.min ?? 0;
+          inp.max = item.input.max ?? 100;
+          inp.step = 1;
+          inp.value = item.input.default ?? 0;
+          inp.placeholder = item.input.label || "Percent";
+          inp.addEventListener("input", () => { COND_STATE[item.id][item.input.id] = Number(inp.value || 0); });
+          COND_STATE[item.id][item.input.id] = Number(inp.value || 0);
+          const percentTip = `Enter the percentage for ${item.label || "this allowance"}.`;
+          inputsWrap.appendChild(wrapWithTooltip(inp, percentTip));
+        }
+        if (item.id === "on_call" && item.kind === "per_occurrence" && Array.isArray(item.inputs)){
+          const periodGroup = document.createElement("div");
+          periodGroup.className = "inputGroup";
+
+          const sel = document.createElement("select");
+          sel.innerHTML = `
+            <option value="fortnight" selected>per fortnight</option>
+            <option value="week">per week</option>
+          `;
+          sel.addEventListener("change", () => {
+            COND_STATE[item.id].onCallPeriod = sel.value;
+            updateConditionsSummary();
+          });
+          COND_STATE[item.id].onCallPeriod = sel.value;
+          periodGroup.appendChild(wrapWithTooltip(sel, "Choose whether your on-call counts are per week or per fortnight."));
+          inputsWrap.appendChild(periodGroup);
+        }
+        if (item.kind === "per_occurrence" && Array.isArray(item.inputs)){
+          item.inputs.forEach(sub => {
+            const inp = document.createElement("input");
+            inp.type = "number";
+            inp.min = sub.min ?? 0;
+            inp.max = sub.max ?? 100;
+            inp.step = 1;
+            inp.value = sub.default ?? 0;
+            inp.placeholder = sub.label || "Count";
+            inp.addEventListener("input", () => {
+              COND_STATE[item.id][sub.id] = Number(inp.value || 0);
+              updateConditionsSummary();
+            });
+            COND_STATE[item.id][sub.id] = Number(inp.value || 0);
+            let tipText = `Enter the number of ${sub.label || "occurrences"}.`;
+            if (item.id === "on_call"){
+              if (sub.id.toLowerCase().includes("weeknight")){
+                tipText = "How many weeknight on-call shifts you do per week or per fortnight.";
+              } else if (sub.id.toLowerCase().includes("weekend")){
+                tipText = "How many weekend day on-call shifts you do per week or per fortnight.";
+              } else {
+                tipText = "How many on-call shifts you do per week or per fortnight.";
+              }
+            }
+            inputsWrap.appendChild(wrapWithTooltip(inp, tipText));
+          });
+        }
+        if (inputsWrap.childElementCount){ meta.appendChild(inputsWrap); }
+
+        el.appendChild(chk);
+        el.appendChild(meta);
+        if (isQuick){
+          quickBox.appendChild(el);
+        }else{
+          calcBox.appendChild(el);
+        }
+
+        COND_ELEMS[item.id] = el;
+        COND_META[item.id] = item;
+      });
+
+      infoItems.forEach(item => {
+        const el = document.createElement("div");
+        el.className = "condItem";
+        el.dataset.ref = item.ref || "";
+        el.dataset.label = ((item.label || "") + " " + (item.text || "")).toLowerCase();
+
+        const meta = document.createElement("div");
+        meta.className = "condMeta";
+
+        const det = document.createElement("details");
+        det.className = "condDetails";
+
+        const sum = document.createElement("summary");
+        sum.innerHTML = `<div class="condTitle"><span class="condRef">${item.ref || "—"}</span><span>${item.label || "Note"}</span></div><div class="infoHint">Tap to expand</div>`;
+        det.appendChild(sum);
+
+        const txt = document.createElement("div");
+        txt.className = "condDesc";
+        txt.textContent = item.text || "";
+        det.appendChild(txt);
+
+        meta.appendChild(det);
+        el.appendChild(meta);
+        infoBox.appendChild(el);
+
+        COND_ELEMS[item.id] = el;
+        COND_META[item.id] = item;
+      });
+
+      applyRoleEligibilityToConditions();
+      updateConditionsSummary();
+    }
+
+    function parseRefs(ref){
+      if (!ref) return [];
+      return String(ref)
+        .split("/")
+        .map(s => s.trim())
+        .filter(Boolean);
+    }
+
+    function isEligibleForRole(role, item){
+      if (!role || !item) return true;
+      if (item.kind === "info") return true;
+
+      const refKey = item.rate_ref || item.ref;
+      if (!refKey) return true;
+
+      const parts = parseRefs(refKey);
+
+      // If any part is an explicit flag on the role, require at least one true.
+      let seenFlag = false;
+      let anyTrue = false;
+
+      parts.forEach(p => {
+        if (Object.prototype.hasOwnProperty.call(role, p)){
+          seenFlag = true;
+          if (!!role[p]) anyTrue = true;
+        }
+      });
+
+      if (seenFlag) return anyTrue;
+
+      // If no flags exist, treat as generally applicable.
+      return true;
+    }
+
+    function applyRoleEligibilityToConditions(){
+      const all = DATA?.conditions_catalog || [];
+      all.forEach(item => {
+        const el = COND_ELEMS[item.id];
+        if (!el) return;
+        const ok = isEligibleForRole(SELECTED_ROLE, item);
+        el.style.display = ok ? "flex" : "none";
+      });
+      updateConditionsSummary();
+    }
+
+    function filterConditions(q){
+      const s = (q || "").trim().toLowerCase();
+      Object.entries(COND_ELEMS).forEach(([id, el]) => {
+        // Hide if not eligible for role (handled by applyRoleEligibilityToConditions)
+        if (SELECTED_ROLE){
+          const meta = COND_META[id];
+          if (meta && !isEligibleForRole(SELECTED_ROLE, meta)){
+            el.style.display = "none";
+            return;
+          }
+        }
+        const ref = (el.dataset.ref || "").toLowerCase();
+        const label = (el.dataset.label || "");
+        const show = !s || ref.includes(s) || label.includes(s);
+        el.style.display = show ? "flex" : "none";
+      });
+    }
+
+    function conditionSummaryText(item){
+      if (!item) return "Applies this allowance to your gross pay.";
+      if (item.id === "night_shift"){
+        return "Clause 17.1 night shift penalty applied to the share of shifts you enter (assumes 5 shifts per week).";
+      }
+      if (item.id === "on_call"){
+        return "Clauses 16.2 and 16.3 on-call allowances using the per-period counts you enter.";
+      }
+      if (item.kind === "fixed_allowance"){
+        const unit = item.unit === "per_fortnight" ? "fortnightly" : "annual";
+        return `Fixed allowance (${unit}) from ${item.ref}.`;
+      }
+      if (item.kind === "percent_share_of_base"){
+        return "Applies a percentage of base salary.";
+      }
+      if (item.kind === "per_occurrence"){
+        return "Applies a per-occurrence allowance from the agreement.";
+      }
+      return "Applies this allowance to your gross pay.";
+    }
+
+    function updateConditionsSummary(){
+      const list = document.getElementById("condSummaryList");
+      const empty = document.getElementById("condSummaryEmpty");
+      if (!list || !empty) return;
+
+      list.innerHTML = "";
+      const selected = Object.entries(COND_STATE)
+        .filter(([id, st]) => st?.checked)
+        .map(([id]) => COND_META[id])
+        .filter(Boolean);
+
+      const filtered = SELECTED_ROLE
+        ? selected.filter(item => isEligibleForRole(SELECTED_ROLE, item))
+        : selected;
+
+      if (!filtered.length){
+        empty.style.display = "block";
+        list.style.display = "none";
+        return;
+      }
+
+      filtered.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.ref || "—"} ${item.label || "Allowance"}: ${conditionSummaryText(item)}`;
+        list.appendChild(li);
+      });
+
+      empty.style.display = "none";
+      list.style.display = "block";
+    }
+
+    const SCENARIOS = [
+      { key: "salary_current",    label: "Current" },
+      { key: "salary_2025_08_01", label: "1 Aug 2025" },
+      { key: "salary_2026_07_01", label: "1 Jul 2026" },
+      { key: "salary_2027_07_01", label: "1 Jul 2027" }
+    ];
+
+    function roleBaseAnnual(role, dateKey){
+      const rt = (role.rate_type || "").toLowerCase();
+      if (rt.includes("annual")){
+        const v = role[dateKey];
+        return (typeof v === "number" && isFinite(v)) ? v : null;
+      }
+      const o = Number(document.getElementById("annualisedOverride").value || 0);
+      return o > 0 ? o : null;
+    }
+
+    function scheduleMultiplier(role, dateKey){
+      const cur = role?.salary_current;
+      const v = role?.[dateKey];
+      if (typeof cur !== "number" || !isFinite(cur) || cur <= 0) return 1;
+      if (typeof v !== "number" || !isFinite(v) || v <= 0) return 1;
+      return v / cur;
+    }
+
+    function awardFloorForDate(role, dateKey){
+      if (!AWARD_MIN) return null;
+      const baseMin = AWARD_MIN[role.code];
+      if (typeof baseMin !== "number" || !isFinite(baseMin)) return null;
+      const currentBase = role?.salary_current;
+      if (typeof currentBase !== "number" || !isFinite(currentBase)) return null;
+      if (baseMin <= currentBase) return null;
+      const mult = scheduleMultiplier(role, dateKey);
+      return baseMin * mult;
+    }
+
+    function allowanceValue(ref, dateKey){
+      const map = {
+        "salary_current": "current",
+        "salary_2025_08_01": "2025_08_01",
+        "salary_2026_07_01": "2026_07_01",
+        "salary_2027_07_01": "2027_07_01"
+      };
+      const k = map[dateKey] || "current";
+      const gr = DATA.global_rates?.[ref];
+      if (gr && typeof gr[k] === "number") return gr[k];
+      return null;
+    }
+
+    function computeExtrasAnnual(role, dateKey, baseAfterFTE){
+      let extras = 0;
+
+      // Night shift penalty (17.1)
+      const night = DATA.conditions_catalog?.find(x => x.id === "night_shift");
+      if (night && isEligibleForRole(role, night) && COND_STATE[night.id]?.checked){
+        const nightCount = Number(COND_STATE[night.id]?.nightShiftCount || 0);
+        const period = COND_STATE[night.id]?.nightShiftPeriod || "fortnight";
+        const totalShifts = period === "week" ? 5 : 10;
+        const share = totalShifts > 0 ? Math.min(1, nightCount / totalShifts) : 0;
+        const rate = allowanceValue("17.1", dateKey);
+        if (typeof rate === "number"){
+          extras += baseAfterFTE * share * rate;
+        }
+      }
+
+      // On-call allowances (16.2 and 16.3): user inputs per fortnight, convert to annual by *26
+      const oc = DATA.conditions_catalog?.find(x => x.id === "on_call");
+      if (oc && isEligibleForRole(role, oc) && COND_STATE[oc.id]?.checked){
+        const period = COND_STATE[oc.id]?.onCallPeriod || "fortnight";
+        const multiplier = period === "week" ? 2 : 1;
+        const wkN = Number(COND_STATE[oc.id]?.onCallWeeknights || 0) * multiplier;
+        const weD = Number(COND_STATE[oc.id]?.onCallWeekendDays || 0) * multiplier;
+        const r162 = allowanceValue("16.2", dateKey);
+        const r163 = allowanceValue("16.3", dateKey);
+        if (typeof r162 === "number") extras += wkN * r162 * 26;
+        if (typeof r163 === "number") extras += weD * r163 * 26;
+      }
+
+      // Fixed allowances from DATA.allowances (schedule refs)
+      (DATA.allowances || []).forEach(a => {
+        const id = "allow_" + a.ref;
+        const st = COND_STATE[id];
+        // Only apply if the condition is visible/eligible and ticked
+        const itemMeta = COND_META[id];
+        if (itemMeta && !isEligibleForRole(role, itemMeta)) return;
+        if (!st || !st.checked) return;
+
+        const v = allowanceValue(a.ref, dateKey);
+        if (typeof v !== "number") return;
+
+        if (a.unit === "per_fortnight"){
+          extras += v * 26;
+        }else{
+          extras += v;
+        }
+      });
+
+      return extras;
+    }
+
+    function scenario(role, dateKey, hasHELP, noPrivate){
+      const fte = Math.max(0.1, Math.min(1, Number(document.getElementById("fte").value || 1)));
+      let base = roleBaseAnnual(role, dateKey);
+      if (base === null) return null;
+
+      // Apply award floor automatically if it lifts pay
+      let appliedAward = false;
+      const floor = awardFloorForDate(role, dateKey);
+      if (typeof floor === "number" && isFinite(floor) && floor > base){
+        base = floor;
+        appliedAward = true;
+      }
+
+      const baseAfterFTE = base * fte;
+      const extras = computeExtrasAnnual(role, dateKey, baseAfterFTE);
+      const gross = baseAfterFTE + extras;
+
+      const np = netPay(gross, hasHELP, noPrivate);
+      const annNet = np.net;
+      const finNet = annNet / 26;
+
+      return { dateKey, base: baseAfterFTE, extras, gross, annNet, finNet, breakdown: np.breakdown, appliedAward, floorApplied: floor };
+    }
+
+    function wireUI(){
+      const classSearch = document.getElementById("classSearch");
+      const classList = document.getElementById("classList");
+
+      classSearch.addEventListener("input", () => {
+        ACTIVE_CLASS_IDX = -1;
+        renderClassList(filterRoles(classSearch.value));
+      });
+      classSearch.addEventListener("focus", () => {
+        ACTIVE_CLASS_IDX = -1;
+        renderClassList(filterRoles(classSearch.value));
+      });
+
+      classSearch.addEventListener("keydown", (e) => {
+        const items = Array.from(classList.children);
+        if (!items.length) return;
+        if (e.key === "ArrowDown"){
+          e.preventDefault();
+          ACTIVE_CLASS_IDX = Math.min(items.length - 1, ACTIVE_CLASS_IDX + 1);
+          items.forEach((n,i)=>n.classList.toggle("isActive", i===ACTIVE_CLASS_IDX));
+          items[ACTIVE_CLASS_IDX].scrollIntoView({ block: "nearest" });
+        }else if (e.key === "ArrowUp"){
+          e.preventDefault();
+          ACTIVE_CLASS_IDX = Math.max(0, ACTIVE_CLASS_IDX - 1);
+          items.forEach((n,i)=>n.classList.toggle("isActive", i===ACTIVE_CLASS_IDX));
+          items[ACTIVE_CLASS_IDX].scrollIntoView({ block: "nearest" });
+        }else if (e.key === "Enter"){
+          if (ACTIVE_CLASS_IDX >= 0){
+            e.preventDefault();
+            const picks = filterRoles(classSearch.value);
+            const pick = picks[ACTIVE_CLASS_IDX]?.r;
+            if (pick) selectRole(pick);
+          }
+        }else if (e.key === "Escape"){
+          classList.style.display = "none";
+        }
+      });
+
+      document.addEventListener("click", closeClassListIfClickedOutside);
+
+      document.getElementById("condSearch").addEventListener("input", (e) => {
+        filterConditions(e.target.value);
+      });
+
+      document.getElementById("btnCalc").addEventListener("click", calculate);
+      document.getElementById("btnClear").addEventListener("click", clearAll);
+
+      document.addEventListener('click', (event) => {
+        document.querySelectorAll('details.menu[open]').forEach((menu) => {
+          if (!menu.contains(event.target)) menu.removeAttribute('open');
+        });
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          document.querySelectorAll('details.menu[open]').forEach((menu) => {
+            menu.removeAttribute('open');
+          });
+        }
+      });
+    }
+
+    function clearOutputsOnly(){
+      document.getElementById("outputs").style.display = "none";
+      document.getElementById("resultsBody").innerHTML = "";
+      document.getElementById("kpiGrid").innerHTML = "";
+      document.getElementById("notesText").textContent = "—";
+    }
+
+    function calculate(){
+      if (!SELECTED_ROLE){
+        document.getElementById("classSelectedHelp").textContent = "Select a classification first.";
+        return;
+      }
+
+      const calcSection = document.getElementById("calculator");
+      if (calcSection){
+        calcSection.classList.add("has-results");
+      }
+
+      const hasHELP = document.getElementById("hasHELP").checked;
+      const noPrivate = document.getElementById("noPrivateHealth").checked;
+
+      const results = [];
+      for (const sc of SCENARIOS){
+        const s = scenario(SELECTED_ROLE, sc.key, hasHELP, noPrivate);
+        if (!s){
+          document.getElementById("classSelectedHelp").textContent =
+            "Missing salary data for this classification. If it's a unit rate, enter Annualised gross.";
+          return;
+        }
+        results.push({ name: sc.label, s });
+      }
+
+      const current = results[0].s;
+      const next = results[1]?.s || results[results.length - 1].s;
+      const nextLabel = results[1]?.name || results[results.length - 1]?.name || "Next";
+      const last = results[results.length - 1].s;
+
+      // KPI grid: current gross, new gross, net fortnight current, net fortnight new
+      const kpi = document.getElementById("kpiGrid");
+      kpi.innerHTML = "";
+
+      const kpis = [
+        { k:"Current gross", v: fmtMoney(current.gross,0), s:"Annual gross incl. selected extras" },
+        { k:"Next gross", v: fmtMoney(next.gross,0), s:`Annual gross (next bump: ${nextLabel})` },
+        { k:"Net fortnight (current)", v: fmtMoney(current.finNet,2), s:"Estimated after tax/Medicare/MLS/HELP" },
+        { k:"Net fortnight (next)", v: fmtMoney(next.finNet,2), s:`Estimated after tax/Medicare/MLS/HELP (${nextLabel})` }
+      ];
+
+      kpis.forEach(x => {
+        const div = document.createElement("div");
+        div.className = "kpi";
+        div.innerHTML = `<div class="k">${x.k}</div><div class="v">${x.v}</div><div class="s">${x.s}</div>`;
+        kpi.appendChild(div);
+      });
+
+      // Table rows
+      const tbody = document.getElementById("resultsBody");
+      tbody.innerHTML = "";
+
+      results.forEach(r => {
+        const d = r.s;
+        const change = d.gross - current.gross;
+        const cls = change >= 0 ? "pos" : "neg";
+        tbody.innerHTML += `
+          <tr>
+            <td class="rowLabel">${r.name}${d.appliedAward ? " · award floor" : ""}</td>
+            <td class="num">${fmtMoney(d.base,0)}</td>
+            <td class="num">${fmtMoney(d.extras,0)}</td>
+            <td class="num"><span class="numStrong">${fmtMoney(d.gross,0)}</span></td>
+            <td class="num"><span class="${cls}">${(change>=0?"+":"") + fmtMoney(change,0)}</span></td>
+            <td class="num">${fmtMoney(d.annNet,2)}</td>
+            <td class="num"><span class="numStrong">${fmtMoney(d.finNet,2)}</span></td>
+          </tr>
+        `;
+      });
+
+      // Notes
+      const fte = Number(document.getElementById("fte").value || 1).toFixed(2);
+      const awardAppliedAny = results.some(r => r.s.appliedAward);
+
+      const notes = [];
+      notes.push(`Selected classification: ${SELECTED_ROLE.code || "—"} (${SELECTED_ROLE.stream || "—"}).`);
+      notes.push(`FTE used: ${fte}.`);
+      if (awardAppliedAny){
+        notes.push("Award minimum applied where it lifted the base rate.");
+      }else{
+        notes.push("Award minimum not applied (no match, missing file, or schedule base already higher).");
+      }
+      if ((SELECTED_ROLE.rate_type || "").toLowerCase().includes("annual") === false){
+        notes.push("Unit/hourly role: enter an annualised gross to estimate take-home pay.");
+      }
+
+      document.getElementById("notesText").textContent = notes.join(" ");
+
+      document.getElementById("outputs").style.display = "block";
+    }
+
+    function clearAll(){
+      const calcSection = document.getElementById("calculator");
+      if (calcSection){
+        calcSection.classList.remove("has-results");
+      }
+      document.getElementById("classSearch").value = "";
+      document.getElementById("classSelectedHelp").textContent = "No classification selected yet.";
+      document.getElementById("fte").value = "1.0";
+      document.getElementById("hasHELP").checked = false;
+      document.getElementById("noPrivateHealth").checked = false;
+      document.getElementById("annualisedOverride").value = "";
+      document.getElementById("unitOverrideWrap").style.display = "none";
+
+      Object.keys(COND_STATE).forEach(id => { if (COND_STATE[id]) COND_STATE[id].checked = false; });
+      document.querySelectorAll('#condQuick input[type="checkbox"], #condCalc input[type="checkbox"]').forEach(el => {
+        el.checked = false;
+      });
+      document.querySelectorAll('#condQuick input[type="number"], #condCalc input[type="number"]').forEach(el => {
+        el.value = "0";
+      });
+      document.querySelectorAll('#condQuick select, #condCalc select').forEach(el => {
+        if (el.querySelector('option[value="fortnight"]')){
+          el.value = "fortnight";
+        } else if (el.options.length){
+          el.selectedIndex = 0;
+        }
+      });
+      updateConditionsSummary();
+      document.getElementById("condSearch").value = "";
+      filterConditions("");
+
+      SELECTED_ROLE = null;
+      clearOutputsOnly();
+    }
+
+    init();
+  </script>
+
+  <script data-goatcounter="https://sa-ps-wages.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
+
+  <script>
+    (function(){
+      const el = document.getElementById('gc-hud');
+      if (!el) return;
+
+      const path = location.pathname || '/';
+      const url = 'https://sa-ps-wages.goatcounter.com/counter/' + encodeURIComponent(path) + '.json?no_branding=1';
+
+      fetch(url, { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        .then(data => { el.textContent = `Views: ${data.count}`; })
+        .catch(() => { el.textContent = 'Views: —'; });
+    })();
+  </script>
+</body>
+</html>

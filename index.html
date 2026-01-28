@@ -37,7 +37,18 @@
     a{ color:var(--accent); text-decoration:none; }
     a:hover{ text-decoration:underline; }
 
-    .wrap{ max-width:var(--max); margin:0 auto; padding: 32px 16px 28px; }
+    .page{
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    .container{ max-width:var(--max); margin:0 auto; padding: 22px 16px 26px; }
+
+    img,
+    svg,
+    iframe{
+      max-width: 100%;
+    }
 
     /* Header */
     .topbar{
@@ -45,14 +56,14 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
-      padding: 10px 12px;
+      gap:12px;
+      padding: 12px;
       border:1px solid var(--line);
-      border-radius: 999px;
+      border-radius: 22px;
       background: rgba(255,255,255,.04);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
     #gc-hud{
@@ -101,7 +112,7 @@
       text-overflow:ellipsis;
       color: rgba(245,247,255,.92);
       line-height: 1.15;
-      font-size: 18px;
+      font-size: clamp(13px, 3.6vw, 18px);
     }
 
     .nav{
@@ -116,8 +127,8 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      width:36px;
-      height:36px;
+      width:32px;
+      height:32px;
       border-radius:999px;
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
@@ -126,7 +137,7 @@
       cursor:pointer;
       -webkit-tap-highlight-color: transparent;
     }
-    .iconPill svg{ width:16px; height:16px; fill: currentColor; }
+    .iconPill svg{ width:14px; height:14px; fill: currentColor; }
     .iconPill:hover{ background: rgba(255,255,255,.06); text-decoration:none; }
     .homePill{ text-decoration:none; }
 
@@ -180,52 +191,73 @@
       color: rgba(245,247,255,.98);
     }
 
-    @media (max-width: 720px){
+    .menuList{
+      left: auto;
+      right: 0;
+      min-width: 220px;
+      width: 220px;
+      max-width: 90vw;
+    }
+
+    @media (min-width: 768px){
       .topbar{
-        border-radius: 22px;
-        padding: 12px;
-        gap: 12px;
+        border-radius: 999px;
+        padding: 10px 12px;
+        gap: 14px;
+        margin-bottom: 22px;
       }
-      .brand{ align-items: flex-start; }
-      .brandname{
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        line-height: 1.15;
-        font-size: 13px;
-      }
-      .nav{
-        width: auto;
-        justify-content: flex-end;
-      }
-      .iconPill{ width:32px; height:32px; }
-      .iconPill svg{ width:14px; height:14px; }
+      .brand{ align-items: center; }
+      .iconPill{ width:36px; height:36px; }
+      .iconPill svg{ width:16px; height:16px; }
       .menuList{
-        left: auto;
-        right: 0;
         min-width: 240px;
         width: 240px;
-        max-width: 90vw;
       }
     }
 
     /* Hero */
-    .hero{
-      margin-top: 0;
-      padding: 28px 18px;
+    .card{
       border-radius: var(--radius);
       border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .panel{
+      border-radius: calc(var(--radius) - 4px);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      padding: 14px;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .section{
+      margin-top: 20px;
+    }
+
+    .sectionCard{
+      display:flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero{
+      margin-top: 0;
+      padding: 22px 16px;
       background:
         radial-gradient(900px 240px at 20% 0%, rgba(110,231,255,.16), transparent 55%),
         radial-gradient(900px 240px at 80% 0%, rgba(167,139,250,.16), transparent 55%),
         linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
       overflow:hidden;
     }
 
     .heroTitle{
       margin:0 0 12px 0;
-      font-size: clamp(36px, 5vw, 64px);
+      font-size: clamp(28px, 7vw, 64px);
       line-height: 1.02;
       letter-spacing: -1px;
     }
@@ -240,7 +272,7 @@
     .heroSub{
       max-width: 100%;
       margin: 12px 0 0 0;
-      font-size: clamp(16px, 1.35vw, 20px);
+      font-size: clamp(15px, 3.6vw, 20px);
       line-height: 1.35;
       font-weight: 750;
       letter-spacing: -0.15px;
@@ -264,27 +296,18 @@
     }
 
     /* Section */
-    .section{
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: var(--radius);
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      box-shadow: 0 10px 30px rgba(0,0,0,.18);
-    }
-
     .sectionHead{
       display:flex;
       justify-content:space-between;
       align-items:flex-end;
       flex-wrap:wrap;
       gap:12px;
-      margin-bottom: 10px;
+      margin: 0;
     }
 
     .sectionHead h2{
       margin:0;
-      font-size: 18px;
+      font-size: clamp(18px, 4.2vw, 22px);
       letter-spacing: -.2px;
     }
 
@@ -296,18 +319,24 @@
       border:1px solid var(--line);
       overflow:hidden;
       background: rgba(0,0,0,.25);
+      padding: 0;
     }
 
     iframe{
       width:100%;
-      height: 76vh;
-      min-height: 620px;
+      height: clamp(420px, 70vh, 620px);
+      min-height: 420px;
       border:0;
       display:block;
     }
 
-    @media (max-width: 520px){
-      iframe{ height: 78vh; min-height: 560px; }
+    @media (min-width: 768px){
+      .container{ padding: 32px 20px 32px; }
+      .card{ padding: 22px; }
+      .hero{ padding: 28px 18px; }
+      iframe{ height: 76vh; min-height: 620px; }
+      .section{ margin-top: 22px; }
+      table{ min-width: 880px; font-size: 15px; }
     }
 
     /* Footer */
@@ -342,15 +371,11 @@
        Recovery bubble (sits inside calculator section)
     ====================================================== */
     .recoveryBubble{
-      margin-bottom: 14px;
-      padding: 16px 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.14);
+      margin-bottom: 0;
       background:
         radial-gradient(520px 200px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
         radial-gradient(520px 200px at 80% 0%, rgba(167,139,250,.14), transparent 60%),
         rgba(0,0,0,.18);
-      box-shadow: 0 10px 24px rgba(0,0,0,.22);
     }
 
     .rbTitle{
@@ -460,14 +485,10 @@
 
     /* Union reform CTA */
     .actionCard{
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.14);
       background:
         radial-gradient(520px 200px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
         radial-gradient(520px 200px at 80% 0%, rgba(167,139,250,.14), transparent 60%),
         rgba(0,0,0,.18);
-      box-shadow: 0 14px 34px rgba(0,0,0,.22);
-      padding: 18px;
     }
     .actionKicker{
       margin: 0 0 10px 0;
@@ -511,146 +532,11 @@
       text-decoration: none;
     }
 
-    /* Calculator */
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .card{
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      padding: 16px;
-    }
-
-    .card h3{
-      margin:0 0 10px 0;
-      font-size: 16px;
-      letter-spacing: -.2px;
-    }
-
-    label{
-      display:block;
-      margin-top: 10px;
-      font-size: 13px;
-      color: rgba(245,247,255,.86);
-    }
-
-    input[type="number"]{
-      width: 100%;
-      margin-top: 6px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.22);
-      color: var(--text);
-      font-size: 14px;
-      outline: none;
-    }
-
-    input[type="number"]:focus{
-      border-color: rgba(110,231,255,.45);
-      box-shadow: 0 0 0 4px rgba(110,231,255,.12);
-    }
-
-    .checkRow{
-      display:flex;
-      align-items:flex-start;
-      gap:10px;
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.16);
-    }
-
-    .checkRow input{ margin-top: 2px; }
-
-    .checkRow .hint{
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 3px;
-    }
-
-    .btnRow{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .btn{
-      cursor:pointer;
-      border:1px solid rgba(255,255,255,.14);
-      background:
-        radial-gradient(420px 160px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
-        radial-gradient(420px 160px at 80% 0%, rgba(167,139,250,.14), transparent 60%),
-        rgba(255,255,255,.03);
-      color: var(--text);
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 850;
-    }
-
-    .btn:hover{ background: rgba(255,255,255,.06); }
-
-    .tableWrap{
-      margin-top: 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.10);
-      overflow:auto;
-      background: rgba(0,0,0,.18);
-    }
-
-    table{
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      min-width: 980px;
-      font-size: 15px;
-    }
-
-    thead th{
-      position: sticky;
-      top: 0;
-      z-index: 1;
-      text-align: left;
-      padding: 10px 12px;
-      background: rgba(11,18,32,.92);
-      color: rgba(245,247,255,.92);
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      white-space: nowrap;
-    }
-
-    tbody td{
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      color: rgba(245,247,255,.86);
-      white-space: nowrap;
-    }
-
-    tbody tr:nth-child(odd){ background: rgba(255,255,255,.02); }
-    tbody tr:hover{ background: rgba(110,231,255,.06); }
-
-    .rowLabel{ font-weight: 900; }
-    .num{ text-align: right; font-variant-numeric: tabular-nums; }
-    .numStrong{ color: var(--accent); font-weight: 900; }
-
     .infoBox{
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,255,255,.10);
       background:
         radial-gradient(520px 180px at 20% 0%, rgba(110,231,255,.10), transparent 60%),
         radial-gradient(520px 180px at 80% 0%, rgba(167,139,250,.10), transparent 60%),
         rgba(255,255,255,.02);
-      box-shadow: 0 10px 22px rgba(0,0,0,.18);
-      padding: 14px 16px;
-      margin-top: 12px;
     }
 
     .infoBox h3{
@@ -670,8 +556,8 @@
   <link rel="stylesheet" href="assets/css/theme.css">
 </head>
 
-<body id="top">
-  <div class="wrap">
+<body id="top" class="page">
+  <div class="container">
     <div class="topbar">
       <div id="gc-hud" aria-hidden="true">Views: —</div>
       <div class="brand">
@@ -695,9 +581,10 @@
             </summary>
 
             <div class="menuList">
-              <a class="menuLink" href="index.html">Home</a>
+              <a class="menuLink isActive" href="index.html">Home</a>
+              <a class="menuLink" href="index_with_new_calculator.html">Updated Calculator</a>
               <a class="menuLink" href="voting-power.html">Voting Power</a>
-              <a class="menuLink isActive" href="Union Reform.html">The Member's Union</a>
+              <a class="menuLink" href="Union Reform.html">The Member's Union</a>
               <a class="menuLink" href="methodology.html">Sources &amp; Method</a>
             </div>
           </details>
@@ -705,7 +592,7 @@
       </div>
     </div>
 
-    <section class="hero">
+    <section class="card hero">
       <h1 class="heroTitle">
         <span class="grad"><strong>EB25:</strong> It's <i>still</i> about pay</span>
       </h1>
@@ -721,7 +608,7 @@
     </section>
 
     <section class="section" id="union-reform">
-      <div class="actionCard">
+      <div class="card actionCard">
         <p class="actionKicker">The Member's Union</p>
         <h2 class="actionTitle">
           Union Members, we are calling you to action to request a special general meeting to ensure accountability to the PSA Change campaign promises.
@@ -736,75 +623,65 @@
       </div>
     </section>
 
-    <section class="section" id="calculator" style="margin-top:18px;">
-      <!-- ✅ Bubble sits inside this section, just above the heading -->
-      <div class="recoveryBubble" role="note" aria-label="Wage erosion message">
-        <div class="rbTop">
-          <h3 class="rbTitle">
-            <span class="grad">The longer our wages bear the wage erosion from the last 5 years, the worse off we will continue to be.</span>
-          </h3>
-        </div>
-
-        <div class="rbGrid">
-          <!-- Left: headline-style CTA -->
-          <div class="rbBlock">
-            <div class="rbKicker">Before you vote</div>
-            <p class="rbBig">
-              Check your cohort’s
-              <a href="voting-power.html" class="rbLink"><strong>VOTING POWER</strong></a>
-            </p>
-            <p class="rbSub">
-              Bigger cohorts can swing outcomes - know where yours sits.
-            </p>
+    <section class="section" id="calculator-cta">
+      <div class="card sectionCard">
+        <div class="panel recoveryBubble" role="note" aria-label="Wage erosion message">
+          <div class="rbTop">
+            <h3 class="rbTitle">
+              <span class="grad">The longer our wages bear the wage erosion from the last 5 years, the worse off we will continue to be.</span>
+            </h3>
           </div>
 
-          <!-- Right: headline-style CTA -->
-          <div class="rbCTA">
-            <div class="rbPill">NEXT</div>
-            <p class="rbBig" style="margin:0;">
-              See your <strong>TAKE-HOME PAY</strong><br/>
-              under the proposed offer
-            </p>
-            <p class="rbSub" style="margin:8px 0 0 0;">
-              *Calculator removed temporarily, see below*
-            </p>
+          <div class="rbGrid">
+            <div class="rbBlock">
+              <div class="rbKicker">Before you vote</div>
+              <p class="rbBig">
+                Check your cohort’s
+                <a href="voting-power.html" class="rbLink"><strong>VOTING POWER</strong></a>
+              </p>
+              <p class="rbSub">
+                Bigger cohorts can swing outcomes - know where yours sits.
+              </p>
+            </div>
+
+            <div class="rbCTA">
+              <div class="rbPill">NEXT</div>
+              <p class="rbBig" style="margin:0;">
+                See your <strong>TAKE-HOME PAY</strong><br/>
+                under the formal enterprise agreement on the
+                <a href="index_with_new_calculator.html" class="rbLink">updated calculator page</a>.
+              </p>
+              <p class="rbSub" style="margin:8px 0 0 0;">
+                Punch in your classification and conditions to compare scenarios.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </section>
-    
-    <section class="section" id="union-reform">
-      <div class="actionCard">
-        <p class="actionKicker">Reasonable Notice Pending</p>
-        <h2 class="actionTitle">
-                    <span class="grad">Please note:</span> The current “Final Offer” provided is <span class="grad">not the document we will be voting on</span>, and is
-          without prejudice, meaning <span class="grad">the government may still amend the offer.</span><br><br>
-          As such we have removed the calculator until workers have been provided with the <span class="grad">
-          Formal Enterprise Agreement and a
-          plain-English summary explaining the terms</span> so we can align analysis to the <span class="grad">actual document we are voting on</span>.
-        </h2>
-    </section>
-    
+
     <section class="section" id="dashboard">
-      <div class="sectionHead">
-        <h2>Interactive dashboard</h2>
-        <div class="small">
-          This shows how the current offer only keeps up with the rate of inflation, without ever recovering eroded wages.
+      <div class="card sectionCard">
+        <div class="sectionHead">
+          <h2>Interactive dashboard</h2>
+          <div class="small">
+            This shows how the current offer only keeps up with the rate of inflation, without ever recovering eroded wages.
+          </div>
         </div>
-      </div>
 
-      <div class="iframeWrap">
-        <iframe
-          src="https://lookerstudio.google.com/embed/reporting/46ce400d-3552-4931-acd2-7a6d9c781546/page/53clF"
-          loading="lazy"
-          allowfullscreen
-          sandbox="allow-scripts allow-same-origin allow-popups allow-forms">
-        </iframe>
+        <div class="iframeWrap">
+          <iframe
+            src="https://lookerstudio.google.com/embed/reporting/46ce400d-3552-4931-acd2-7a6d9c781546/page/53clF"
+            loading="lazy"
+            allowfullscreen
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms">
+          </iframe>
+        </div>
       </div>
     </section>
 
     <section class="section" id="disclaimer">
-      <div class="infoBox" style="margin-top:0;">
+      <div class="card infoBox">
         <h3>Disclaimer</h3>
         <p>
           This site is a public data explainer only and does not provide industrial relations advice, voting guidance, financial advice, or tax advice.
@@ -855,8 +732,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
